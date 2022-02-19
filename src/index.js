@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SignIn from './components/Authentication/SignIn'
 
 ReactDOM.render(
-  <h1>E-Kaksha</h1>,
+  <div>
+    <SignIn/>
+  </div>,
   document.getElementById("root")
 )
