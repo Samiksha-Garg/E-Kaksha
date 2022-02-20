@@ -15,20 +15,19 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#607782',
+    },
+    secondary : {
+      main : '#F3BD40'
+    }
+  },
+});
+
+
 
 export default function SignIn() {
   const handleSubmit = (event) => {
@@ -60,7 +59,8 @@ export default function SignIn() {
             
         //   }}
         >
-         <img src={logo}></img>
+         <img src={logo} className={styles.logo}></img>
+
         </Grid>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
@@ -72,7 +72,7 @@ export default function SignIn() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 1, bgcolor: '#F3BD40' }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -104,10 +104,13 @@ export default function SignIn() {
                 label="Remember me"
               />
               <Button
+              color="secondary"
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                style={{color : 'white'}}
+                
               >
                 Sign In
               </Button>
@@ -123,7 +126,6 @@ export default function SignIn() {
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
