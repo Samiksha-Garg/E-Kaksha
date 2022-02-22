@@ -169,7 +169,7 @@ const [value, setValue] = useState(null);
             </Button>
 
             <center>
-                <p>OR LOG IN WITH</p>
+                <p>OR SIGN UP WITH</p>
                 <button className={styles.google}>
                   <img src={Google} alt="" width={50} />
                 </button>
