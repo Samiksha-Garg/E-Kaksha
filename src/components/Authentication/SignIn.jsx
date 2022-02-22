@@ -22,6 +22,7 @@ import {
 } from "@mui/material";
 import SignUpTitle from "./signUpTitle";
 import SignUp from "./SignUp";
+import Google from "../../assets/google.png"
 
 
 
@@ -159,6 +160,13 @@ export default function SignIn() {
           </Dialog>
                 </Grid>
               </Grid>
+              <hr style={{marginTop : "20px"}}></hr>
+              <center>
+                <p>OR LOG IN WITH</p>
+                <button className={styles.google}>
+                  <img src={Google} alt="" width={50} />
+                </button>
+              </center>
             </Box>
           </Box>
         </Grid>

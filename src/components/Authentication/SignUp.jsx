@@ -21,6 +21,7 @@ import DatePicker from '@mui/lab/DatePicker';
 import DateAdapter from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import Google from "../../assets/google.png"
 
 const theme = createTheme({
     palette: {
@@ -166,6 +167,13 @@ const [value, setValue] = useState(null);
             >
               Create New Account
             </Button>
+
+            <center>
+                <p>OR LOG IN WITH</p>
+                <button className={styles.google}>
+                  <img src={Google} alt="" width={50} />
+                </button>
+              </center>
           
           </Box>
       </Container>

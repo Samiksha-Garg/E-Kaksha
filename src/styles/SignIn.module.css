@@ -14,3 +14,14 @@
 .links:hover {
     cursor: pointer;
 }
+
+.google {
+    padding: 20px;
+    background-color: white;
+    border-radius: 50%;
+    
+}
+
+.google:hover {
+    cursor: pointer;
+}
