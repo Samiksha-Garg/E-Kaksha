@@ -1,6 +1,6 @@
 import logo from "../../assets/logo.png"
 import styles from "../../styles/SignIn.module.css"
-import * as React from 'react';
+import React, {useState } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,6 +14,15 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
+import SignUpTitle from "./signUpTitle";
+import SignUp from "./SignUp";
+
 
 
 const theme = createTheme({
@@ -30,6 +39,9 @@ const theme = createTheme({
 
 
 export default function SignIn() {
+
+  const [showModal, setShowModal] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -121,9 +133,30 @@ export default function SignIn() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link variant="body2" className={styles.links} onClick={() => setShowModal(true)}>
                     {"Don't have an account? Sign Up"}
                   </Link>
+                  <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            open={showModal}
+            // onClose={() => setShowModal(false)}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+ 
+            <DialogTitle id="alert-dialog-title"><SignUpTitle setShowModal={setShowModal}/></DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <SignUp></SignUp>
+              {/* <SignUpTitle setShowModal={setShowModal}/>
+                <EventForm setShowModal={setShowModal} /> */}
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
                 </Grid>
               </Grid>
             </Box>

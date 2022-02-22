@@ -10,3 +10,7 @@
 .logIn {
     background-color: #F3BD40;
 }
+
+.links:hover {
+    cursor: pointer;
+}
