@@ -1,10 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import SignIn from './components/Authentication/SignIn'
+import React from "react";
+import ReactDOM from "react-dom";
+import SignIn from "./components/Authentication/SignIn";
+
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
 
 ReactDOM.render(
-  <div>
-    <SignIn/>
-  </div>,
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
   document.getElementById("root")
-)
+);

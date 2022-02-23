@@ -1,0 +1,53 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .Navbar {
+    background-color: darkslategray;
+    color: rgb(255, 255, 255);
+    height: 100vh;
+    padding : 5px 0px;
+    overflow-y: auto;
+  }
+  
+  .div{
+    align-items: flex-start;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .link{
+    align-items: center;
+    display: flex;
+    color: white;
+    gap: 15px;
+    margin: 0px 0px;
+    padding: 10px 10px;
+    text-size-adjust: 18px;
+  }
+  
+  .link:hover{
+    border-right: 4px solid white;
+    background: rgb(142, 223, 155);
+    color: black;
+  }
+  
+.ul{
+    list-style : none;
+    margin: 0px 0px;
+    padding: 0px 0px;
+  }
+  
+  li{
+    padding : 0;
+  }
+  
+  a:link{
+    text-decoration : none;
+  }
+  
+  
+  
+  
