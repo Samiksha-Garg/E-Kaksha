@@ -304,12 +304,7 @@ const validate = (values) => {
               Create New Account
             </Button>
 
-            <center>
-                <p>OR SIGN UP WITH</p>
-                <button className={styles.google}>
-                  <img src={Google} alt="" width={50} />
-                </button>
-              </center>
+           
 
               <Dialog
             PaperProps={{
@@ -349,6 +344,12 @@ const validate = (values) => {
           </Dialog>
           
           </Box>
+          <center>
+                <p>OR SIGN UP WITH</p>
+                <button className={styles.google} onClick={() => {console.log("Hello");}}>
+                  <img src={Google} alt="" width={50} />
+                </button>
+              </center>
       </Container>
     </ThemeProvider>
   );

@@ -193,14 +193,16 @@ export default function SignIn() {
                 </Grid>
               </Grid>
               <hr style={{marginTop : "20px"}}></hr>
-              <center>
+             
+            </Box>
+            <center>
                 <p>OR LOG IN WITH</p>
                 <button className={styles.google}>
                   <img src={Google} alt="" width={50} />
                 </button>
               </center>
-            </Box>
           </Box>
+         
         </Grid>
       </Grid>
     </ThemeProvider>
