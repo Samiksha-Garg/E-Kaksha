@@ -25,7 +25,12 @@ import SignUp from "./SignUp";
 import Google from "../../assets/google.png";
 import CircularProgress from '@mui/material/CircularProgress';
 import axios from "axios";
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+toast.configure()
 
 
 const theme = createTheme({
@@ -47,6 +52,15 @@ export default function SignIn() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const intialValues = { email: "", password: ""};
   const [formValues, setFormValues] = useState(intialValues);
+  const [authError, setAuthError] = useState("");
+  const [modalStatus, setModalStatus] = useState(false);
+  const [isChecked, setChecked] = useState(false);
+
+  const notify = ()=>{
+ 
+    // Calling toast method by passing string
+    toast.success('Log In Successfull',  {position: toast.POSITION.BOTTOM_CENTER})
+}
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,10 +91,18 @@ export default function SignIn() {
 
     const user = await response.data;
     console.log(user);
+    notify();
+    setFormValues(intialValues);
   } catch (err) {
     console.log(err.response.data);
+    setAuthError(err.response.data);
+    setModalStatus(true);
   }
     setIsSubmitting(false);
+  };
+
+  const handleClose = () => {
+    setModalStatus(false);
   };
   
 
@@ -168,7 +190,7 @@ export default function SignIn() {
           )} */}
           
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox checked={isChecked} onChange={() => setChecked(!isChecked)} color="primary" />}
                 label="Remember me"
               />
 
@@ -226,6 +248,42 @@ export default function SignIn() {
                 </button>
               </center>
           </Box>
+          <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            onClose={handleClose}
+            open={modalStatus}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+ 
+            <DialogTitle id="alert-dialog-title">
+            <div>
+        <center>Error</center>
+        <IconButton
+          aria-label="close"
+          onClick={() => setModalStatus(false)}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        
+    </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div className={styles.error}>{authError}</div>
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
          
         </Grid>
       </Grid>
