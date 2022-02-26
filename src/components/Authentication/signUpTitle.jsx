@@ -1,12 +1,11 @@
-import React, {useState } from "react";
+import React from "react";
 import styles from "../../styles/SignUp.module.css"
-import { ImCross} from "react-icons/im";
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function SignUpTitle({ setShowModal }) {
+export default function SignUpTitle({ setShowModal, title }) {
     return <div className={styles.container}>
-        <center>{"Sign Up"}</center>
+        <center>{title}</center>
         <IconButton
           aria-label="close"
           onClick={() => setShowModal(false)}

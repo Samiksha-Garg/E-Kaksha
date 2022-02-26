@@ -1,6 +1,6 @@
 import logo from "../../assets/logo.png"
 import styles from "../../styles/SignIn.module.css"
-import React, {useState, useEffect } from "react";
+import React, {useState} from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -46,7 +46,11 @@ export default function SignIn() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
  
-  const handleSubmit = (event) => {
+  const handleLogIn = (event) => {
+
+    if (showModal) {
+      return;
+    }
     
     event.preventDefault();
     setIsSubmitting(true);
@@ -58,8 +62,7 @@ export default function SignIn() {
     });
     setIsSubmitting(false);
   };
-
-
+  
 
 
   return (
@@ -109,7 +112,7 @@ export default function SignIn() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" Validate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box component="form" Validate onSubmit={handleLogIn} sx={{ mt: 1 }}>
               <TextField
               // value={formValues.email}
                 margin="normal"
@@ -176,17 +179,14 @@ export default function SignIn() {
               },
             }}
             open={showModal}
-            // onClose={() => setShowModal(false)}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
  
-            <DialogTitle id="alert-dialog-title"><SignUpTitle setShowModal={setShowModal}/></DialogTitle>
+            <DialogTitle id="alert-dialog-title"><SignUpTitle title="Sign Up" setShowModal={setShowModal}/></DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                <SignUp></SignUp>
-              {/* <SignUpTitle setShowModal={setShowModal}/>
-                <EventForm setShowModal={setShowModal} /> */}
+                <SignUp setShowModal={setShowModal}></SignUp>
               </DialogContentText>
             </DialogContent>
           </Dialog>

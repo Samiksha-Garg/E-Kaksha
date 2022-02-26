@@ -1,35 +1,33 @@
 import React, {useState, useEffect} from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import styles from "../../styles/SignUp.module.css";
 import DatePicker from '@mui/lab/DatePicker';
-import DateAdapter from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import Google from "../../assets/google.png"
 import CircularProgress from '@mui/material/CircularProgress';
-import { toDate } from 'date-fns/esm';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import {
   Dialog,
   DialogContent,
   DialogContentText,
-  DialogTitle,
+  DialogTitle
 } from "@mui/material";
+import axios from "axios";
+import { ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure()
 
 const theme = createTheme({
     palette: {
@@ -42,19 +40,57 @@ const theme = createTheme({
     },
   });
 
-export default function SignUp() {
+export default function SignUp({setShowModal}) {
 
 
-const [selectedProf, setSelectedProf] = useState('teacher');
-const [value, setValue] = useState(null);
-const intialValues = { email: "", password: "", confirmPassword:"", firstName:"", lastName:"" };
+  const [selectedProf, setSelectedProf] = useState('teacher');
+  const [value, setValue] = useState(null);
+  const intialValues = { email: "", password: "", confirmPassword:"", firstName:"", lastName:"" };
   const [formValues, setFormValues] = useState(intialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [authError, setAuthError] = useState("");
+  const [modalStatus, setModalStatus] = useState(false);
 
-  const submitForm = () => {
+
+  const notify = ()=>{
+ 
+    // Calling toast method by passing string
+    toast.success('Sign Up Successfull',  {position: toast.POSITION.BOTTOM_CENTER})
+}
+
+  const submitForm =  async (e) => {
+    const name = formValues.firstName + " " + formValues.lastName;
+    const dob = value;
+    const role = selectedProf;
+
+    try {
+      const response = await axios.post("/auth/register", {
+        name : name,
+        email : formValues.email,
+        password : formValues.password,
+        dob : dob,
+        role : role
+      });
+
+      if (response.status != 200) {
+        console.log(response);
+        throw new Error(`Error! status: ${response.status}`);
+      }
+  
+      const result = await response.data;
+      console.log(result);
+      setShowModal(false);
+      notify();
+  
+    }catch (err){
+      let message = typeof err.response !== "undefined" ? err.response.data.message : err.message;
+      setModalStatus(true);
+      setAuthError(message.msgBody);
+      console.log("error", message);
+    }
+
     setIsSubmitting(false);
-    console.log(formValues);
   };
 
   const handleChange = (e) => {
@@ -111,6 +147,11 @@ const validate = (values) => {
     }
   }, [formErrors]);
 
+  const handleClose = () => {
+    setModalStatus(false);
+  };
+
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -139,7 +180,7 @@ const validate = (values) => {
               <Grid item xs={12} sm={6}>
                 <TextField
                  value={formValues.firstName}
-                  autoComplete="given-name"
+                  autoComplete="off"
                   name="firstName"
                   required
                   fullWidth
@@ -163,7 +204,7 @@ const validate = (values) => {
                   id="lastName"
                   label="Last Name"
                   name="lastName"
-                  autoComplete="family-name"
+                  autoComplete="off"
                 />
                 {formErrors.lastName && (
             <span className={styles.error}>{formErrors.lastName}</span>
@@ -179,7 +220,7 @@ const validate = (values) => {
                   id="email"
                   label="Email Address"
                   name="email"
-                  autoComplete="email"
+                  autoComplete="off"
                 />
                 {formErrors.email && (
             <span className={styles.error}>{formErrors.email}</span>
@@ -196,7 +237,7 @@ const validate = (values) => {
                   label="Password"
                   type="password"
                   id="password"
-                  autoComplete="new-password"
+                  autoComplete="off"
                 />
                 {formErrors.password && (
             <span className={styles.error}>{formErrors.password}</span>
@@ -213,7 +254,7 @@ const validate = (values) => {
                   label="Confirm Password"
                   type="password"
                   id="confirmPassword"
-                  autoComplete="new-password"
+                  autoComplete="off"
                 />
                 {formErrors.confirmPassword && (
             <span className={styles.error}>{formErrors.confirmPassword}</span>
@@ -269,6 +310,43 @@ const validate = (values) => {
                   <img src={Google} alt="" width={50} />
                 </button>
               </center>
+
+              <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            onClose={handleClose}
+            open={modalStatus}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+ 
+            <DialogTitle id="alert-dialog-title">
+            <div>
+        <center>Error</center>
+        <IconButton
+          aria-label="close"
+          onClick={() => setModalStatus(false)}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        
+    </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div className={styles.error}>{authError}</div>
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
           
           </Box>
       </Container>
