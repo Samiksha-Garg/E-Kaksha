@@ -24,6 +24,7 @@ import SignUpTitle from "./signUpTitle";
 import SignUp from "./SignUp";
 import Google from "../../assets/google.png";
 import CircularProgress from '@mui/material/CircularProgress';
+import axios from "axios";
 
 
 
@@ -44,9 +45,16 @@ export default function SignIn() {
 
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const intialValues = { email: "", password: ""};
+  const [formValues, setFormValues] = useState(intialValues);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+    
+  };
  
-  const handleLogIn = (event) => {
+  const handleLogIn = async (event) => {
 
     if (showModal) {
       return;
@@ -54,12 +62,24 @@ export default function SignIn() {
     
     event.preventDefault();
     setIsSubmitting(true);
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+
+    try {
+
+    const response = await axios.post("/auth/login", {
+      email : formValues.email,
+      password : formValues.password,
     });
+
+    if (response.status != 200) {
+      console.log(response);
+      throw new Error(`Error! status: ${response.status}`);
+    }
+
+    const user = await response.data;
+    console.log(user);
+  } catch (err) {
+    console.log(err.response.data);
+  }
     setIsSubmitting(false);
   };
   
@@ -115,16 +135,17 @@ export default function SignIn() {
             <Box component="form" Validate onSubmit={handleLogIn} sx={{ mt: 1 }}>
               <TextField
               // value={formValues.email}
+              value={formValues.email}
                 margin="normal"
                 required
                 fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="email"
+                autoComplete="off"
                 autoFocus
                 // error={formErrors.email}
-                // onChange={handleChange}
+                onChange={handleChange}
               />
               {/* {formErrors.email && (
             <span className={styles.error}>{formErrors.email}</span>
@@ -137,10 +158,10 @@ export default function SignIn() {
                 label="Password"
                 type="password"
                 id="password"
-                // value={formValues.password}
+                value={formValues.password}
                 // error={formErrors.password}
-                // onChange={handleChange}
-                autoComplete="current-password"
+                onChange={handleChange}
+                autoComplete="off"
               />
                {/* {formErrors.password && (
             <span className={styles.error}>{formErrors.password}</span>
@@ -169,7 +190,10 @@ export default function SignIn() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link variant="body2" className={styles.links} onClick={() => setShowModal(true)}>
+                  <Link variant="body2" className={styles.links} onClick={() => {
+                    setShowModal(true);
+                    setFormValues(intialValues);
+                  }}>
                     {"Don't have an account? Sign Up"}
                   </Link>
                   <Dialog
