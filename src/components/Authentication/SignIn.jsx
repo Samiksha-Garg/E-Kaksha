@@ -1,6 +1,6 @@
 import logo from "../../assets/logo.png"
 import styles from "../../styles/SignIn.module.css"
-import React, {useState } from "react";
+import React, {useState, useEffect } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -22,7 +22,8 @@ import {
 } from "@mui/material";
 import SignUpTitle from "./signUpTitle";
 import SignUp from "./SignUp";
-import Google from "../../assets/google.png"
+import Google from "../../assets/google.png";
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 
@@ -42,35 +43,52 @@ const theme = createTheme({
 export default function SignIn() {
 
   const [showModal, setShowModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
+ 
   const handleSubmit = (event) => {
+    
     event.preventDefault();
+    setIsSubmitting(true);
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
+    setIsSubmitting(false);
   };
+
+
+
 
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
+      <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            open={isSubmitting}
+            // onClose={() => setShowModal(false)}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <CircularProgress/>
+              
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
         <CssBaseline />
         <Grid
           item
           xs={false}
           sm={4}
           md={7}
-        //   sx={{
-        //     // backgroundImage: 'url(https://source.unsplash.com/random)',
-        //     // backgroundRepeat: 'no-repeat',
-        //     // backgroundColor: (t) =>
-        //     //   t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-        //     // backgroundSize: 'cover',
-        //     // backgroundPosition: 'center',
-            
-        //   }}
         >
          <img src={logo} className={styles.logo}></img>
 
@@ -91,8 +109,9 @@ export default function SignIn() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box component="form" Validate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
+              // value={formValues.email}
                 margin="normal"
                 required
                 fullWidth
@@ -101,7 +120,12 @@ export default function SignIn() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                // error={formErrors.email}
+                // onChange={handleChange}
               />
+              {/* {formErrors.email && (
+            <span className={styles.error}>{formErrors.email}</span>
+            )} */}
               <TextField
                 margin="normal"
                 required
@@ -110,12 +134,20 @@ export default function SignIn() {
                 label="Password"
                 type="password"
                 id="password"
+                // value={formValues.password}
+                // error={formErrors.password}
+                // onChange={handleChange}
                 autoComplete="current-password"
               />
+               {/* {formErrors.password && (
+            <span className={styles.error}>{formErrors.password}</span>
+          )} */}
+          
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
+
               <Button
               color="secondary"
                 type="submit"

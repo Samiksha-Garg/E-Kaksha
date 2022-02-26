@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -22,6 +22,14 @@ import DateAdapter from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import Google from "../../assets/google.png"
+import CircularProgress from '@mui/material/CircularProgress';
+import { toDate } from 'date-fns/esm';
+import {
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 
 const theme = createTheme({
     palette: {
@@ -36,33 +44,101 @@ const theme = createTheme({
 
 export default function SignUp() {
 
-const [selectedValue, setSelectedValue] = useState('a');
+
 const [selectedProf, setSelectedProf] = useState('teacher');
 const [value, setValue] = useState(null);
+const intialValues = { email: "", password: "", confirmPassword:"", firstName:"", lastName:"" };
+  const [formValues, setFormValues] = useState(intialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value);
+  const submitForm = () => {
+    setIsSubmitting(false);
+    console.log(formValues);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+    
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormErrors(validate(formValues));
+    setIsSubmitting(true);
+  };
+
+const validate = (values) => {
+    let errors = {};
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if (!values.firstName) {
+      errors.firstName = "First Name Can't be empty"
+    }
+    
+    if (!values.lastName) {
+      errors.lastName = "Last Name Can't be empty"
+    }
+    if (!values.email) {
+      errors.email = "Cannot be blank";
+    } else if (!regex.test(values.email)) {
+      errors.email = "Invalid email format";
+    }
+    if (!values.password) {
+      errors.password = "Cannot be blank";
+    } else if (values.password.length < 8) {
+      errors.password = "Password must be more than 8 characters";
+    } else if (values.password != values.confirmPassword) {
+      errors.confirmPassword = "Password don't match";
+    }
+
+    if (!value) {
+      errors.dob = "Enter DOB";
+    } else {
+      const d = new Date();
+      if (value > d) {
+        errors.dob = "Enter Valid DOB";
+      }
+    }
+    return errors;
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmitting) {
+      submitForm();
+    } else {
+      setIsSubmitting(false);
+    }
+  }, [formErrors]);
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-       
+        <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            open={isSubmitting}
+            // onClose={() => setShowModal(false)}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <CircularProgress/>
+              
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                 value={formValues.firstName}
                   autoComplete="given-name"
                   name="firstName"
                   required
@@ -70,10 +146,18 @@ const [value, setValue] = useState(null);
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  error={formErrors.firstName}
+                  onChange={handleChange}
                 />
+                {formErrors.firstName && (
+            <span className={styles.error}>{formErrors.firstName}</span>
+            )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                value={formValues.lastName}
+                error={formErrors.lastName}
+                  onChange={handleChange}
                   required
                   fullWidth
                   id="lastName"
@@ -81,9 +165,15 @@ const [value, setValue] = useState(null);
                   name="lastName"
                   autoComplete="family-name"
                 />
+                {formErrors.lastName && (
+            <span className={styles.error}>{formErrors.lastName}</span>
+            )}
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                value={formValues.email}
+                error={formErrors.email}
+                  onChange={handleChange}
                   required
                   fullWidth
                   id="email"
@@ -91,9 +181,15 @@ const [value, setValue] = useState(null);
                   name="email"
                   autoComplete="email"
                 />
+                {formErrors.email && (
+            <span className={styles.error}>{formErrors.email}</span>
+            )}
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                value={formValues.password}
+                error={formErrors.password}
+                  onChange={handleChange}
                   required
                   fullWidth
                   name="password"
@@ -102,33 +198,27 @@ const [value, setValue] = useState(null);
                   id="password"
                   autoComplete="new-password"
                 />
+                {formErrors.password && (
+            <span className={styles.error}>{formErrors.password}</span>
+            )}
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                value={formValues.confirmPassword}
+                error={formErrors.confirmPassword}
+                  onChange={handleChange}
                   required
                   fullWidth
-                  name="confirm-password"
+                  name="confirmPassword"
                   label="Confirm Password"
                   type="password"
-                  id="confirm-password"
+                  id="confirmPassword"
                   autoComplete="new-password"
                 />
+                {formErrors.confirmPassword && (
+            <span className={styles.error}>{formErrors.confirmPassword}</span>
+            )}
               </Grid>
-  
-      {/* <Radio
-        checked={selectedValue === 'a'}
-        onChange={handleChange}
-        value="a"
-        name="radio-buttons"
-        inputProps={{ 'aria-label': 'A' }}
-      />
-      <Radio
-        checked={selectedValue === 'b'}
-        onChange={handleChange}
-        value="b"
-        name="radio-buttons"
-        inputProps={{ 'aria-label': 'B' }}
-      /> */}
       <div className={styles.profession}>
       <Grid style={{margin : "10px"}}>
        <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -140,7 +230,12 @@ const [value, setValue] = useState(null);
         }}
         renderInput={(params) => <TextField {...params} />}
       />
+      <br></br>
+       {formErrors.dob && (
+            <center><span className={styles.error}>{formErrors.dob}</span></center>
+            )}
     </LocalizationProvider>
+   
     </Grid>
     </div>
 <div className={styles.profession}>

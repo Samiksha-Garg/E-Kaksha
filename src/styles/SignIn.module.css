@@ -25,3 +25,9 @@
 .google:hover {
     cursor: pointer;
 }
+
+.error {
+    color: red;
+    font-size: 1rem;
+    margin-top: 0.3rem;
+}
