@@ -1,6 +1,6 @@
 import logo from "../../assets/logo.png"
 import styles from "../../styles/SignIn.module.css"
-import React, {useState} from "react";
+import React, {useState, useRef, useContext} from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -29,6 +29,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {Context} from "../../context/Context";
 
 toast.configure()
 
@@ -55,6 +56,9 @@ export default function SignIn() {
   const [authError, setAuthError] = useState("");
   const [modalStatus, setModalStatus] = useState(false);
   const [isChecked, setChecked] = useState(false);
+  const userRef= useRef();
+  const passwordRef=useRef();
+  const {dispatch,isFetching}=useContext(Context);
 
   const notify = ()=>{
  
@@ -75,6 +79,7 @@ export default function SignIn() {
     }
     
     event.preventDefault();
+    dispatch({ type: "LOGIN_START" });
     setIsSubmitting(true);
 
     try {
@@ -88,19 +93,21 @@ export default function SignIn() {
       console.log(response);
       throw new Error(`Error! status: ${response.status}`);
     }
-
+    dispatch({type:"LOGIN_SUCCESS", payload:response.data});
     const user = await response.data;
     console.log(user);
     notify();
     setFormValues(intialValues);
   } catch (err) {
+    dispatch({type:"LOGIN_FAILURE"})
     console.log(err.response.data);
     setAuthError(err.response.data);
     setModalStatus(true);
   }
     setIsSubmitting(false);
   };
-
+  
+ 
   const handleClose = () => {
     setModalStatus(false);
   };
@@ -165,6 +172,7 @@ export default function SignIn() {
                 label="Email Address"
                 name="email"
                 autoComplete="off"
+                ref={userRef}
                 autoFocus
                 // error={formErrors.email}
                 onChange={handleChange}
@@ -184,6 +192,7 @@ export default function SignIn() {
                 // error={formErrors.password}
                 onChange={handleChange}
                 autoComplete="off"
+                ref={passwordRef}
               />
                {/* {formErrors.password && (
             <span className={styles.error}>{formErrors.password}</span>
