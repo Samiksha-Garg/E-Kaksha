@@ -50,7 +50,6 @@ const theme = createTheme({
 export default function SignIn() {
 
   const [showModal, setShowModal] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const intialValues = { email: "", password: ""};
   const [formValues, setFormValues] = useState(intialValues);
   const [authError, setAuthError] = useState("");
@@ -80,7 +79,6 @@ export default function SignIn() {
     
     event.preventDefault();
     dispatch({ type: "LOGIN_START" });
-    setIsSubmitting(true);
 
     try {
 
@@ -93,18 +91,16 @@ export default function SignIn() {
       console.log(response);
       throw new Error(`Error! status: ${response.status}`);
     }
-    dispatch({type:"LOGIN_SUCCESS", payload:response.data});
+    dispatch({type:"LOGIN_SUCCESS", payload:response.data, isChecked : isChecked});
     const user = await response.data;
     console.log(user);
     notify();
     setFormValues(intialValues);
   } catch (err) {
     dispatch({type:"LOGIN_FAILURE"})
-    console.log(err.response.data);
     setAuthError(err.response.data);
     setModalStatus(true);
   }
-    setIsSubmitting(false);
   };
   
  
@@ -123,7 +119,7 @@ export default function SignIn() {
                 overflow: "visible",
               },
             }}
-            open={isSubmitting}
+            open={isFetching}
             
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"

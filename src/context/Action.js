@@ -4,9 +4,10 @@ const LoginStart = function (userCredentials) {
    })
 };
 
-const LoginSuccess = (user) => ({
+const LoginSuccess = (user, remember) => ({
   type: "LOGIN_SUCCESS",
   payload: user,
+  isChecked : remember
 });
 
 const LoginFailure = () => ({
