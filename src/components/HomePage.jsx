@@ -5,15 +5,10 @@ import DashboardPage from "./Dashboard/temp";
 
 export default function HomePage() {
     const {user}=useContext(Context);
-    const [currentUser, setCurrentUser] = useState(user);
-
-    useEffect(() => {
-        setCurrentUser(user);
-      }, [user]);
 
     return(
         <div>
-           {currentUser? <DashboardPage/> : <SignIn/>} 
+           {user? <DashboardPage/> : <SignIn/>} 
         </div>
     );
 
