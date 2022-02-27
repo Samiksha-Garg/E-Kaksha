@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SignIn from './components/Authentication/SignIn'
+import { ContextProvider } from './context/Context';
+import App from "./App";
 
 ReactDOM.render(
   <div>
-    <SignIn/>
+  <ContextProvider>
+      <App />
+  </ContextProvider>
+   
   </div>,
   document.getElementById("root")
 )

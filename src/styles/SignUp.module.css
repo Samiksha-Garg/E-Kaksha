@@ -1,0 +1,38 @@
+.container {
+    width: 450px;
+    /* flex-direction: row;
+    display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+}
+
+.profession {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.google {
+  padding: 20px;
+  background-color: white;
+  border-radius: 50%;
+  
+}
+
+.google:hover {
+  cursor: pointer;
+}
+
+.error {
+  color: #e63946;
+  font-size: 1rem;
+  margin-top: 0.3rem;
+}
+
+
+@media only screen and (max-width: 660px) {
+    .container {
+      width: 310px;
+    }
+  }
+  
