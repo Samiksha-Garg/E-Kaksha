@@ -1,0 +1,51 @@
+ *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+   }
+  
+  .Navbar { 
+    background-color: darkslategray;
+    color: rgb(8, 8, 8);
+    height: var(--nav-size);
+    padding : 5px 0px;
+    width: 100%;
+    justify-content: center;
+    vertical-align: center;
+  }
+
+.link{
+    padding: 5px 30px;
+    color: black;
+    
+} 
+
+.ul{
+    vertical-align: center;
+    list-style : none;
+    margin: 12px 12px;
+    padding: 0px 0px;
+    display: flex;
+    justify-content: right;
+}
+
+
+.NotificationsButton{
+    color: darkslategray;
+    background-color: darkslategray;
+    
+}
+
+  
+
+.NotificationsButton:hover{
+    background-color: rgb(142, 223, 155);
+}
+.link:hover{
+    background-color: rgb(142, 223, 155);
+}
+
+  
+  
+  
+   

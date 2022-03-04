@@ -10,18 +10,29 @@ import "./App.css";
 
 import NavBar from "./components/Navigation/NavBar.js";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import TopNavbar from "./components/Navigation/topNavbar.js";
+
 
 function App() {
   return (
-    <div className='main-page'>
+    <div>
+
+      <TopNavbar />
+      <div className = "main-page">
       <NavBar />
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/assignments" element={<Assignments />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/attendence" element={<Attendance />} />
-          <Route path="/chat" element={<Chat />} />
-        </Routes>
+  
+      <Routes>
+    <Route path="/" element={<Dashboard />} />
+    <Route path="/assignments" element={<Assignments />} />
+    <Route path="/calendar" element={<Calendar />} />
+    <Route path="/attendence" element={<Attendance />} />
+    <Route path="/chat" element={<Chat />} />
+  </Routes>
+      </div>
+      
+      
+      
+      
     </div>
   );
 }
