@@ -34,18 +34,8 @@ function App() {
 
 
 
-      <TopNavbar />
-      <div className = "main-page">
-      <NavBar />
-  
-      <Routes>
-    <Route path="/" element={<Dashboard />} />
-    <Route path="/assignments" element={<Assignments />} />
-    <Route path="/calendar" element={<Calendar />} />
-    <Route path="/attendence" element={<Attendance />} />
-    <Route path="/chat" element={<Chat />} />
-  </Routes>
-      </div>
+
+
       
       
       

@@ -1,9 +1,12 @@
 import CardT from "../components/Card/CardT.js"
 import React from 'react'
+import TopNavbar from "../components/Navigation/topNavbar.js";
 
 function DashBoard(){
     return(
         <div>
+
+<TopNavbar />
         <CardT
         title='Card Title'
         ImageUrl="./assets/CardImg.jpg"
