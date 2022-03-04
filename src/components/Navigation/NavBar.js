@@ -17,6 +17,7 @@ function NavBar() {
   const changeState=()=>setOpenNavBar(!isOpenNavBar);
 
   return (
+    <div className="">
     <div className={classes.Navbar } style={{ width : isOpenNavBar ?'200px': '43px'}}>
         <ul className={classes.ul}>
           <li onClick={changeState} className={classes.link} >
@@ -54,7 +55,8 @@ function NavBar() {
           </li>
         </ul>
     </div>
+    </div>
   );
 }
 
-export default NavBar;
+export default NavBar ;

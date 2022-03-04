@@ -7,9 +7,10 @@
   .Navbar {
     background-color: darkslategray;
     color: rgb(255, 255, 255);
-    height: 100vh;
+    height: 100%;
     padding : 5px 0px;
-    overflow-y: auto;
+
+    /* overflow-y: auto; */
   }
   
   .div{

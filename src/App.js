@@ -10,10 +10,13 @@ import "./App.css";
 
 import NavBar from "./components/Navigation/NavBar.js";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import CardT from './components/Card/CardT.js';
 
 function App() {
   return (
     <div className='main-page'>
+
+      
       <NavBar />
         <Routes>
           <Route path="/" element={<Dashboard />} />
@@ -22,6 +25,9 @@ function App() {
           <Route path="/attendence" element={<Attendance />} />
           <Route path="/chat" element={<Chat />} />
         </Routes>
+
+      
+
     </div>
   );
 }
