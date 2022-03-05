@@ -10,15 +10,32 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import AddCourseIcon from '../../assets/AddCourseIcon.jsx'
+import Avatar from '@mui/material/Avatar'
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
 function TopNavbar() {
 
-const [anchorEl, setAnchorEl] = React.useState(null);
-const open = Boolean(anchorEl);
-const handleClick = (event) => {
-  setAnchorEl(event.currentTarget);
+const [anchorEl1, setAnchorEl1] = useState(null);
+const [anchorEl2, setAnchorEl2] = useState(null);
+const open1 = Boolean(anchorEl1);
+const open2 = Boolean(anchorEl2);
+
+const handleClick2 = (event) => {
+  setAnchorEl2(event.currentTarget);
 };
-const handleClose = () => {
-  setAnchorEl(null);
+
+const handleClose2 = () => {
+  setAnchorEl2(null);
+};
+
+const handleClick1 = (event) => {
+  setAnchorEl1(event.currentTarget);
+};
+const handleClose1 = () => {
+  setAnchorEl1(null);
 };
 
   return (
@@ -28,64 +45,120 @@ const handleClose = () => {
 
         <ul className={classes.ul}>
          
-          <Button>
-          <AddCourseIcon />
-          </Button>
           <Button
         id="demo-positioned-button"
-        aria-controls={open ? 'demo-positioned-menu' : undefined}
+        aria-controls={open1 ? 'demo-positioned-menu' : undefined}
         aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
+        aria-expanded={open1 ? 'true' : undefined}
+        onClick={handleClick1}
       >
         <HorizontalNavbarPeopleLogo /> 
       </Button>
       <Menu
+        anchorEl={anchorEl1}
+        id="account-menu"
+        open={open1}
+        onClose={handleClose1}
+        onClick={handleClose1}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            mt: 1.5,
+            '& .MuiAvatar-root': {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            '&:before': {
+              content: '""',
+              display: 'block',
+              position: 'absolute',
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: 'background.paper',
+              transform: 'translateY(-50%) rotate(45deg)',
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem>
+          <Avatar /> Profile
+        </MenuItem>
+        <MenuItem>
+          <Avatar /> My account
+        </MenuItem>
+        <Divider />
+        <MenuItem>
+          <ListItemIcon>
+            <PersonAdd fontSize="small" />
+          </ListItemIcon>
+          Add another account
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          Settings
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </Menu>
+      {/* <Menu
         id="demo-positioned-menu"
         aria-labelledby="demo-positioned-button"
-        anchorEl={anchorEl}
-        open={open}
+        anchorEl={anchorEl1}
+        open={open1}
         placement="bottom-start"
-        onClose={handleClose}
+        onClose={handleClose1}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'left',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </Menu>
+        <MenuItem >Profile</MenuItem>
+        <MenuItem >My account</MenuItem>
+        <MenuItem >Logout</MenuItem>
+      </Menu> */}
     
 
           <Button
         id="demo-positioned-button"
-        aria-controls={open ? 'demo-positioned-menu' : undefined}
+        aria-controls={open2 ? 'demo-positioned-menu' : undefined}
         aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
+        aria-expanded={open2 ? 'true' : undefined}
+        onClick={handleClick2}
       >
         <NotificationNavbarIcon/>
       </Button>
       <Menu
         id="demo-positioned-menu"
         aria-labelledby="demo-positioned-button"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
+        anchorEl={anchorEl2}
+        open={open2}
+        onClose={handleClose2}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem>
           <div>
             <h5>Course Instructor Name</h5>
             <p>Assignment-6 has been added to your course. </p>
             <hr></hr>
           </div>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem >
         <div>
             <h5>Course Instructor Name</h5>
             <p>Assignment-6 has been added to your course. </p>
