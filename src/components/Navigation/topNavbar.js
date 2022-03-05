@@ -9,7 +9,7 @@ import Dropdown from 'react-bootstrap/DropdownButton';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
+import AddCourseIcon from '../../assets/AddCourseIcon.jsx'
 function TopNavbar() {
 
 const [anchorEl, setAnchorEl] = React.useState(null);
@@ -28,7 +28,9 @@ const handleClose = () => {
 
         <ul className={classes.ul}>
          
-
+          <Button>
+          <AddCourseIcon />
+          </Button>
           <Button
         id="demo-positioned-button"
         aria-controls={open ? 'demo-positioned-menu' : undefined}
@@ -76,9 +78,21 @@ const handleClose = () => {
           horizontal: 'left',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleClose}>
+          <div>
+            <h5>Course Instructor Name</h5>
+            <p>Assignment-6 has been added to your course. </p>
+            <hr></hr>
+          </div>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+        <div>
+            <h5>Course Instructor Name</h5>
+            <p>Assignment-6 has been added to your course. </p>
+            <hr></hr>
+          </div>
+        </MenuItem>
+        
       </Menu>
               
 
