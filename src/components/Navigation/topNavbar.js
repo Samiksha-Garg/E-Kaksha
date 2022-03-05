@@ -44,6 +44,9 @@ const handleClose1 = () => {
     <div className={classes.Navbar }>
 
         <ul className={classes.ul}>
+        <Button>
+          <AddCourseIcon />
+      </Button>
          
           <Button
         id="demo-positioned-button"
