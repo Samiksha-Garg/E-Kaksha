@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import React from "react";
 import HorizontalNavbarPeopleLogo from "../../assets/Horizontal-Navbar-People-Logo";
 import NotificationNavbarIcon from "../../assets/Notification-Navbar";
@@ -16,12 +16,14 @@ import Divider from '@mui/material/Divider';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import { Context } from "../../context/Context";
 function TopNavbar() {
 
 const [anchorEl1, setAnchorEl1] = useState(null);
 const [anchorEl2, setAnchorEl2] = useState(null);
 const open1 = Boolean(anchorEl1);
 const open2 = Boolean(anchorEl2);
+const {dispatch,isFetching}=useContext(Context);
 
 const handleClick2 = (event) => {
   setAnchorEl2(event.currentTarget);
@@ -37,6 +39,10 @@ const handleClick1 = (event) => {
 const handleClose1 = () => {
   setAnchorEl1(null);
 };
+
+const handleLogOut = () => {
+  dispatch({type:"LOGOUT"});
+}
 
   return (
    
@@ -98,13 +104,13 @@ const handleClose1 = () => {
         
         <Divider />
         
-        <MenuItem>
+        <MenuItem >
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={handleLogOut}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

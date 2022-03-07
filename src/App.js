@@ -9,6 +9,7 @@ import NavBar from "./components/Navigation/NavBar";
 import React, {useState, useRef, useContext, useEffect} from "react";
 
 import CalendarPage from "./components/Calendar/CalendarPage";
+import ProtectedRoute from "./ProtectedRoute";
 
 
 function App(){
@@ -19,7 +20,7 @@ function App(){
       {user? <NavBar/> : null} 
         <Routes>
         <Route exact path={"/"} element={<HomePage />} />  
-        <Route  path={"/calendar"} element={<CalendarPage />}/>   
+        <Route path={"/calendar"} element={<ProtectedRoute Component={CalendarPage}/>}/>
        </Routes>
        </div>
       </Router>
