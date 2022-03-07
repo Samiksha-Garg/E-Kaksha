@@ -18,7 +18,8 @@ function App(){
       <div style={{display : "flex"}}>
       {user? <NavBar/> : null} 
         <Routes>
-        <Route exact path={"/"} element={<HomePage />} />        
+        <Route exact path={"/"} element={<HomePage />} />  
+        <Route  path={"/calendar"} element={<CalendarPage />}/>   
        </Routes>
        </div>
       </Router>

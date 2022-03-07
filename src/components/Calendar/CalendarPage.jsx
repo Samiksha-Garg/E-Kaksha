@@ -5,8 +5,8 @@ import "./index.css";
 import styles from "../../styles/Calendar.module.css"
 
 export default () => (
-  <div style={{display : "flex"}}>
-    <div className={styles.filters} style={{width : "20%"}}> 
+  <div className={styles.container}>
+    <div className={styles.filters} style={{width : "30%"}}> 
       <h1> Filters</h1>
      </div>
     <Calendar />
