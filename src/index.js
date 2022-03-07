@@ -1,13 +1,17 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import SignIn from "./components/Authentication/SignIn";
 
+import React from 'react';
 import { BrowserRouter } from "react-router-dom";
+import ReactDOM from 'react-dom';
+import { ContextProvider } from './context/Context';
 import App from "./App";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <div>
+
+  <ContextProvider>
+      <App />
+  </ContextProvider>
+   
+  </div>,
   document.getElementById("root")
 );

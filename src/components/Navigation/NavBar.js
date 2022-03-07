@@ -21,36 +21,37 @@ function NavBar() {
     <div className={classes.Navbar } style={{ width : isOpenNavBar ?'200px': '43px'}}>
         <ul className={classes.ul}>
           <li onClick={changeState} className={classes.link} >
-            <BarsIcon /> E-Kaksha
+            <BarsIcon />
+            {isOpenNavBar && 'E-Kaksha'}
           </li>
           <li>
             <Link to="/" className={classes.link}>
               <Home />
-              Dashboard
+              {isOpenNavBar && 'Home'}
             </Link>
           </li>
           <li>
             <Link to="/assignments" className={classes.link}>
               <AssignmentIcon />
-              Assignments
+              {isOpenNavBar && 'Assignments'}
             </Link>
           </li>
           <li>
             <Link to="/chat" className={classes.link}>
               <ChatIcon />
-              Chat
+              {isOpenNavBar && 'Chat'}
             </Link>
           </li>
           <li>
             <Link to="/attendence" className={classes.link}>
               <AttendenceIcon />
-              Attendance
+              {isOpenNavBar && 'Attendance'}
             </Link>
           </li>
           <li>
             <Link to="/calendar" className={classes.link}>
               <CalendarIcon />
-              Calendar
+              {isOpenNavBar && 'Calendar'}
             </Link>
           </li>
         </ul>
