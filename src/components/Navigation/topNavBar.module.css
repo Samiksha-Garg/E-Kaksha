@@ -9,9 +9,9 @@
     color: rgb(8, 8, 8);
     height: var(--nav-size);
     padding : 5px 0px;
-    width: 100%;
     justify-content: center;
     vertical-align: center;
+    width: 100%;
   }
 
 .link{

@@ -1,18 +1,20 @@
 import React from 'react'
 import './Card.css' 
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import CardImg from "./CardImg.js"
 
-import pic from "./CardImg.jpg"
+import CardImg0 from "./CardImg0.jpg"
+import CardImg1 from "./CardImg1.png"
 import { resolvePath } from 'react-router-dom';
 
 function CardT(props)
 {
+
+const array = [CardImg0, CardImg1];
 return (
 <div className='card-style' >
 <div className="card-container">
     <div className = 'image-container'>
-    <img src={pic} alt={pic}></img>
+    <img src={array[props.ImageUrl]} ></img>
 </div>
 <div classsName="card-content">
     <div className="card-title">

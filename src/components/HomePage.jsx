@@ -7,7 +7,7 @@ export default function HomePage() {
     const {user}=useContext(Context);
 
     return(
-        <div>
+        <div style={{width : "100%"}}>
            {user? <DashBoard/> : <SignIn/>} 
         </div>
     );
