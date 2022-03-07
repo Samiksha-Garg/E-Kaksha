@@ -5,7 +5,7 @@ import "./index.css";
 import styles from "../../styles/Calendar.module.css"
 import TopNavbar from "../Navigation/topNavbar";
 import { Context } from "../../context/Context";
-
+import axios from "axios";
 export default function CalendarPage() {
 
   const {user}=useContext(Context);
@@ -28,8 +28,29 @@ export default function CalendarPage() {
 
     setEvents(pEvents);
 
-  }, [])
+  }, []);
   
+  useEffect(()=>{
+    let courseArray = user.courses;
+    let l = courseArray.length;
+    let assigEvents=[];
+
+    for(let i=0;i<l;i++){
+      let assigOfCourse=[];
+       console.log(courseArray[i]);
+      
+        //assignment db compared with assignment array
+        const getAssig= async()=>{
+          const res=await axios.get("http://localhost:1000/api/assignments");
+          console.log(res);
+      }
+      getAssig();
+        
+        
+      
+    }
+  },[])
+  // console.log(events);
 return (
   <div style={{width : "100%"}}>
   <TopNavbar/>
