@@ -16,7 +16,6 @@ export const Context = createContext(INITIAL_STATE);
 export const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, INITIAL_STATE);
   const [userCourses, setUserCourses] = useState([]);
-  const [personalEvents, setPersonalEvents] = useState([]);
 
   const getCourses = async (courseArray) => {
     let l = courseArray.length;
@@ -40,7 +39,7 @@ export const ContextProvider = ({ children }) => {
       const currUser = state.user;
       console.log(currUser);
       getCourses(currUser.courses);
-      setPersonalEvents(currUser.personalEvents);
+      
     } else {
       setUserCourses([]);
     }
@@ -50,7 +49,6 @@ export const ContextProvider = ({ children }) => {
   return (
     <Context.Provider
       value={{
-        personalEvents : personalEvents,
         courses : userCourses,
         user: state.user,
         isFetching: state.isFetching,

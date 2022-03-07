@@ -23,27 +23,7 @@ function App(){
        </Routes>
        </div>
       </Router>
-  
-        // <Router>
-        //   <Routes>
-        //   {/* <Route path="/assignments" element={<Assignments />} />
-        //   <Route path="/calendar" element={<Calendar />} />
-        //   <Route path="/attendence" element={<Attendance />} />
-        //   <Route path="/chat" element={<Chat />} /> */}
-        //     <Route exact path={"/"} element={<HomePage />} />
-        //     <Route path={"/login"} element={<SignIn/>} />
-        //     <Route path={"/register"} element={<SignUp />} />
-        //   </Routes>
-        // </Router>        
-
-        // <Router>
-        //   <Routes>
-        //   <Route exact path={"/calendar"} element={<CalendarPage />} />
-        //     <Route exact path={"/"} element={<HomePage />} />
-        //     <Route path={"/login"} element={<SignIn/>} />
-        //     <Route path={"/register"} element={<SignUp />} />
-        //   </Routes>
-        // </Router>        
+     
 
     );
 }
