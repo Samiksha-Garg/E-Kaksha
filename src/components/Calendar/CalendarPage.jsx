@@ -117,7 +117,7 @@ export default function CalendarPage() {
         pEvents.push({title : personalEvents[i].Title,
           start : new Date(personalEvents[i].Start),
           end : new Date(personalEvents[i].End),
-          type : "global"});
+          type : "personal"});
     }
 
     setPersonal(pEvents);
@@ -156,7 +156,7 @@ export default function CalendarPage() {
               title:assigArrayOfCourse[j].title,
               start:new Date(assigArrayOfCourse[j].deadline).subHours(2),
               end:new Date(assigArrayOfCourse[j].deadline),
-              type:"global",
+              type:"assig",
               course : courseName
             }
           );
@@ -171,7 +171,7 @@ export default function CalendarPage() {
               title : quizArrayOfCourse[j].title,
               start : new Date(quizArrayOfCourse[j].date),
               end : new Date(quizArrayOfCourse[j].date).addHours(quizArrayOfCourse[j].duration),
-              type : "global",
+              type : "quiz",
               course : courseName
             });
           }
@@ -185,7 +185,7 @@ export default function CalendarPage() {
               title : "Class",
               start : new Date(classArrayOfCourse[j].beginTime),
               end : new Date(classArrayOfCourse[j].endTime),
-              type : "global",
+              type : "class",
               course : courseName
             })
           }
