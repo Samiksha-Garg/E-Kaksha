@@ -6,11 +6,95 @@ import styles from "../../styles/Calendar.module.css"
 import TopNavbar from "../Navigation/topNavbar";
 import { Context } from "../../context/Context";
 import axios from "axios";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Button from '@mui/material/Button';
+import { set } from "date-fns";
+
 export default function CalendarPage() {
 
   const {user}=useContext(Context);
+  const [courses, setCourses] = useState([]);
   const [events, setEvents] = useState([]);
+  const [classes, setClass] = useState([]);
+  const [quiz, setQuizzes] = useState([]);
   const [assig,setAssig]=useState([]);
+  const [personal, setPersonal] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState('');
+  const [isAssignmentChecked, setAssignChecked] = useState(true);
+  const [isClassChecked, setClassChecked] = useState(true);
+  const [isQuizChecked, setQuizChecked] = useState(true);
+  const [isPersonalChecked, setPersonalChecked] = useState(true);
+
+  const handleChange = (event) => {
+    setSelectedCourse(event.target.value);
+  };
+
+  const handleFilters = () => {
+    setEvents([]);
+
+    if (isAssignmentChecked) {
+      if (selectedCourse != '') {
+        let temp = []
+        let l = assig.length
+
+        for (let i = 0; i < l; i++) {
+          if (assig[i].course == selectedCourse) {
+            temp.push(assig[i]);
+          }
+        }
+        
+        setEvents(oldArray => [...oldArray, ...temp]);
+      } else {
+        setEvents(oldArray => [...oldArray, ...assig]);
+      }
+      
+    }
+
+    if (isQuizChecked) {
+      if (selectedCourse != '') {
+        let temp = []
+        let l = quiz.length
+
+        for (let i = 0; i < l; i++) {
+          if (quiz[i].course == selectedCourse) {
+            temp.push(quiz[i]);
+          }
+        }
+        
+        setEvents(oldArray => [...oldArray, ...temp]);
+      } else {
+      setEvents(oldArray => [...oldArray, ...quiz]);
+      }
+    }
+
+    if (isPersonalChecked) {
+      setEvents(oldArray => [...oldArray, ...personal]);
+    }
+
+    if (isClassChecked) {
+      if (selectedCourse != '') {
+        let temp = []
+        let l = classes.length
+
+        for (let i = 0; i < l; i++) {
+          if (classes[i].course == selectedCourse) {
+            temp.push(classes[i]);
+          }
+        }
+        
+        setEvents(oldArray => [...oldArray, ...temp]);
+      } else {
+      setEvents(oldArray => [...oldArray, ...classes]);
+      }
+    }
+
+  }
 
   useEffect(() => {
     let personalEvents = user.personalEvents
@@ -27,6 +111,7 @@ export default function CalendarPage() {
           type : "global"});
     }
 
+    setPersonal(pEvents);
     setEvents(pEvents);
 
   }, []);
@@ -44,6 +129,7 @@ export default function CalendarPage() {
   
   useEffect(async () => {
     let courseArray = user.courses;
+    setCourses(courseArray);
     let l = courseArray.length;
     let assigEvents=[];
     let quizEvents = [];
@@ -67,7 +153,8 @@ export default function CalendarPage() {
               title:assigArrayOfCourse[j].title,
               start:new Date(assigArrayOfCourse[j].deadline).subHours(2),
               end:new Date(assigArrayOfCourse[j].deadline),
-              type:"global"
+              type:"global",
+              course : courseArray[i]
             }
           );
         }    
@@ -81,7 +168,8 @@ export default function CalendarPage() {
               title : quizArrayOfCourse[j].title,
               start : new Date(quizArrayOfCourse[j].date),
               end : new Date(quizArrayOfCourse[j].date).addHours(quizArrayOfCourse[j].duration),
-              type : "global"
+              type : "global",
+              course : courseArray[i]
             });
           }
 
@@ -93,10 +181,17 @@ export default function CalendarPage() {
               title : "Class",
               start : new Date(classArrayOfCourse[j].beginTime),
               end : new Date(classArrayOfCourse[j].endTime),
-              type : "global"
+              type : "global",
+              course : courseArray[i]
             })
           }
     }
+
+    console.log(courses);
+
+    setAssig(assigEvents);
+    setClass(classEvents);
+    setQuizzes(quizEvents);
     setEvents(oldArray => [...oldArray, ...assigEvents]);
     setEvents(oldArray => [...oldArray, ...quizEvents]);
     setEvents(oldArray => [...oldArray, ...classEvents]);
@@ -113,6 +208,54 @@ return (
   <div className={styles.container}>
     <div className={styles.filters} style={{width : "30%"}}> 
       <h1> Filters</h1>
+      <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="courseId">Course</InputLabel>
+        <Select
+          labelId="courseId"
+          id="courseId-dropdown"
+          value={selectedCourse}
+          label="Course"
+          onChange={handleChange}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {courses.map((event) => {
+          return <MenuItem value={event}> {event} </MenuItem>;
+        })} 
+        </Select>
+      </FormControl>
+      <br/>
+      <FormControlLabel
+                control={<Checkbox checked={isAssignmentChecked} onChange={() => setAssignChecked(!isAssignmentChecked)} color="primary" />}
+                label="Assignments"
+      />
+      <br/>
+         <FormControlLabel
+                control={<Checkbox checked={isClassChecked} onChange={() => setClassChecked(!isClassChecked)} color="primary" />}
+                label="Classes"
+      />
+      <br/>
+         <FormControlLabel
+                control={<Checkbox checked={isQuizChecked} onChange={() => setQuizChecked(!isQuizChecked)} color="primary" />}
+                label="Quizzes"
+      />
+      <br/>
+         <FormControlLabel
+                control={<Checkbox checked={isPersonalChecked} onChange={() => setPersonalChecked(!isPersonalChecked)} color="primary" />}
+                label="Personal Events"
+      />
+      <br/>
+
+<Button onClick={handleFilters}
+              type="submit"
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              style={{color : 'white'}}
+            >
+              Set Filters
+            </Button>
+     
      </div>
     <Calendar allEvents = {events}/>
   </div>
