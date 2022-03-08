@@ -30,34 +30,81 @@ export default function CalendarPage() {
     setEvents(pEvents);
 
   }, []);
+
+  Date.prototype.subHours= function(h){
+    this.setHours(this.getHours()-h);
+    return this;
+  }
+  
+  Date.prototype.addHours= function(h){
+    this.setHours(this.getHours()+h);
+    return this;
+  } 
   
   
   useEffect(async () => {
     let courseArray = user.courses;
     let l = courseArray.length;
     let assigEvents=[];
+    let quizEvents = [];
+    let classEvents = [];
 
     for(let i=0;i<l;i++){
         //console.log(courseArray[i]);
-        const response = await axios.get("/assignment/courseid/"+courseArray[i]);
+        const response1 = await axios.get("/assignment/courseid/"+courseArray[i]);
+        const response2 = await axios.get("/quiz/courseid/" + courseArray[i]);
+        const response3 = await axios.get("/class/courseid/" + courseArray[i])
+
+        console.log(response3);
         //console.log(response.data);
-        let assigArrayOfCourse=response.data;
+        let assigArrayOfCourse=response1.data;
         let len=assigArrayOfCourse.length;
         for(let j=0;j<len;j++){
           // let temp=assigArrayOfCourse[i].deadline;
           // let strtdate=
           assigEvents.push(
             {
-              title:assigArrayOfCourse[i].title,
-              start:assigArrayOfCourse[i].deadline,
-              end:assigArrayOfCourse[i].deadline,
+              title:assigArrayOfCourse[j].title,
+              start:new Date(assigArrayOfCourse[j].deadline).subHours(2),
+              end:new Date(assigArrayOfCourse[j].deadline),
               type:"global"
             }
           );
         }    
+
+        let quizArrayOfCourse = response2.data;
+          let len2 = quizArrayOfCourse.length;
+
+          for (let j = 0; j < len2; j++) {
+
+            quizEvents.push({
+              title : quizArrayOfCourse[j].title,
+              start : new Date(quizArrayOfCourse[j].date),
+              end : new Date(quizArrayOfCourse[j].date).addHours(quizArrayOfCourse[j].duration),
+              type : "global"
+            });
+          }
+
+          let classArrayOfCourse = response3.data;
+          let len3 = classArrayOfCourse.length;
+
+          for (let j = 0; j < len3; j++) {
+            classEvents.push({
+              title : "Class",
+              start : new Date(classArrayOfCourse[j].beginTime),
+              end : new Date(classArrayOfCourse[j].endTime),
+              type : "global"
+            })
+          }
     }
     setEvents(oldArray => [...oldArray, ...assigEvents]);
+    setEvents(oldArray => [...oldArray, ...quizEvents]);
+    setEvents(oldArray => [...oldArray, ...classEvents]);
+    
   },[])
+
+  
+
   console.log(events);
 
 return (
