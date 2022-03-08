@@ -128,7 +128,7 @@ export default function CalendarPage() {
   //Adding assignment, quizes,classes events
   useEffect(async () => {
     let courseArray = user.courses;
-    setCourses(courseArray);
+    let courseNameArray=[];
     let l = courseArray.length;
     let assigEvents=[];
     let quizEvents = [];
@@ -139,7 +139,13 @@ export default function CalendarPage() {
         const response1 = await axios.get("/assignment/courseid/"+courseArray[i]);
         const response2 = await axios.get("/quiz/courseid/" + courseArray[i]);
         const response3 = await axios.get("/class/courseid/" + courseArray[i]);
+        let courseName= await axios.get("/course/courseName/" + courseArray[i]);
         
+         console.log(courseName);
+        courseNameArray.push({
+          cid: courseArray[i],
+          name: courseName
+        });
         //Assignment events
         let assigArrayOfCourse=response1.data;
         let len=assigArrayOfCourse.length;
@@ -150,7 +156,7 @@ export default function CalendarPage() {
               start:new Date(assigArrayOfCourse[j].deadline).subHours(2),
               end:new Date(assigArrayOfCourse[j].deadline),
               type:"global",
-              course : courseArray[i]
+              course : courseName
             }
           );
         }    
@@ -165,7 +171,7 @@ export default function CalendarPage() {
               start : new Date(quizArrayOfCourse[j].date),
               end : new Date(quizArrayOfCourse[j].date).addHours(quizArrayOfCourse[j].duration),
               type : "global",
-              course : courseArray[i]
+              course : courseName
             });
           }
 
@@ -179,16 +185,17 @@ export default function CalendarPage() {
               start : new Date(classArrayOfCourse[j].beginTime),
               end : new Date(classArrayOfCourse[j].endTime),
               type : "global",
-              course : courseArray[i]
+              course : courseName
             })
           }
     }
 
-    console.log(courses);
+    //console.log(courseNameArray);
 
     setAssig(assigEvents);
     setClass(classEvents);
     setQuizzes(quizEvents);
+    setCourses(courseNameArray);
     //inserting all events of courseArray[i] in the events array 
     setEvents(oldArray => [...oldArray, ...assigEvents]);
     setEvents(oldArray => [...oldArray, ...quizEvents]);
@@ -218,7 +225,7 @@ return (
             <em>None</em>
           </MenuItem>
           {courses.map((event) => {
-          return <MenuItem value={event}> {event} </MenuItem>;
+          return <MenuItem value={event.cid}> {event.name} </MenuItem>;
         })} 
         </Select>
       </FormControl>
