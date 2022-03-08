@@ -21,6 +21,13 @@ const Reducer = (state, action) => {
           error: true,
           isChecked : true,
         };
+      case "UPDATE_USER" : 
+        return {
+          user : action.payload,
+          isFetching : false,
+          error : false,
+          isChecked : state.isChecked
+        };
       case "LOGOUT":
         return {
           user: null,
