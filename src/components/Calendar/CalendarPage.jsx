@@ -139,13 +139,14 @@ export default function CalendarPage() {
         const response1 = await axios.get("/assignment/courseid/"+courseArray[i]);
         const response2 = await axios.get("/quiz/courseid/" + courseArray[i]);
         const response3 = await axios.get("/class/courseid/" + courseArray[i]);
-        let courseName= await axios.get("/course/courseName/" + courseArray[i]);
+        const res= await axios.get("/course/courseName/" + courseArray[i]);
+        const courseName=res.data.name;
         
-         console.log(courseName);
         courseNameArray.push({
           cid: courseArray[i],
           name: courseName
         });
+        console.log(courseNameArray);
         //Assignment events
         let assigArrayOfCourse=response1.data;
         let len=assigArrayOfCourse.length;
@@ -225,7 +226,7 @@ return (
             <em>None</em>
           </MenuItem>
           {courses.map((event) => {
-          return <MenuItem value={event.cid}> {event.name} </MenuItem>;
+          return <MenuItem value={event.name}> {event.name} </MenuItem>;
         })} 
         </Select>
       </FormControl>
