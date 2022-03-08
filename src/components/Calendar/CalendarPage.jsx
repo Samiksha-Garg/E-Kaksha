@@ -9,9 +9,19 @@ import axios from "axios";
 export default function CalendarPage() {
 
   const {user}=useContext(Context);
-  const [events, setEvents] = useState([]);
-  const [assig,setAssig]=useState([]);
+  const [events, setEvents] = useState([]); //events array store all events of a user
+  
+  Date.prototype.subHours= function(h){
+    this.setHours(this.getHours()-h);
+    return this;
+  }
+  
+  Date.prototype.addHours= function(h){
+    this.setHours(this.getHours()+h);
+    return this;
+  } 
 
+  //Adding personal events
   useEffect(() => {
     let personalEvents = user.personalEvents
     let l = personalEvents.length;
@@ -19,8 +29,6 @@ export default function CalendarPage() {
     let pEvents = []
 
       for (let i = 0; i < l; i++) {
-        // setPersonalEvents(oldArray => [...oldArray, currUser.personalEvents[i]]);
-        
         pEvents.push({title : personalEvents[i].Title,
           start : new Date(personalEvents[i].Start),
           end : new Date(personalEvents[i].End),
@@ -31,17 +39,7 @@ export default function CalendarPage() {
 
   }, []);
 
-  Date.prototype.subHours= function(h){
-    this.setHours(this.getHours()-h);
-    return this;
-  }
-  
-  Date.prototype.addHours= function(h){
-    this.setHours(this.getHours()+h);
-    return this;
-  } 
-  
-  
+  //Adding assignment, quizes,classes events
   useEffect(async () => {
     let courseArray = user.courses;
     let l = courseArray.length;
@@ -53,15 +51,12 @@ export default function CalendarPage() {
         //console.log(courseArray[i]);
         const response1 = await axios.get("/assignment/courseid/"+courseArray[i]);
         const response2 = await axios.get("/quiz/courseid/" + courseArray[i]);
-        const response3 = await axios.get("/class/courseid/" + courseArray[i])
-
-        console.log(response3);
-        //console.log(response.data);
+        const response3 = await axios.get("/class/courseid/" + courseArray[i]);
+        
+        //Assignment events
         let assigArrayOfCourse=response1.data;
         let len=assigArrayOfCourse.length;
         for(let j=0;j<len;j++){
-          // let temp=assigArrayOfCourse[i].deadline;
-          // let strtdate=
           assigEvents.push(
             {
               title:assigArrayOfCourse[j].title,
@@ -72,11 +67,11 @@ export default function CalendarPage() {
           );
         }    
 
+        //Quiz events
         let quizArrayOfCourse = response2.data;
           let len2 = quizArrayOfCourse.length;
 
           for (let j = 0; j < len2; j++) {
-
             quizEvents.push({
               title : quizArrayOfCourse[j].title,
               start : new Date(quizArrayOfCourse[j].date),
@@ -85,6 +80,7 @@ export default function CalendarPage() {
             });
           }
 
+          //Classes events
           let classArrayOfCourse = response3.data;
           let len3 = classArrayOfCourse.length;
 
@@ -97,15 +93,16 @@ export default function CalendarPage() {
             })
           }
     }
+
+    //inserting all events of courseArray[i] in the events array 
     setEvents(oldArray => [...oldArray, ...assigEvents]);
     setEvents(oldArray => [...oldArray, ...quizEvents]);
     setEvents(oldArray => [...oldArray, ...classEvents]);
     
   },[])
 
-  
+  //console.log(events);
 
-  console.log(events);
 
 return (
   <div style={{width : "100%"}}>
