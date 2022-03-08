@@ -10,6 +10,7 @@ export default function CalendarPage() {
 
   const {user}=useContext(Context);
   const [events, setEvents] = useState([]);
+  const [assig,setAssig]=useState([]);
 
   useEffect(() => {
     let personalEvents = user.personalEvents
@@ -30,27 +31,35 @@ export default function CalendarPage() {
 
   }, []);
   
-  useEffect(()=>{
+  
+  useEffect(async () => {
     let courseArray = user.courses;
     let l = courseArray.length;
     let assigEvents=[];
 
     for(let i=0;i<l;i++){
-      let assigOfCourse=[];
-       console.log(courseArray[i]);
-      
-        //assignment db compared with assignment array
-        const getAssig= async()=>{
-          const res=await axios.get("http://localhost:1000/api/assignments");
-          console.log(res);
-      }
-      getAssig();
-        
-        
-      
+        //console.log(courseArray[i]);
+        const response = await axios.get("/assignment/courseid/"+courseArray[i]);
+        //console.log(response.data);
+        let assigArrayOfCourse=response.data;
+        let len=assigArrayOfCourse.length;
+        for(let j=0;j<len;j++){
+          // let temp=assigArrayOfCourse[i].deadline;
+          // let strtdate=
+          assigEvents.push(
+            {
+              title:assigArrayOfCourse[i].title,
+              start:assigArrayOfCourse[i].deadline,
+              end:assigArrayOfCourse[i].deadline,
+              type:"global"
+            }
+          );
+        }    
     }
+    setEvents(oldArray => [...oldArray, ...assigEvents]);
   },[])
-  // console.log(events);
+  console.log(events);
+
 return (
   <div style={{width : "100%"}}>
   <TopNavbar/>
