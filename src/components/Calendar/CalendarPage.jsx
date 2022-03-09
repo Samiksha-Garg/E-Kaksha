@@ -14,11 +14,32 @@ import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
+import DatePicker from '@mui/lab/DatePicker';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { set } from "date-fns";
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import {
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import TextField from '@mui/material/TextField';
+import DateTimePicker from '@mui/lab/DateTimePicker';
 
 export default function CalendarPage() {
 
-  const {user}=useContext(Context);
+  const {user, dispatch}=useContext(Context);
+  const [startDate, setStartDate] = useState(null);
+  const [title, setTitle] = useState('');
+  const [formErrors, setFormErrors] = useState({});
+  const [eventError, setEventError] = useState("");
+  const [endDate, setEndDate] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [courses, setCourses] = useState([]);
   const [events, setEvents] = useState([]);
   const [classes, setClass] = useState([]);
@@ -30,9 +51,81 @@ export default function CalendarPage() {
   const [isClassChecked, setClassChecked] = useState(true);
   const [isQuizChecked, setQuizChecked] = useState(true);
   const [isPersonalChecked, setPersonalChecked] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validate = () => {
+    let errors = {};
+    
+    if (!title) {
+      errors.title = "Title Can't be empty"
+    }
+
+    if (!startDate) {
+      errors.start = "Start Date Can't be empty";
+    }
+
+    if (!endDate) {
+      errors.end = "End Date Can't be empty";
+    } else {
+      if (startDate) {
+        if (startDate > endDate) {
+          errors.end = "Invalid End Date";
+        }
+      }
+    }
+
+    return errors;
+  };
+  const handleTitleChange = (e) => {
+    const {value } = e.target;
+    setTitle(value);
+  }
+
+  const submitForm = async() => {
+  let pEvents = user.personalEvents;
+  pEvents.push({
+    Title : title,
+    Start : startDate,
+    End : endDate
+  })
+    const response = await axios.put("/auth/update/" + user._id, {
+      name : user.name,
+      email : user.email,
+      courses : user.courses,
+      dob : user.dob,
+      personalEvents : pEvents,
+      role : user.role,
+    });
+
+    dispatch({type:"UPDATE_USER", payload: response.data});
+    setShowModal(false);
+    setIsSubmitting(false);
+  }
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmitting) {
+      submitForm();
+    } else {
+      setIsSubmitting(false);
+    }
+  }, [formErrors]);
+
+  const checkFunc = (event) => {
+    setFormErrors(validate());
+    setIsSubmitting(true);
+  }
 
   const handleChange = (event) => {
     setSelectedCourse(event.target.value);
+  };
+
+  const handleClose = () => {
+    setEndDate(null);
+    setStartDate(null);
+    setTitle('');
+    setShowModal(false);
+    
+
   };
 
   const handleFilters = () => {
@@ -95,6 +188,8 @@ export default function CalendarPage() {
     }
 
   }
+
+  
   
   Date.prototype.subHours= function(h){
     this.setHours(this.getHours()-h);
@@ -106,14 +201,17 @@ export default function CalendarPage() {
     return this;
   } 
 
-  //Adding personal events
-  useEffect(() => {
+  
+
+  //Adding assignment, quizes,classes, personal events
+  useEffect(async () => {
+    console.log("Hii");
     let personalEvents = user.personalEvents
-    let l = personalEvents.length;
+    let l1 = personalEvents.length;
 
     let pEvents = []
 
-      for (let i = 0; i < l; i++) {
+      for (let i = 0; i < l1; i++) {
         pEvents.push({title : personalEvents[i].Title,
           start : new Date(personalEvents[i].Start),
           end : new Date(personalEvents[i].End),
@@ -123,10 +221,6 @@ export default function CalendarPage() {
     setPersonal(pEvents);
     setEvents(pEvents);
 
-  }, []);
-
-  //Adding assignment, quizes,classes events
-  useEffect(async () => {
     let courseArray = user.courses;
     setCourses(courseArray);
     let l = courseArray.length;
@@ -194,7 +288,7 @@ export default function CalendarPage() {
     setEvents(oldArray => [...oldArray, ...quizEvents]);
     setEvents(oldArray => [...oldArray, ...classEvents]);
     
-  },[])
+  },[user])
 
   //console.log(events);
 
@@ -252,7 +346,108 @@ return (
             >
               Set Filters
             </Button>
-     
+     <br/>
+
+     <Button onClick={() => {
+       setShowModal(true);
+     }} 
+              type="submit"
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              style={{color : 'white'}}
+            >
+              Add Personal Event
+      </Button>
+      <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            open={showModal}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            {/* <DialogTitle id="alert-dialog-title">
+            <div style={{width : "300px"}}>
+        <center>Add Personal Event</center>
+        <IconButton
+          aria-label="close"
+          onClick={() => setShowModal(false)}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        </div>
+            </DialogTitle> */}
+        
+            <DialogContent style={{width : "100%"}}>
+              <DialogContentText id="alert-dialog-description">
+                <center>
+                  <br/>
+                  
+                    
+                  
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <div className={styles.addPersonal}>
+                  <div>
+       <DateTimePicker
+          label="Start Date And Time"
+          value={startDate}
+        onChange={(newValue) => {
+          setStartDate(newValue);
+        }}
+          renderInput={(params) => <TextField {...params} />}
+        />
+         {formErrors.start && (
+            <center><span className={styles.error}>{formErrors.start}</span></center>
+            )}
+        </div>
+       
+        <div style={{marginRight : "10px"}}></div>
+        <div>
+      <DateTimePicker
+          label="End Date And Time"
+          value={endDate}
+        onChange={(newValue) => {
+          setEndDate(newValue);
+        }}
+          renderInput={(params) => <TextField {...params} />}
+        />
+         {formErrors.end && (
+            <center><span className={styles.error}>{formErrors.end}</span></center>
+            )}
+        </div>
+         </div>
+         </LocalizationProvider>
+ 
+                <br/>
+                
+    <br/>
+    <TextField id="title" label="Title" variant="standard" value={title} onChange={handleTitleChange} />
+    {formErrors.title && (
+            <center><span className={styles.error}>{formErrors.title}</span></center>
+            )}
+          <br/>
+              <Button onClick={checkFunc}
+              type="submit"
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              style={{color : 'white'}}
+            >
+              ADD
+            </Button>
+            </center>
+              </DialogContentText>
+            </DialogContent>
+            </Dialog>
+
      </div>
     <Calendar allEvents = {events}/>
   </div>
