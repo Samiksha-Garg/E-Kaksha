@@ -98,7 +98,7 @@ export default function CalendarPage() {
     });
 
     dispatch({type:"UPDATE_USER", payload: response.data});
-    setShowModal(false);
+    handleClose();
     setIsSubmitting(false);
   }
 
@@ -124,8 +124,7 @@ export default function CalendarPage() {
     setStartDate(null);
     setTitle('');
     setShowModal(false);
-    
-
+  
   };
 
   const handleFilters = () => {
@@ -205,7 +204,6 @@ export default function CalendarPage() {
 
   //Adding assignment, quizes,classes, personal events
   useEffect(async () => {
-    console.log("Hii");
     let personalEvents = user.personalEvents
     let l1 = personalEvents.length;
 
