@@ -7,11 +7,17 @@
     position: static;
   }
   
-  .rbc-day-slot .rbc-event--global {
+  .rbc-day-slot .rbc-event--class {
     background-color: #fbab18;
   }
   
-  .rbc-day-slot .rbc-event--regional {
+  .rbc-day-slot .rbc-event--assig {
     background-color: #6ebe4a;
+  }
+  .rbc-day-slot .rbc-event--quiz {
+    background-color: #3b2dbd;
+  }
+  .rbc-day-slot .rbc-event--personal {
+    background-color: #f33574;
   }
   

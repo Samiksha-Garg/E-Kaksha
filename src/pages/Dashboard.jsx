@@ -20,7 +20,7 @@ function DashBoard(){
                   courses.push(res.data);
             }                
            setCourses(courses);
-      },[])
+      },[], user)
 
     return(
         <div>

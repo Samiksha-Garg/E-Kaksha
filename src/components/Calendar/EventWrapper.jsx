@@ -15,6 +15,7 @@ const EventWrapper = ({ event, children }) => {
       style={{ gridRow: `${gridRowStart} / span ${hourStop - hourStart}` }}
     >
       {children.props.children}
+      {event.course}
     </div>
   );
 };
