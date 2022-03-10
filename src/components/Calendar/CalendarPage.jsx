@@ -289,10 +289,19 @@ export default function CalendarPage() {
     setClass(classEvents);
     setQuizzes(quizEvents);
     setCourses(courseNameArray);
+    
     //inserting all events of courseArray[i] in the events array 
+
     setEvents(oldArray => [...oldArray, ...assigEvents]);
     setEvents(oldArray => [...oldArray, ...quizEvents]);
     setEvents(oldArray => [...oldArray, ...classEvents]);
+
+    setAssignChecked(true)
+    setClassChecked(true)
+    setQuizChecked(true)
+    setPersonalChecked(true)
+    setSelectedCourse('');
+
     
   },[user])
 
