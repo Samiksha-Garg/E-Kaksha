@@ -1,10 +1,6 @@
 import React, {useState, useRef, useContext, useEffect} from "react";
 import { Calendar, momentLocalizer, Views} from "react-big-calendar";
 import moment from "moment";
-import { Context } from "../../context/Context";
-
-import events from "./events";
-// import Event from "./Event";
 import EventWrapper from "./EventWrapper";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
