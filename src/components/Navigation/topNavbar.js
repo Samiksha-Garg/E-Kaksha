@@ -17,6 +17,14 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { Context } from "../../context/Context";
+import {JoinCourseTitle, JoinCourse} from "./joinCourse";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from "@mui/material";
 function TopNavbar() {
 
 const [anchorEl1, setAnchorEl1] = useState(null);
@@ -24,6 +32,7 @@ const [anchorEl2, setAnchorEl2] = useState(null);
 const open1 = Boolean(anchorEl1);
 const open2 = Boolean(anchorEl2);
 const {dispatch,isFetching}=useContext(Context);
+const [showModal, setShowModal] = useState(false);
 
 const handleClick2 = (event) => {
   setAnchorEl2(event.currentTarget);
@@ -50,7 +59,9 @@ const handleLogOut = () => {
     <div className={classes.Navbar }>
 
         <ul className={classes.ul}>
-        <Button>
+        <Button onClick={() => {
+            setShowModal(true);
+          }}>
           <AddCourseIcon />
       </Button>
          
@@ -169,10 +180,29 @@ const handleLogOut = () => {
         </MenuItem>
         
       </Menu>
-              
-
-            
-          
+      <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            onClose={() => {
+              setShowModal(false);
+            }}
+            open={showModal}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+ 
+            <DialogTitle id="alert-dialog-title">
+              <JoinCourseTitle setShowModal={setShowModal}/>
+              </DialogTitle>
+              <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+              <JoinCourse setShowModal={setShowModal}/>
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
         </ul>
     </div>
   );
