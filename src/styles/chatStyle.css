@@ -11,21 +11,36 @@
   min-width: 300px;
   margin-bottom: 15px;
 }
+
+.viewMessages {
+    height: 85vh;
+    overflow-y: auto;
+}
 /* conversation section */
 .converseBox{
     padding:20px;
-
 }
+
+.profile {
+    height: 5vh;
+}
+
+
 .writeMessages{
+    position: fixed;
+    bottom: 1vh;
     display: flex;
     justify-content: space-between;
 }
+
 /*message*/
 .message {
+
     display: flex;
     flex-direction: column;
     margin-top: 20px;
-  }
+}
+
 .messageText{
     padding: 10px;
     border-radius: 20px;
