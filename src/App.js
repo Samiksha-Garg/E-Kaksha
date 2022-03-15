@@ -10,7 +10,7 @@ import React, {useState, useRef, useContext, useEffect} from "react";
 
 import CalendarPage from "./components/Calendar/CalendarPage";
 import ProtectedRoute from "./ProtectedRoute";
-
+import Chat from "./components/Chat/Chat";
 
 function App(){
   const {user}=useContext(Context);
@@ -21,6 +21,7 @@ function App(){
         <Routes>
         <Route exact path={"/"} element={<HomePage />} />  
         <Route path={"/calendar"} element={<ProtectedRoute Component={CalendarPage}/>}/>
+        <Route path={"/chat"} element={<ProtectedRoute Component={Chat}/>}/>
        </Routes>
        </div>
       </Router>
