@@ -5,7 +5,7 @@ import "../../styles/chatStyle.css";
 export default function Conversation() {
 
   return (
-   <Grid item lg="8" className="converseBox">
+   <Grid item lg="8" className="converseBox" style={{flexDirection : "column"}}>
 
        <div className='profile'>
            <center><h2>Kajal Kaushal</h2></center>
@@ -29,7 +29,7 @@ export default function Conversation() {
        </div>
 
        <div className='writeMessages'>
-       <input type="text" placeholder="Write your message here..." style={{width: "700px", padding:"8px"}}/>
+       <input type="text" placeholder="Write your message here..." style={{width: "80%", padding:"8px"}}/>
        <button type="submit" style={{width: "100px"}}><strong>Send</strong></button>
        </div>
    </Grid>

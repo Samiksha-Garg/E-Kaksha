@@ -1,6 +1,6 @@
 import React from 'react'
 import temp from "../../assets/logo.png"
-export default function Contacts() {
+export default function Contacts({name}) {
   return (
     <div style={{ marginBottom: "12px"}}>
     <img src={temp} style={{ width: "40px",
@@ -8,7 +8,7 @@ export default function Contacts() {
      borderRadius: "50%",
      objectFit: "cover",
      marginRight: "20px",}}/>
-    <span><strong>Kajal Kaushal</strong></span>
+    <span><strong>{name}</strong></span>
     </div>
   );
 }
