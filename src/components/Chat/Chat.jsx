@@ -11,6 +11,7 @@ export default function Chat() {
   const {user} = useContext(Context);
   const [friends, setFriends] = useState([]);
   const [recentChat, setRecentChats] = useState([]);
+  const [convo, setConvo] = useState(null);
 
   function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
@@ -22,19 +23,26 @@ export default function Chat() {
     let courses = user.courses
     let l = courses.length;
 
-    let students = [];
+    let peers = [];
 
-    for (let i =0; i < l; i++) {
-      const response = await axios.get("/chat/students/"+courses[i]);
-      let array = response.data
-      let len = array.length
-
-      for (let j = 0; j < len; j++) {
-        students.push(array[j].studentId);
+    if (user.role === "teacher") {
+      for (let i =0; i < l; i++) {
+        const response = await axios.get("/chat/students/"+courses[i]);
+        let array = response.data
+        let len = array.length
+  
+        for (let j = 0; j < len; j++) {
+          peers.push(array[j].studentId);
+        }
+      }
+    } else {
+      for (let i = 0; i < l; i++) {
+        const response = await axios.get("/chat/teacher/" + courses[i]);
+        peers.push(response.data.teacherId);
       }
     }
-
-    var unique = students.filter(onlyUnique);
+    
+    var unique = peers.filter(onlyUnique);
     let len = unique.length
     let info = []
 
@@ -72,7 +80,7 @@ export default function Chat() {
   }, []) 
 
   return (
-    <div style={{width : "100%"}}>
+    <div style={{width : "100%", height : "100%"}}>
     <TopNavbar/>
     <Grid style={{display : "flex", width:"100%"}} >
        <Grid item  className="contactBox" lg="4" >
@@ -80,10 +88,10 @@ export default function Chat() {
         <input type="text" placeholder="Search Recent Chats" className="searchTab"/>
         </div>
         {recentChat.map((event) => {
-          return <Contact name = {event.name}/>
+          return <Contact id = {event._id} name = {event.name} friend={event} choose = {setConvo}/>
         })} 
        </Grid>
-        <Conversation />
+        <Conversation friend={convo}/>
         <Grid item  className="contactBox" lg="4" >
         <div style={{paddingBottom: "8px"}}>
         <input type="text" placeholder="Search All Users" className="searchTab"/>
