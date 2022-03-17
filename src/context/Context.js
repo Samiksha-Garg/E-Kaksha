@@ -17,6 +17,7 @@ export const ContextProvider = ({ children }) => {
 
 
   useEffect(() => {
+    console.log(state.user);
     if (state.isChecked) {
       localStorage.setItem("user", JSON.stringify(state.user));
     }
