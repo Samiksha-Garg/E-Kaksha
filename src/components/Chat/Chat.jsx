@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Grid from '@mui/material/Grid';
 import Contact from "./Contact";
+import Contact2 from './Contact2';
 import Conversation from './Conversation';
 import TopNavbar from '../Navigation/topNavbar';
 import "../../styles/chatStyle.css";
@@ -59,9 +60,6 @@ export default function Chat() {
 
     let chats = recent.data
     let l1 = chats.length
-
-    console.log(map1);
-
     const rec = []
 
     for (let i = 0; i < l1; i++) {
@@ -71,7 +69,10 @@ export default function Chat() {
         temp = chats[i].members[1];
       }
 
-      rec.push(map1.get(temp));
+      rec.push({
+        prof : map1.get(temp),
+        chatId : chats[i]._id
+      });
     }
 
 
@@ -79,6 +80,37 @@ export default function Chat() {
     setFriends(info);
   }, []) 
 
+  const handleAllChat = async(event) => {
+    console.log(event);
+    let l = recentChat.length
+
+    for (let i = 0; i < l; i++) {
+      if (recentChat[i].prof._id == event._id) {
+        setConvo(recentChat[i]);
+        return;
+      }
+    }
+
+    const newChat = await axios.post("/chat", {
+      members : [
+        event._id,
+        user._id
+      ]
+    });
+    setConvo({
+      prof : event,
+      chatId: newChat.data._id
+    });
+
+    setRecentChats((vals) => {
+      return [...vals, {
+        prof : event,
+        chatId: newChat.data._id
+      }]
+    });
+
+    console.log(newChat);
+  }
   return (
     <div style={{width : "100%", height : "100%"}}>
     <TopNavbar/>
@@ -88,16 +120,16 @@ export default function Chat() {
         <input type="text" placeholder="Search Recent Chats" className="searchTab"/>
         </div>
         {recentChat.map((event) => {
-          return <Contact id = {event._id} name = {event.name} friend={event} choose = {setConvo}/>
+          return <Contact key = {event.chatId} name = {event.prof.name} friend={event} choose = {setConvo}/>
         })} 
        </Grid>
-        <Conversation friend={convo}/>
+        <Conversation friend={convo} user={user}/>
         <Grid item  className="contactBox" lg="4" >
         <div style={{paddingBottom: "8px"}}>
         <input type="text" placeholder="Search All Users" className="searchTab"/>
         </div>
         {friends.map((event) => {
-          return <Contact name = {event.name}/>
+          return <div key = {event._id} onClick={() => {handleAllChat(event)}}> <Contact2 name = {event.name}/></div>
         })} 
        </Grid>
     </Grid>
