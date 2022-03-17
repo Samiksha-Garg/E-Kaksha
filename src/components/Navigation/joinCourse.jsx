@@ -64,6 +64,7 @@ export function JoinCourse({setShowModal}) {
             setErrorModal(true);
         }
 
+        
         setIsSubmitting(false);
     }
 
