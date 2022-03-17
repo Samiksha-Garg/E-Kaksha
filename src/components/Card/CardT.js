@@ -38,6 +38,3 @@ return (
 }
 
 export default CardT
-
-
- 
