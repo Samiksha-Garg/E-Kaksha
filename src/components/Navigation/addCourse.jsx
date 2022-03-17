@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import styles from '../../styles/SignUp.module.css'
 import { Context } from '../../context/Context';
+import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 
 import {
@@ -68,6 +69,8 @@ export function AddCourse({setShowModal}) {
           teacherId : user._id
         });
 
+        console.log(response);
+
         if(response.status === 200){
           let temp = user.courses;
           temp.push(response.data._id);
@@ -81,9 +84,9 @@ export function AddCourse({setShowModal}) {
           });
           dispatch({type:"UPDATE_USER", payload: res.data});
         }
-        // console.log(res);
 
         setIsSubmitting(false);
+        setShowModal(false);
     }
 
     const handleSubmit = (e) => {
@@ -102,6 +105,24 @@ export function AddCourse({setShowModal}) {
     }
 
     return (<div style={{width : "300px"}}>
+      <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            open={isSubmitting}
+            
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <CircularProgress/>
+              
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
         <center>
         <TextField value={courseName} autoComplete="off" onChange={handleNameChange} id="standard-basic" label="Course Name" variant="standard" />
         <br></br>

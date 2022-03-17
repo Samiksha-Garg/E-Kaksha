@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment-mini";
 
-const EventWrapper = ({ event, children }) => {
+const monthEventWrapper = ({ event, children }) => {
   const { title, className } = children.props;
   const customClass = `${className} rbc-event--${event.type}`;
   const hourStart = moment(event.start).hour();
@@ -15,9 +15,8 @@ const EventWrapper = ({ event, children }) => {
       style={{ gridRow: `${gridRowStart} / span ${hourStop - hourStart}` }}
     >
       {children.props.children}
-      {event.course}
     </div>
   );
 };
 
-export default EventWrapper;
+export default monthEventWrapper;
