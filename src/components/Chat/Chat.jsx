@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React from 'react'
+import { useContext, useEffect, useRef, useState } from "react";
 import Grid from '@mui/material/Grid';
 import Contact from "./Contact";
 import Contact2 from './Contact2';
@@ -7,12 +8,27 @@ import TopNavbar from '../Navigation/topNavbar';
 import "../../styles/chatStyle.css";
 import { Context } from '../../context/Context';
 import axios from 'axios';
+import { io } from "socket.io-client";
+
 export default function Chat() {
 
   const {user} = useContext(Context);
   const [friends, setFriends] = useState([]);
   const [recentChat, setRecentChats] = useState([]);
   const [convo, setConvo] = useState(null);
+  
+
+  const socket=useRef();
+ 
+  useEffect(()=>{
+   socket.current=io("ws://localhost:8900");
+  },[])
+
+  
+  useEffect(()=>{
+    //sending to server
+    socket.current.emit("addUser",user._id);
+  },[user]);
 
   function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
