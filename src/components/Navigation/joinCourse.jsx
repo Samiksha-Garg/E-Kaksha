@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import styles from '../../styles/SignUp.module.css'
 import { Context } from '../../context/Context';
+import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 import {
     Dialog,
@@ -59,15 +60,20 @@ export function JoinCourse({setShowModal}) {
             }
         }
 
+        if (found) {
+          setIsSubmitting(false);
+          return;
+        }
 
+        try {
         const response = await axios.post("/course/joinCourses/", {
           courseId : courseId,
-          userId : user.id
+          studentId : user._id
         });
 
         if(response.status === 400){
-          setdbError('Invalid Course Id');
-          setErrorModal(true);
+          throw new Error(`Invalid Course Id`);
+          
         }
         else{
           let temp = user.courses;
@@ -83,6 +89,9 @@ export function JoinCourse({setShowModal}) {
           dispatch({type:"UPDATE_USER", payload: res.data});
           setIsSubmitting(false);
           setShowModal(false);
+        } } catch(err) {
+          setdbError('Invalid Course Id');
+          setErrorModal(true);
         }
        
         setIsSubmitting(false);
@@ -98,6 +107,24 @@ export function JoinCourse({setShowModal}) {
     }
 
     return (<div style={{width : "300px"}}>
+      <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            open={isSubmitting}
+            
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <CircularProgress/>
+              
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
         <center>
         <TextField value={courseId} autoComplete="off" onChange={handleChange} id="standard-basic" label="Course Id" variant="standard" />
         <br></br>
