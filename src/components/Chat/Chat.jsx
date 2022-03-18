@@ -34,7 +34,7 @@ export default function Chat() {
   useEffect(()=>{
       if(arrivalMsg){
         console.log(arrivalMsg);
-        setMessages((prev)=>[...prev,arrivalMsg.text]);
+        convo?.chatId===arrivalMsg.text.chatId && setMessages((prev)=>[...prev,arrivalMsg.text]);
       }
   },[arrivalMsg,convo])
 
