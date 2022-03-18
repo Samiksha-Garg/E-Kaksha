@@ -6,7 +6,13 @@ import "./table.css"
 
 function FilteringTable(props){
     const columns = useMemo(() =>  COLUMNS , [])
-    const data = useMemo(() => props.statusTasks , [])
+    const len=props.statusTasks.length;
+    const arrayTasks=[];
+    for(let i=0 ; i<len ; i++){
+        arrayTasks.push({todo:"yo" , missed :"hari om" , completed:"kashi vishwanath"} );
+    }
+    const data = useMemo(() => arrayTasks , [])
+
     const tableInstance = useTable({
         columns : columns,
         data : data,
@@ -24,10 +30,16 @@ function FilteringTable(props){
     } = tableInstance
 
     const {globalFilter} = state;
-    //console.log(props.statusTasks);
+    try{
+        console.log("success" , props.statusTasks);
+    }
+    catch{
+        console.log("oops");
+    }
 
     return(
         <>
+        {props.statusTasks?"om" : 'narayan'}
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
        <table {...getTableProps()}>
             <thead >

@@ -1,9 +1,8 @@
-import { SettingsInputAntennaTwoTone } from "@mui/icons-material";
 import axios from "axios";
 import React, {useEffect, useState, useContext , useCallback} from "react";
 import { Context } from "../../context/Context";
 import Badge from 'react-bootstrap/Badge'
-import FilteringTable from "./FilteringTable";
+import DisplayTasks from "./DisplayTasks"
 
 function ToDoAsnPage(){
 
@@ -17,9 +16,8 @@ function ToDoAsnPage(){
     const [todoQuizzes , setTodoQuizzes] = useState([]);
     const [missedQuizzes , setMissedQuizzes] = useState([]);
     const [completedQuizzes , setCompletedQuizzes] =useState([]);
-    const [statusTasks , setStatusTasks]  =useState([]);
-
-
+    //const [statusTasks , setStatusTasks]  =useState([]);
+    //const statusArray=[];
 
     useEffect(async () =>{
         let courseArray =user.courses;
@@ -32,7 +30,7 @@ function ToDoAsnPage(){
         let todoq = [];
         let missedq = [];
         let completedq = [];
-        let statusArray = [];
+        //let statusArray = [];
         let assigArrayOfCourse=[];
         let quizArrayOfCourse=[];
         let l = courseArray.length;
@@ -53,8 +51,7 @@ function ToDoAsnPage(){
 
             assigArrayOfCourse = response2.data;
             //console.log(assigArrayOfCourse);
-            
-            
+             
             len=assigArrayOfCourse.length;
             for(let j=0; j<len ; j++){
                 assignmentArray.push({
@@ -77,8 +74,8 @@ function ToDoAsnPage(){
                     course : courseName,
                     quizid: quizArrayOfCourse[j]._id,
                     title: quizArrayOfCourse.title,
-                    date: new Date(quizArrayOfCourse[j].date),
-                    duration: quizArrayOfCourse[j].duration,
+                    start: new Date(quizArrayOfCourse[j].date),
+                    deadline: quizArrayOfCourse[j].duration,
                     submissions: quizArrayOfCourse[j].submissions,
                 });
             }
@@ -144,7 +141,7 @@ function ToDoAsnPage(){
                 let deadline =quizzes[i].date;
 
                 if(today.getTime() > deadline.getTime()){
-                    console.log(today , deadline);
+                    //console.log(today , deadline);
                     missedq.push(quizzes[i]);
                 }else {
                     todoq.push(quizzes[i]);
@@ -157,82 +154,26 @@ function ToDoAsnPage(){
         setCompletedQuizzes(completedq);
         setMissedQuizzes(missedq);
 
-        //console.log(todoAsn);
-        //console.log(missedAsn);
-        //console.log(completedAsn);
-        //console.log("todo" , todoAssignments);
-        //console.log("missed" , missedAssignments);
-        //console.log("completed" , completedAssignments);
-
-        //console.log(todoq);
-       // console.log(missedq);
-        //console.log(completedq);
-        //console.log("todoq" , todoQuizzes);
-        //console.log( "missedq", missedQuizzes);
-        //console.log("completedq" , completedQuizzes);
-
-        l=todoAssignments.length;
-        for(let i=0 ; i<l ; i++){
-            statusArray.push({
-                "todo" : todoAssignments[i],
-                "missed" : null,
-                "completed" : null,
-            });
-        }
-        l=missedAssignments.length;
-        for(let i=0 ; i<l ; i++){
-            statusArray.push({
-                "todo" : null,
-                "missed" : missedAssignments[i],
-                "completed" : null,
-            });
-        }
-        l=completedAssignments.length;
-        for(let i=0 ; i<l ; i++){
-            statusArray.push({
-                "todo" : null,
-                "missed" : null,
-                "completed" : completedAssignments[i],
-            });
-        }
-
-        l=todoQuizzes.length;
-        for(let i=0 ; i<l ; i++){
-            statusArray.push({
-                "todo" : todoQuizzes[i],
-                "missed" : null,
-                "completed" : null,
-            });
-        }
-        l=missedQuizzes.length;
-        for(let i=0 ; i<l ; i++){
-            statusArray.push({
-                "todo":null,
-                "missed" : missedQuizzes[i],
-                "completed":null,
-            });
-        }
-        l=completedQuizzes.length;
-        for(let i=0 ; i<l ; i++){
-            statusArray.push({
-                "todo" : null,
-                "missed" : null,
-                "completed" : completedQuizzes[i],
-            });
-        }
-
-        setStatusTasks(statusArray);
-        //console.log("status" , statusArray );
-        //console.log("status" , statusTasks);
     } ,[user])
 
-    
+    //console.log("todo" , todoAssignments);
+    //console.log("missed" , missedAssignments);
+    //console.log("completed" , completedAssignments);
+    //console.log("todoq" , todoQuizzes);
+    //console.log( "missedq", missedQuizzes);
+    //console.log("completedq" , completedQuizzes);
+
     return (
         <div>
-            <FilteringTable statusTasks={statusTasks}></FilteringTable>
+            <DisplayTasks todoAssignments={todoAssignments} missedAssignments={missedAssignments} 
+            completedAssignments={completedAssignments} todoQuizzes={todoQuizzes} 
+            missedQuizzes={missedQuizzes} completedQuizzes={completedQuizzes}
+            courses = {courses}/>
         </div>
     );
 }
+
+
 
 export default ToDoAsnPage;
 
@@ -281,3 +222,76 @@ export default ToDoAsnPage;
 <BasicTable statusTasks={statusTasks}/>
 <SortingTable statusTasks={statusTasks}/>
 */
+
+/*
+<FilteringTable statusTasks={statusTasks}></FilteringTable>
+*/
+
+/*
+        //console.log(todoAsn);
+        //console.log(missedAsn);
+        //console.log(completedAsn);
+        //console.log("todo" , todoAssignments);
+        //console.log("missed" , missedAssignments);
+        //console.log("completed" , completedAssignments);
+
+        //console.log(todoq);
+       // console.log(missedq);
+        //console.log(completedq);
+        //console.log("todoq" , todoQuizzes);
+        //console.log( "missedq", missedQuizzes);
+        //console.log("completedq" , completedQuizzes);
+
+        /*l=todoAssignments.length;
+        for(let i=0 ; i<l ; i++){
+            statusArray.push({
+                "todo" : todoAssignments[i],
+                "missed" : "",
+                "completed" : "",
+            });
+        }
+        l=missedAssignments.length;
+        for(let i=0 ; i<l ; i++){
+            statusArray.push({
+                "todo" : "",
+                "missed" : missedAssignments[i],
+                "completed" : "",
+            });
+        }
+        l=completedAssignments.length;
+        for(let i=0 ; i<l ; i++){
+            statusArray.push({
+                "todo" : "",
+                "missed" : "",
+                "completed" : completedAssignments[i],
+            });
+        }
+
+        l=todoQuizzes.length;
+        for(let i=0 ; i<l ; i++){
+            statusArray.push({
+                "todo" : todoQuizzes[i],
+                "missed" : "",
+                "completed" : "",
+            });
+        }
+        l=missedQuizzes.length;
+        for(let i=0 ; i<l ; i++){
+            statusArray.push({
+                "todo":"",
+                "missed" : missedQuizzes[i],
+                "completed":"",
+            });
+        }
+        l=completedQuizzes.length;
+        for(let i=0 ; i<l ; i++){
+            statusArray.push({
+                "todo" : "",
+                "missed" : "",
+                "completed" : completedQuizzes[i],
+            });
+        }
+
+        setStatusTasks(statusArray);*/
+        //console.log("status" , statusArray );
+        //console.log("status" , statusTasks);
