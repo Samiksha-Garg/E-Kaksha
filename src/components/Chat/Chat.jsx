@@ -31,11 +31,11 @@ export default function Chat() {
       })
   })
   },[])
-  // useEffect(()=>{
-  //     if(arrivalMsg){
-  //       setMessages([...messages,arrivalMsg]);
-  //     }
-  // },[arrivalMsg])
+  useEffect(()=>{
+      if(arrivalMsg){
+        convo?.event._id===arrivalMsg.senderId && setMessages((prev)=>[...prev,arrivalMsg]);
+      }
+  },[arrivalMsg,convo])
 
   
   useEffect(()=>{
