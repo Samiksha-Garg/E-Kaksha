@@ -5,7 +5,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import styles from '../../styles/SignUp.module.css'
 import { Context } from '../../context/Context';
-
+import CircularProgress from '@mui/material/CircularProgress';
+import axios from 'axios';
 import {
     Dialog,
     DialogContent,
@@ -33,7 +34,7 @@ export function JoinCourseTitle({setShowModal}) {
 
 export function JoinCourse({setShowModal}) {
 
-    const {user} = useContext(Context);
+    const {user, dispatch} = useContext(Context);
     const [courseId, setCourseId] = useState('');
     const [isValid, setValid] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,25 +46,54 @@ export function JoinCourse({setShowModal}) {
         setCourseId(value)
     }
 
-    const addToDatabase = () => {
+    const addToDatabase = async() => {
         setIsSubmitting(true);
 
         let found = false;
 
         for (let id in user.courses) {
  
-            if (user.courses[id] === courseId) {
+            if (user.courses[id] === courseId) {  //id hona chahiye
                 found = true;
                 setdbError('Already enrolled in course');
                 setErrorModal(true);
             }
         }
 
-        if (!found) {
-            setdbError('Invalid Course Id');
-            setErrorModal(true);
+        if (found) {
+          setIsSubmitting(false);
+          return;
         }
 
+        try {
+        const response = await axios.post("/course/joinCourses/", {
+          courseId : courseId,
+          studentId : user._id
+        });
+
+        if(response.status === 400){
+          throw new Error(`Invalid Course Id`);
+          
+        }
+        else{
+          let temp = user.courses;
+          temp.push(courseId);
+          const res = await axios.put("/auth/update/" + user._id, {
+            name : user.name,
+            email : user.email,
+            courses : temp,
+            dob : user.dob,
+            personalEvents : user.personalEvents,
+            role : user.role,
+          });
+          dispatch({type:"UPDATE_USER", payload: res.data});
+          setIsSubmitting(false);
+          setShowModal(false);
+        } } catch(err) {
+          setdbError('Invalid Course Id');
+          setErrorModal(true);
+        }
+       
         setIsSubmitting(false);
     }
 
@@ -77,6 +107,24 @@ export function JoinCourse({setShowModal}) {
     }
 
     return (<div style={{width : "300px"}}>
+      <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            open={isSubmitting}
+            
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <CircularProgress/>
+              
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
         <center>
         <TextField value={courseId} autoComplete="off" onChange={handleChange} id="standard-basic" label="Course Id" variant="standard" />
         <br></br>

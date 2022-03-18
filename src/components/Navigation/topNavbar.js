@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useReducer } from "react";
 import React from "react";
 import HorizontalNavbarPeopleLogo from "../../assets/Horizontal-Navbar-People-Logo";
 import NotificationNavbarIcon from "../../assets/Notification-Navbar";
@@ -27,6 +27,7 @@ import {
 } from "@mui/material";
 function TopNavbar() {
 
+const {user} = useContext(Context);
 const [anchorEl1, setAnchorEl1] = useState(null);
 const [anchorEl2, setAnchorEl2] = useState(null);
 const open1 = Boolean(anchorEl1);
@@ -195,13 +196,13 @@ const handleLogOut = () => {
           >
  
             <DialogTitle id="alert-dialog-title">
-              {/* <JoinCourseTitle setShowModal={setShowModal}/> */}
-              <AddCourseTitle setShowModal={setShowModal}/>
+             {user.role == "student" ? <JoinCourseTitle setShowModal={setShowModal}/>
+              : <AddCourseTitle setShowModal={setShowModal}/> }
               </DialogTitle>
               <DialogContent>
               <DialogContentText id="alert-dialog-description">
-              <AddCourse setShowModal={setShowModal}/>
-              {/* <JoinCourse setShowModal={setShowModal}/> */}
+              {user.role == "student" ? <JoinCourse setShowModal={setShowModal}/>
+              : <AddCourse setShowModal={setShowModal}/> }
               </DialogContentText>
             </DialogContent>
           </Dialog>
