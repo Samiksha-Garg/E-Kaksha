@@ -5,6 +5,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import styles from '../../styles/SignUp.module.css'
 import { Context } from '../../context/Context';
+import CircularProgress from '@mui/material/CircularProgress';
+import axios from 'axios';
 
 import {
     Dialog,
@@ -33,7 +35,7 @@ export function AddCourseTitle({setShowModal}) {
 
 export function AddCourse({setShowModal}) {
 
-    const {user} = useContext(Context);
+    const {user, dispatch} = useContext(Context);
     const [courseName, setCourseName] = useState('');
     const [courseDesc, setCourseDesc] = useState('');
     const [isValidTitle, setValidTitle] = useState(true);
@@ -46,7 +48,6 @@ export function AddCourse({setShowModal}) {
         return Math.floor(Math.random() * max);
     }
       
-
     const handleNameChange = (e) => {
         const {value} = e.target;
         setCourseName(value)
@@ -57,27 +58,35 @@ export function AddCourse({setShowModal}) {
         setCourseDesc(value)
     }
 
-    const addToDatabase = () => {
+    const addToDatabase = async() => {
         setIsSubmitting(true);
         let picNum = getRandomInt(9);
 
-        // let found = false;
+        const response = await axios.post("/course/", {
+          name : courseName,
+          desc : courseDesc,
+          image : picNum,
+          teacherId : user._id
+        });
 
-        // for (let id in user.courses) {
- 
-        //     if (user.courses[id] === courseId) {
-        //         found = true;
-        //         setdbError('Already enrolled in course');
-        //         setErrorModal(true);
-        //     }
-        // }
+        console.log(response);
 
-        // if (!found) {
-        //     setdbError('Invalid Course Id');
-        //     setErrorModal(true);
-        // }
+        if(response.status === 200){
+          let temp = user.courses;
+          temp.push(response.data._id);
+          const res = await axios.put("/auth/update/" + user._id, {
+            name : user.name,
+            email : user.email,
+            courses : temp,
+            dob : user.dob,
+            personalEvents : user.personalEvents,
+            role : user.role,
+          });
+          dispatch({type:"UPDATE_USER", payload: res.data});
+        }
 
         setIsSubmitting(false);
+        setShowModal(false);
     }
 
     const handleSubmit = (e) => {
@@ -96,6 +105,24 @@ export function AddCourse({setShowModal}) {
     }
 
     return (<div style={{width : "300px"}}>
+      <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            open={isSubmitting}
+            
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <CircularProgress/>
+              
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
         <center>
         <TextField value={courseName} autoComplete="off" onChange={handleNameChange} id="standard-basic" label="Course Name" variant="standard" />
         <br></br>
