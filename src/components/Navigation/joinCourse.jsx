@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import styles from '../../styles/SignUp.module.css'
 import { Context } from '../../context/Context';
-
+import axios from 'axios';
 import {
     Dialog,
     DialogContent,
@@ -33,7 +33,7 @@ export function JoinCourseTitle({setShowModal}) {
 
 export function JoinCourse({setShowModal}) {
 
-    const {user} = useContext(Context);
+    const {user, dispatch} = useContext(Context);
     const [courseId, setCourseId] = useState('');
     const [isValid, setValid] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,26 +45,46 @@ export function JoinCourse({setShowModal}) {
         setCourseId(value)
     }
 
-    const addToDatabase = () => {
+    const addToDatabase = async() => {
         setIsSubmitting(true);
 
         let found = false;
 
         for (let id in user.courses) {
  
-            if (user.courses[id] === courseId) {
+            if (user.courses[id] === courseId) {  //id hona chahiye
                 found = true;
                 setdbError('Already enrolled in course');
                 setErrorModal(true);
             }
         }
 
-        if (!found) {
-            setdbError('Invalid Course Id');
-            setErrorModal(true);
-        }
 
-        
+        const response = await axios.post("/course/joinCourses/", {
+          courseId : courseId,
+          userId : user.id
+        });
+
+        if(response.status === 400){
+          setdbError('Invalid Course Id');
+          setErrorModal(true);
+        }
+        else{
+          let temp = user.courses;
+          temp.push(courseId);
+          const res = await axios.put("/auth/update/" + user._id, {
+            name : user.name,
+            email : user.email,
+            courses : temp,
+            dob : user.dob,
+            personalEvents : user.personalEvents,
+            role : user.role,
+          });
+          dispatch({type:"UPDATE_USER", payload: res.data});
+          setIsSubmitting(false);
+          setShowModal(false);
+        }
+       
         setIsSubmitting(false);
     }
 

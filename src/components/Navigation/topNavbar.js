@@ -195,13 +195,13 @@ const handleLogOut = () => {
           >
  
             <DialogTitle id="alert-dialog-title">
-              {/* <JoinCourseTitle setShowModal={setShowModal}/> */}
-              <AddCourseTitle setShowModal={setShowModal}/>
+              <JoinCourseTitle setShowModal={setShowModal}/>
+              {/* <AddCourseTitle setShowModal={setShowModal}/> */}
               </DialogTitle>
               <DialogContent>
               <DialogContentText id="alert-dialog-description">
-              <AddCourse setShowModal={setShowModal}/>
-              {/* <JoinCourse setShowModal={setShowModal}/> */}
+              {/* <AddCourse setShowModal={setShowModal}/> */}
+              <JoinCourse setShowModal={setShowModal}/>
               </DialogContentText>
             </DialogContent>
           </Dialog>
