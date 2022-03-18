@@ -33,7 +33,8 @@ export default function Chat() {
   },[])
   useEffect(()=>{
       if(arrivalMsg){
-        convo?.event._id===arrivalMsg.senderId && setMessages((prev)=>[...prev,arrivalMsg]);
+        console.log(arrivalMsg);
+        setMessages((prev)=>[...prev,arrivalMsg.text]);
       }
   },[arrivalMsg,convo])
 
@@ -68,7 +69,7 @@ export default function Chat() {
     socket.current.emit("sendMessage",{
       senderId: user._id,
       receiverId: convo.prof._id,
-      text : newMessage,
+      text : msg,
     });
 
     const res = await axios.post("/message", msg);
