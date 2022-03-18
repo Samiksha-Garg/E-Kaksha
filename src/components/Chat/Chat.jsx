@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import Grid from '@mui/material/Grid';
 import Contact from "./Contact";
 import Contact2 from './Contact2';
-import Conversation from './Conversation';
+import Message from './Message';
 import TopNavbar from '../Navigation/topNavbar';
 import "../../styles/chatStyle.css";
 import { Context } from '../../context/Context';
@@ -16,20 +16,66 @@ export default function Chat() {
   const [friends, setFriends] = useState([]);
   const [recentChat, setRecentChats] = useState([]);
   const [convo, setConvo] = useState(null);
-  
-
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [arrivalMsg,setArrivalMsg]=useState(null);
   const socket=useRef();
  
   useEffect(()=>{
    socket.current=io("ws://localhost:8900");
+   //getting message from server
+  socket.current.on("getMessage",(msg)=>{
+      setArrivalMsg({
+        senderId: msg.senderId,
+        text: msg.text
+      })
+  })
   },[])
+  // useEffect(()=>{
+  //     if(arrivalMsg){
+  //       setMessages([...messages,arrivalMsg]);
+  //     }
+  // },[arrivalMsg])
 
   
   useEffect(()=>{
     //sending to server
     socket.current.emit("addUser",user._id);
+    socket.current.on("getUsers",users=>{
+      console.log(users);
+    })
   },[user]);
+  useEffect(async() => {
+    if (convo) {
+        const response = await axios.get("/message/" + convo.chatId);
+        setMessages(response.data);
+    } else {
+        setMessages([]);
+    }
+    
+  }, [convo])
+  const sendMessage = async (e) => {
+    if (newMessage == "") {
+        return;
+    }
+    e.preventDefault();
+    const msg = {
+        senderId : user._id,
+        text : newMessage,
+        chatId : convo.chatId
+    };
+    //to send message to server
+    socket.current.emit("sendMessage",{
+      senderId: user._id,
+      receiverId: convo.prof._id,
+      text : newMessage,
+    });
 
+    const res = await axios.post("/message", msg);
+    setMessages([...messages, res.data]);
+    setNewMessage("");
+
+}
   function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
   }
@@ -139,7 +185,28 @@ export default function Chat() {
           return <Contact key = {event.chatId} name = {event.prof.name} friend={event} choose = {setConvo}/>
         })} 
        </Grid>
-        <Conversation friend={convo} user={user}/>
+       <Grid item lg="8" className="converseBox" style={{flexDirection : "column"}}>
+       {convo ?
+<>
+       <div className='profile'>
+           <center><h2>{convo.prof.name}</h2></center>
+       </div>
+      
+       <div className='viewMessages'>
+       {messages.map((event) => {
+          return <Message own={event.senderId == user._id} text={event.text}/>
+        })}
+       </div>
+
+       <div className='writeMessages'>
+       <input type="text" value={newMessage} onChange={(e) => setNewMessage(e.target.value)}  placeholder="Write your message here..." style={{width: "80%", padding:"8px"}}/>
+       <button onClick={sendMessage} type="submit" style={{width: "100px"}}><strong>Send</strong></button>
+       </div>
+       </> : <div style={{position : "relative", height : "100%"}}>
+           <span className='noConvo'>Open a Conversation to start a chat</span>
+       </div>
+}
+   </Grid>
         <Grid item  className="contactBox" lg="4" >
         <div style={{paddingBottom: "8px"}}>
         <input type="text" placeholder="Search All Users" className="searchTab"/>
