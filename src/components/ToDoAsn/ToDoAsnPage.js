@@ -73,7 +73,7 @@ function ToDoAsnPage(){
                     cid : courseArray[i],
                     course : courseName,
                     quizid: quizArrayOfCourse[j]._id,
-                    title: quizArrayOfCourse.title,
+                    title: quizArrayOfCourse[j].title,
                     start: new Date(quizArrayOfCourse[j].date),
                     deadline: quizArrayOfCourse[j].duration,
                     submissions: quizArrayOfCourse[j].submissions,
@@ -95,12 +95,12 @@ function ToDoAsnPage(){
 
 
         let IdOfUser =user.__id;
-        l = assignments.length;
+        l = assignmentArray.length;
         for(let i=0 ; i<l ; i++){
-            let len =assignments[i].submissions.length;
+            let len =assignmentArray[i].submissions.length;
             let flag=1;
             for(let j=0 ; j<len ; j++){
-                if(IdOfUser === assignments[i].submissions[j].studentId){
+                if(IdOfUser === assignmentArray[i].submissions[j].studentId){
                     flag=0;break;
                 }
             }
@@ -110,44 +110,45 @@ function ToDoAsnPage(){
                 //let dd = int(String(today.getDate()).padStart(2, '0'));
                 //let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
                 //let yyyy = today.getFullYear();
-                let deadline = assignments[i].deadline;
+                let deadline = assignmentArray[i].deadline;
+                
 
                 if(today.getTime() > deadline.getTime()){
-                    missedAsn.push(assignments[i]);
+                    missedAsn.push(assignmentArray[i]);
                 }else {
-                    todoAsn.push(assignments[i]);
+                    todoAsn.push(assignmentArray[i]);
                 }
             }else{
-                completedAsn.push(assignments[i]);
+                completedAsn.push(assignmentArray[i]);
             }
         }
         setTodoAssignments(todoAsn);
         setCompletedAssignments(completedAsn);
         setMissedAssignments(missedAsn);
 
-        l = quizzes.length;
+        l = quizArray.length;
         //console.log("length" , l);
         for(let i=0 ; i<l ; i++){
-            let len =quizzes[i].submissions.length;
+            let len =quizArray[i].submissions.length;
             let flag=1;
             for(let j=0 ; j<len ; j++){
-                if(IdOfUser === quizzes[i].submissions[j].studentId){
+                if(IdOfUser === quizArray[i].submissions[j].studentId){
                     flag=0;break;
                 }
             }
 
             if(flag){
                 let today = new Date();
-                let deadline =quizzes[i].date;
-
+                let deadline =quizArray[i].start;
                 if(today.getTime() > deadline.getTime()){
+                  
                     //console.log(today , deadline);
-                    missedq.push(quizzes[i]);
+                    missedq.push(quizArray[i]);
                 }else {
-                    todoq.push(quizzes[i]);
+                    todoq.push(quizArray[i]);
                 }
             }else{
-                completedq.push(quizzes[i]);
+                completedq.push(quizArray[i]);
             }
         }
         setTodoQuizzes(todoq);
@@ -169,6 +170,9 @@ function ToDoAsnPage(){
             completedAssignments={completedAssignments} todoQuizzes={todoQuizzes} 
             missedQuizzes={missedQuizzes} completedQuizzes={completedQuizzes}
             courses = {courses}/>
+            <button onClick={() => {
+                console.log(quizzes);
+            }}> Hello</button>
         </div>
     );
 }
