@@ -1,0 +1,19 @@
+.filters {
+    text-align: center;
+}
+
+.container {
+    margin-top: 1%;
+    width: 100%;
+    display: flex;
+}
+
+.addPersonal {
+    display: flex;
+}
+
+.error {
+    color: red;
+    font-size: 1rem;
+    margin-top: 0.3rem;
+}

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext, useReducer } from "react";
 import React from "react";
 import HorizontalNavbarPeopleLogo from "../../assets/Horizontal-Navbar-People-Logo";
 import NotificationNavbarIcon from "../../assets/Notification-Navbar";
@@ -16,12 +16,24 @@ import Divider from '@mui/material/Divider';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import { Context } from "../../context/Context";
+import {JoinCourseTitle, JoinCourse} from "./joinCourse";
+import { AddCourse, AddCourseTitle } from "./addCourse";
+import {
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from "@mui/material";
 function TopNavbar() {
 
+const {user} = useContext(Context);
 const [anchorEl1, setAnchorEl1] = useState(null);
 const [anchorEl2, setAnchorEl2] = useState(null);
 const open1 = Boolean(anchorEl1);
 const open2 = Boolean(anchorEl2);
+const {dispatch,isFetching}=useContext(Context);
+const [showModal, setShowModal] = useState(false);
 
 const handleClick2 = (event) => {
   setAnchorEl2(event.currentTarget);
@@ -38,6 +50,10 @@ const handleClose1 = () => {
   setAnchorEl1(null);
 };
 
+const handleLogOut = () => {
+  dispatch({type:"LOGOUT"});
+}
+
   return (
    
 
@@ -45,7 +61,9 @@ const handleClose1 = () => {
 
         <ul className={classes.ul}>
           <div className={classes.iconItem}>
-          <Button>
+        <Button onClick={() => {
+            setShowModal(true);
+          }}>
           <AddCourseIcon />
       </Button>
             </div>
@@ -102,13 +120,13 @@ const handleClose1 = () => {
         
         <Divider />
         
-        <MenuItem>
+        <MenuItem >
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={handleLogOut}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
@@ -170,10 +188,31 @@ const handleClose1 = () => {
         </MenuItem>
         
       </Menu>
-              
-
-            
-          
+      <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            onClose={() => {
+              setShowModal(false);
+            }}
+            open={showModal}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+ 
+            <DialogTitle id="alert-dialog-title">
+             {user.role == "student" ? <JoinCourseTitle setShowModal={setShowModal}/>
+              : <AddCourseTitle setShowModal={setShowModal}/> }
+              </DialogTitle>
+              <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+              {user.role == "student" ? <JoinCourse setShowModal={setShowModal}/>
+              : <AddCourse setShowModal={setShowModal}/> }
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
         </ul>
     </div>
   );

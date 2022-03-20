@@ -1,0 +1,27 @@
+.rbc-events-container {
+    display: grid;
+    grid-template-rows: repeat(24, 80px);
+  }
+
+  .rbc-timeslot-group {
+    min-height: 80px;
+  }
+  
+  .rbc-day-slot .rbc-event {
+    position: static;
+  }
+  
+  .rbc-day-slot .rbc-event--class {
+    background-color: #fbab18;
+  }
+  
+  .rbc-day-slot .rbc-event--assig {
+    background-color: #6ebe4a;
+  }
+  .rbc-day-slot .rbc-event--quiz {
+    background-color: #3b2dbd;
+  }
+  .rbc-day-slot .rbc-event--personal {
+    background-color: #f33574;
+  }
+  

@@ -18,4 +18,8 @@ const Logout = () => ({
   type: "LOGOUT",
 });
 
-export {LoginFailure,LoginStart,LoginSuccess,Logout}
+const updateUser = () => ({
+  type : "UPDATE_USER"
+})
+
+export {LoginFailure,LoginStart,LoginSuccess,Logout, updateUser}
