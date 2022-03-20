@@ -44,11 +44,14 @@ const handleClose1 = () => {
     <div className={classes.Navbar }>
 
         <ul className={classes.ul}>
-        <Button>
+          <div className={classes.iconItem}>
+          <Button>
           <AddCourseIcon />
       </Button>
-         
-          <Button
+            </div>
+        
+         <div className={classes.iconItem}>
+          <Button 
         id="demo-positioned-button"
         aria-controls={open1 ? 'demo-positioned-menu' : undefined}
         aria-haspopup="true"
@@ -56,7 +59,8 @@ const handleClose1 = () => {
         onClick={handleClick1}
       >
         <HorizontalNavbarPeopleLogo /> 
-      </Button>
+      </Button></div>
+      
       <Menu
         anchorEl={anchorEl1}
         id="account-menu"
@@ -128,8 +132,8 @@ const handleClose1 = () => {
         <MenuItem >Logout</MenuItem>
       </Menu> */}
     
-
-          <Button
+        <div className={classes.iconItem}>
+        <Button
         id="demo-positioned-button"
         aria-controls={open2 ? 'demo-positioned-menu' : undefined}
         aria-haspopup="true"
@@ -138,6 +142,9 @@ const handleClose1 = () => {
       >
         <NotificationNavbarIcon/>
       </Button>
+      </div>
+          
+
       <Menu
         id="demo-positioned-menu"
         aria-labelledby="demo-positioned-button"

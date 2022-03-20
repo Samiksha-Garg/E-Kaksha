@@ -30,12 +30,15 @@
     margin: 0px 0px;
     padding: 10px 10px;
     text-size-adjust: 18px;
+    text-transform: none;
+
   }
   
   .link:hover{
     border-right: 4px solid white;
     background: rgb(142, 223, 155);
     color: black;
+    
   }
   
 .ul{

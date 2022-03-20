@@ -7,18 +7,18 @@
   .Navbar { 
     background-color: darkslategray;
     color: rgb(8, 8, 8);
-    height: var(--nav-size);
-    padding : 5px 0px;
+    height: 51px;
+    padding : 2px 0px;
     width: 100%;
     justify-content: center;
     vertical-align: center;
   }
 
-.link{
-    padding: 5px 30px;
+  .iconItem:hover{
+    background: rgb(142, 223, 155);
     color: black;
-    
-} 
+  }
+
 
 .ul{
     vertical-align: center;
