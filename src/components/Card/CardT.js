@@ -4,7 +4,7 @@ import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import CardImg from "./CardImg.js"
 
 import pic from "./CardImg.jpg"
-import { resolvePath } from 'react-router-dom';
+import { Link, resolvePath } from 'react-router-dom';
 
 function CardT(props)
 {
@@ -25,9 +25,9 @@ return (
 
 <div className="btn">
     <button>
-        <a href="https://www.google.co.in/">
-            View More
-        </a>
+        <Link to="/coursepage">
+            View More!
+        </Link>
     </button>
 </div>
 </div>
