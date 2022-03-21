@@ -1,15 +1,21 @@
 import React from 'react'
 import temp from "../../assets/logo.png"
-export default function Contacts({name}) {
+import "../../styles/chatStyle.css";
+export default function Contacts({name,isOnline}) {
   return (
-    <div className='contact' onClick={() => {
+    
+  <div className='contact' onClick={() => {
     }} style={{ marginBottom: "12px"}}>
     <img src={temp} style={{ width: "40px",
      height: "40px",
      borderRadius: "50%",
      objectFit: "cover",
-     marginRight: "20px",}}/>
+     marginRight: "12px"
+     }}/> 
     <span><strong>{name}</strong></span>
-    </div>
+     {isOnline && <span style={{color: "green", marginLeft: "65px"}}>Online</span>}
+  
+  
+  </div>
   );
 }

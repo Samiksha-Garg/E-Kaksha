@@ -217,7 +217,8 @@ export default function Chat() {
         <input type="text" placeholder="Search All Users" className="searchTab"/>
         </div>
         {friends.map((event) => {
-          return <div key = {event._id} onClick={() => {handleAllChat(event)}}> <Contact2 name = {event.name}/></div>
+          const isOnline=onlineUsers.some(el => el.userId === event._id);
+          return <div key = {event._id} onClick={() => {handleAllChat(event)}}> <Contact2 name = {event.name} isOnline={isOnline}/></div>
         })} 
        </Grid>
     </Grid>
