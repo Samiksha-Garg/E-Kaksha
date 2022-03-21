@@ -19,6 +19,7 @@ export default function Chat() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMsg,setArrivalMsg]=useState(null);
+  const [onlineUsers,setOnlineUsers]=useState([]);
   const socket=useRef();
  
   useEffect(()=>{
@@ -43,7 +44,7 @@ export default function Chat() {
     //sending to server
     socket.current.emit("addUser",user._id);
     socket.current.on("getUsers",users=>{
-      console.log(users);
+      setOnlineUsers(users);
     })
   },[user]);
   useEffect(async() => {
@@ -66,11 +67,14 @@ export default function Chat() {
         chatId : convo.chatId
     };
     //to send message to server
-    socket.current.emit("sendMessage",{
-      senderId: user._id,
-      receiverId: convo.prof._id,
-      text : msg,
-    });
+    const found = onlineUsers.some(el => el.userId === convo.prof._id);
+    if(found){
+      socket.current.emit("sendMessage",{
+        senderId: user._id,
+        receiverId: convo.prof._id,
+        text : msg,
+      });
+    }
 
     const res = await axios.post("/message", msg);
     setMessages([...messages, res.data]);
