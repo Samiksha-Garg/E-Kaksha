@@ -11,7 +11,7 @@ function DisplayTasks(props){
     const [completedQuiz , setCompletedQuizzes] =useState(props.completedQuizzes);
     const [selectedCourse , setSelectedCourse] = useState(props.courses.name);
     const [selectedDate , setSelectedDate] = useState(new Date());
-    console.log(selectedDate);
+    //console.log(selectedDate);
     const SelectCourse=e=>{
       setSelectedCourse(e.name);
 
