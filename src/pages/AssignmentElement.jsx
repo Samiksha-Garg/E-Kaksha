@@ -1,5 +1,10 @@
-function AssignmentElement(){
- return (
+import { useState } from "react";
+
+function AssignmentElement(props){
+  const [issue,setIssue] = useState(new Date(props.issueDate));
+  const [deadline, setDeadline] = useState(new Date(props.deadline));
+ 
+  return (
     <div
     style={{
       backgroundColor: "slategrey",
@@ -9,11 +14,14 @@ function AssignmentElement(){
     }}
   >
     <div>
-      <h5>Assignment Name.</h5>
+      <h5>{props.title}</h5>
     </div>
-    <div style={{display:"block"}}>
-      Assignment description  : Assignment based on Trees 
-      
+    <div style={{display:"flex", justifyContent : "space-between", alignItems : "center"}}>
+      <div>
+        <p>Assignment description  : {props.link}</p>
+      <p>Issue Date : {issue.toString()}</p>
+      <p>Deadline : {deadline.toString()}</p>
+      </div>
       <div
         style={{
           width: "150px",

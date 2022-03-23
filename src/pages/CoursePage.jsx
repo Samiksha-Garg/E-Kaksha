@@ -1,20 +1,38 @@
 import { padding } from "@mui/system";
-import { useState } from "react";
+import { useEffect, useState} from "react";
 import TopNavbar from "../components/Navigation/topNavbar";
 import classes from "./CoursePage.module.css";
 import CourseMaterial from "./CourseMaterial";
 import QuizPage from "./QuizPage";
 import AssignmentPage from "./AssignmentPage";
 import { Assignment } from "@mui/icons-material";
+import { useParams } from "react-router";
+import axios from "axios";
 
 function CoursePage() {
+
     const[isAssignment,setAssignment]=useState(true);
     const[isCourseMaterial,setCourseMaterial]=useState(false);
     const[isQuizzes,setQuizzes]=useState(false);
+    const [assignments, setAssignments] = useState([]);
+    const [quizzes, setQuiz] = useState([]);
+    const [material, setMaterial] = useState([]);
+
+    const { cid } = useParams();
 
     const openAssignment=()=>{setQuizzes(false);setAssignment(true);setCourseMaterial(false);}
     const openCourseMaterial=()=>{setQuizzes(false);setAssignment(false);setCourseMaterial(true);}
     const openQuizzes=()=>{setQuizzes(true);setAssignment(false);setCourseMaterial(false);}
+
+    useEffect(async() => {
+  
+      const response1 = await axios.get("/assignment/courseid/"+ cid);
+      const response2 = await axios.get("/quiz/courseid/" + cid);
+      console.log(response1);
+      setAssignments(response1.data);
+      setQuiz(response2.data);
+    
+    },[cid])
   return (
     <div>
         <TopNavbar />
@@ -62,7 +80,7 @@ function CoursePage() {
                Quizzes
         </div>
     </div>  
-    { isAssignment && <AssignmentPage/>}
+    { isAssignment && <AssignmentPage assignments={assignments}/>}
      { isCourseMaterial && <CourseMaterial/>}
      { isQuizzes && <QuizPage/>}
 
