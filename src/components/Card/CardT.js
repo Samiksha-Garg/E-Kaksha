@@ -18,6 +18,11 @@ function CardT(props)
 {
 
 const array = [CardImg0, CardImg1, CardImg2, CardImg3, CardImg4, CardImg5, CardImg6, CardImg7, CardImg8];
+
+// const handleClick = (url) => {
+//     history.push("/resources/" + url);
+// };
+
 return (
 <div className='card-style' >
 <div className="card-container">
@@ -35,7 +40,7 @@ return (
 
 <div className="btn">
     <button>
-        <Link to="/coursepage">
+        <Link to={"/coursepage/" + props.courseId}>
             View More!
         </Link>
     </button>

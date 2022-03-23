@@ -22,7 +22,7 @@ function App(){
         <Route exact path={"/"} element={<HomePage />} />  
         <Route path={"/calendar"} element={<ProtectedRoute Component={CalendarPage}/>}/>
         <Route path={"/chat"} element={<ProtectedRoute Component={Chat}/>}/>
-        <Route path="/coursepage" element={<ProtectedRoute Component={CoursePage}/>}/>
+        <Route path="/coursepage/:cid" element={<ProtectedRoute Component={CoursePage}/>}/>
        </Routes>
        </div>
       </Router>
