@@ -10,11 +10,13 @@ import AttendenceIcon from "../../assets/Attendence-icon";
 
 import classes from './NavBar.module.css';
 
+
 function NavBar() {
 
   const[isOpenNavBar,setOpenNavBar]=useState(false);
  
   const changeState=()=>setOpenNavBar(!isOpenNavBar);
+  
 
   return (
     <div className="">

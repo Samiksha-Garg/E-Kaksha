@@ -12,21 +12,24 @@ import CalendarPage from "./components/Calendar/CalendarPage";
 import ProtectedRoute from "./ProtectedRoute";
 import Chat from "./components/Chat/Chat";
 
+import ToDoAsnPage from "./components/ToDoAsn/ToDoAsnPage"
+
+
 function App(){
   const {user}=useContext(Context);
     return (
-      <Router>
+      
+     <Router>
       <div style={{display : "flex", width : "100vw", minHeight:"100vh"}}>
       {user? <NavBar/> : null} 
         <Routes>
         <Route exact path={"/"} element={<HomePage />} />  
         <Route path={"/calendar"} element={<ProtectedRoute Component={CalendarPage}/>}/>
         <Route path={"/chat"} element={<ProtectedRoute Component={Chat}/>}/>
+        <Route path={"/assignments"} element={<ProtectedRoute Component={ToDoAsnPage}/>}/>
        </Routes>
        </div>
       </Router>
-     
-
     );
 }
 export default App;

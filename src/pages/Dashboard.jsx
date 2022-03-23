@@ -28,7 +28,7 @@ function DashBoard(){
 
 <TopNavbar />
 {userCourses.map((event) => {
-          return <CardT title={event.name} ImageUrl={event.image} body = {event.desc} />;
+          return <CardT title={event.name} ImageUrl={event.image} body = {event.desc} course_id ={event.__id}/>;
         })} 
       </div>    
     )
