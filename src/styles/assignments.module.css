@@ -1,0 +1,21 @@
+.outerBody {
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+   
+}
+
+hr {
+    width: 90%;
+}
+
+.view {
+    display: flex;
+    justify-content: space-evenly;
+     height: 50vh;
+    overflow-y: auto;
+}

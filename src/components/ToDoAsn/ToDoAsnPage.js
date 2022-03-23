@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, {useEffect, useState, useContext , useCallback} from "react";
 import { Context } from "../../context/Context";
-import Badge from 'react-bootstrap/Badge'
-import DisplayTasks1 from "./DisplayTasks1"
+import DisplayTasks1 from "./DisplayTasks"
 
 function ToDoAsnPage(){
 
@@ -16,8 +15,6 @@ function ToDoAsnPage(){
     const [todoQuizzes , setTodoQuizzes] = useState([]);
     const [missedQuizzes , setMissedQuizzes] = useState([]);
     const [completedQuizzes , setCompletedQuizzes] =useState([]);
-    //const [statusTasks , setStatusTasks]  =useState([]);
-    //const statusArray=[];
 
     useEffect(async () =>{
         let courseArray =user.courses;
@@ -62,6 +59,7 @@ function ToDoAsnPage(){
                     start:new Date(assigArrayOfCourse[j].issueDate),
                     deadline: new Date(assigArrayOfCourse[j].deadline),
                     submissions: assigArrayOfCourse[j].submissions,
+                    type : "assignment"
                 });
             }
             
@@ -77,6 +75,7 @@ function ToDoAsnPage(){
                     start: new Date(quizArrayOfCourse[j].date),
                     deadline: quizArrayOfCourse[j].duration,
                     submissions: quizArrayOfCourse[j].submissions,
+                    type : "quiz"
                 });
             }
         }
@@ -84,13 +83,6 @@ function ToDoAsnPage(){
         setCourses(courseNameArray);
         setAssignments(assignmentArray);
         setQuizzes(quizArray);
-        //console.log(courseNameArray)
-        //console.log(assignmentArray);
-        //console.log(quizArray);
-        //console.log(courseNameArray);
-        //console.log(courses);
-        //console.log(assignments);
-        //console.log(quizzes);
 
 
 
@@ -107,9 +99,6 @@ function ToDoAsnPage(){
 
             if(flag){
                 let today = new Date();
-                //let dd = int(String(today.getDate()).padStart(2, '0'));
-                //let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                //let yyyy = today.getFullYear();
                 let deadline = assignmentArray[i].deadline;
                 
 
@@ -157,22 +146,12 @@ function ToDoAsnPage(){
 
     } ,[user])
 
-    //console.log("todo" , todoAssignments);
-    //console.log("missed" , missedAssignments);
-    //console.log("completed" , completedAssignments);
-    //console.log("todoq" , todoQuizzes);
-    //console.log( "missedq", missedQuizzes);
-    //console.log("completedq" , completedQuizzes);
-
     return (
-        <div>
+        <div style={{width : "100%"}}>
             <DisplayTasks1 todoAssignments={todoAssignments} missedAssignments={missedAssignments} 
             completedAssignments={completedAssignments} todoQuizzes={todoQuizzes} 
             missedQuizzes={missedQuizzes} completedQuizzes={completedQuizzes}
             courses = {courses}/>
-            <button onClick={() => {
-                console.log(quizzes);
-            }}> Hello</button>
         </div>
     );
 }
@@ -180,122 +159,3 @@ function ToDoAsnPage(){
 
 
 export default ToDoAsnPage;
-
-/*
- M
-            {todoAssignments.map((obj) =>{
-                return <CardDisplay cid={obj.cid} course={obj.course} quizid={obj.assigid} title={obj.title} start={obj.start} deadline={obj.deadline} submissions={obj.submissions} type={"asn"} status={0} ></CardDisplay>
-            })}
-            A
-            {completedAssignments.map((obj) =>{
-                return <CardDisplay cid={obj.cid} course={obj.course} quizid={obj.assigid} title={obj.title} start={obj.start} deadline={obj.deadline} submissions={obj.submissions} type={"asn"} status={1}></CardDisplay>
-            })}
-            H
-            {missedAssignments.map((obj) =>{
-                return <CardDisplay cid={obj.cid} course={obj.course} quizid={obj.assigid} title={obj.title} start={obj.start} deadline={obj.deadline} submissions={obj.submissions} type={"asn"} status={-1}></CardDisplay>
-            })}
-            A
-            {todoQuizzes.map((obj) =>{
-                return <CardDisplay cid={obj.cid} course={obj.course} quizid={obj.quizid} title={obj.title} start={obj.date} deadline={obj.duration} submissions={obj.submissions} type={"quiz"} status={0}></CardDisplay>
-            })}
-            D
-            {completedQuizzes.map((obj) =>{
-                return <CardDisplay cid={obj.cid} course={obj.course} quizid={obj.quizid} title={obj.title} start={obj.date} deadline={obj.duration} submissions={obj.submissions} type={"quiz"} status={1}></CardDisplay>
-            })}
-            E
-            {missedQuizzes.map((obj) =>{
-                return <CardDisplay  cid={obj.cid} course={obj.course} quizid={obj.quizid} title={obj.title} start={obj.date} deadline={obj.duration} submissions={obj.submissions} type={"quiz"} status={-1}></CardDisplay>
-            })}
-            V
-*/
-/*
-{todoAssignments.map((obj) =>{
-                return <CardDisplay  {...obj}></CardDisplay>
-            })}
-            A
-            {completedAssignments.map((obj) =>{
-                return <CardDisplay  {...obj}></CardDisplay>
-            })}
-            H
-            {missedAssignments.map((obj) =>{
-                return <CardDisplay  {...obj}></CardDisplay>
-            })}
-*/
-
-/*
-<BasicTable statusTasks={statusTasks}/>
-<SortingTable statusTasks={statusTasks}/>
-*/
-
-/*
-<FilteringTable statusTasks={statusTasks}></FilteringTable>
-*/
-
-/*
-        //console.log(todoAsn);
-        //console.log(missedAsn);
-        //console.log(completedAsn);
-        //console.log("todo" , todoAssignments);
-        //console.log("missed" , missedAssignments);
-        //console.log("completed" , completedAssignments);
-
-        //console.log(todoq);
-       // console.log(missedq);
-        //console.log(completedq);
-        //console.log("todoq" , todoQuizzes);
-        //console.log( "missedq", missedQuizzes);
-        //console.log("completedq" , completedQuizzes);
-
-        /*l=todoAssignments.length;
-        for(let i=0 ; i<l ; i++){
-            statusArray.push({
-                "todo" : todoAssignments[i],
-                "missed" : "",
-                "completed" : "",
-            });
-        }
-        l=missedAssignments.length;
-        for(let i=0 ; i<l ; i++){
-            statusArray.push({
-                "todo" : "",
-                "missed" : missedAssignments[i],
-                "completed" : "",
-            });
-        }
-        l=completedAssignments.length;
-        for(let i=0 ; i<l ; i++){
-            statusArray.push({
-                "todo" : "",
-                "missed" : "",
-                "completed" : completedAssignments[i],
-            });
-        }
-
-        l=todoQuizzes.length;
-        for(let i=0 ; i<l ; i++){
-            statusArray.push({
-                "todo" : todoQuizzes[i],
-                "missed" : "",
-                "completed" : "",
-            });
-        }
-        l=missedQuizzes.length;
-        for(let i=0 ; i<l ; i++){
-            statusArray.push({
-                "todo":"",
-                "missed" : missedQuizzes[i],
-                "completed":"",
-            });
-        }
-        l=completedQuizzes.length;
-        for(let i=0 ; i<l ; i++){
-            statusArray.push({
-                "todo" : "",
-                "missed" : "",
-                "completed" : completedQuizzes[i],
-            });
-        }
-
-        setStatusTasks(statusArray);*/
-        //console.log("status" , statusArray );
-        //console.log("status" , statusTasks);
