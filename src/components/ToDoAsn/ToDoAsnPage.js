@@ -2,7 +2,7 @@ import axios from "axios";
 import React, {useEffect, useState, useContext , useCallback} from "react";
 import { Context } from "../../context/Context";
 import Badge from 'react-bootstrap/Badge'
-import DisplayTasks from "./DisplayTasks"
+import DisplayTasks1 from "./DisplayTasks1"
 
 function ToDoAsnPage(){
 
@@ -166,7 +166,7 @@ function ToDoAsnPage(){
 
     return (
         <div>
-            <DisplayTasks todoAssignments={todoAssignments} missedAssignments={missedAssignments} 
+            <DisplayTasks1 todoAssignments={todoAssignments} missedAssignments={missedAssignments} 
             completedAssignments={completedAssignments} todoQuizzes={todoQuizzes} 
             missedQuizzes={missedQuizzes} completedQuizzes={completedQuizzes}
             courses = {courses}/>

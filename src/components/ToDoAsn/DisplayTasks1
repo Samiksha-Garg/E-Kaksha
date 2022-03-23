@@ -6,7 +6,7 @@ import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 
-function DisplayTasks(props){
+function DisplayTasks1(props){
     const [todoAsn , setTodoAssignments] = useState(props.todoAssignments);
     const [missedAsn , setMissedAssignments] = useState(props.missedAssignments);
     const [completedAsn , setCompletedAssignments] =useState(props.completedAssignments);
@@ -39,8 +39,11 @@ function DisplayTasks(props){
      }, [props.todoAssignments, props.missedAssignments, props.completedQuizzes, props.completedAssignments, props.todoQuizze, props.missedQuizzes])
 
     const SelectCourse=e=>{
+      //let a=selectedCourse;
       setSelectedCourse(e.target.value.toString());
+      //setSelectedCourse(a => e.target.value);
       let sCourse = e.target.value;
+      //let sCourse = selectedCourse;
 
       if (sCourse == '') {
         setSelectedDate('');
@@ -53,7 +56,7 @@ function DisplayTasks(props){
         return;
       }
       
-      let todoA=[];
+      /*let todoA=[];
       let missedA=[];
       let completedA=[];
       let todoQ=[];
@@ -95,7 +98,14 @@ function DisplayTasks(props){
       setCompletedAssignments(completedA);
       setTodoQuizzes(todoQ);
       setMissedQuizzes(missedQ);
-      setCompletedQuizzes(completedQ);
+      setCompletedQuizzes(completedQ); */
+
+      setTodoAssignments(arr => arr.filter( ele => ele.cid===sCourse));
+      setMissedAssignments(arr => arr.filter( ele => ele.cid===sCourse));
+      setCompletedAssignments(arr => arr.filter( ele => ele.cid===sCourse));
+      setTodoQuizzes(arr => arr.filter( ele => ele.cid===sCourse));
+      setMissedQuizzes(arr => arr.filter( ele => ele.cid===sCourse));
+      setCompletedQuizzes(arr => arr.filter( ele => ele.cid===sCourse));
     }
 
     const SelectDate=e=>{
@@ -108,6 +118,7 @@ function DisplayTasks(props){
         return;
       }
 
+    /*
       let todoA=[];
       let todoQ=[];
 
@@ -122,7 +133,10 @@ function DisplayTasks(props){
         }
       }
       setTodoAssignments(todoA);
-      setTodoQuizzes(todoQ);
+      setTodoQuizzes(todoQ);*/
+
+      setTodoAssignments(arr => arr.filter( ele => ele.deadline.setHours(0,0,0)===sDate.setHours(0,0,0)));
+      setTodoQuizzes(arr => arr.filter( ele => ele.deadline.setHours(0,0,0)===sDate.setHours(0,0,0)));
   }
     return(
         <div>
@@ -177,5 +191,4 @@ function DisplayTasks(props){
     );
 }
 
-export default DisplayTasks;
-
+export default DisplayTasks1;
