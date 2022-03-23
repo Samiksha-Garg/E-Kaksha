@@ -180,15 +180,16 @@ export default function Chat() {
 
   const handleSearch=(event)=>{
     setSearchText(event.target.value);
-    console.log(searchText);
+    console.log(event.target.value);
+
     const filteredData = recentChat.filter((el) => {
       //if no input the return the original
-      if (searchText === "") {
+      if (event.target.value === "") {
           return el;
       }
       //return the item which contains the user input
       else {
-          return el.prof.name.toString().toLowerCase().includes(searchText.toString().toLowerCase())
+          return el.prof.name.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())
       }
   })
    
