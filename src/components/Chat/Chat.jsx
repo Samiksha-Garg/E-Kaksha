@@ -11,6 +11,7 @@ import axios from "axios";
 import { io } from "socket.io-client";
 
 export default function Chat() {
+  const scroll = useRef();
   const { user } = useContext(Context);
   const [friends, setFriends] = useState([]);
   const[filteredFriends,setFilteredFriends]=useState([]);
@@ -24,6 +25,19 @@ export default function Chat() {
   const socket = useRef();
   const[searchFriends,setSearchFriends]=useState("");
   const [searchText,setSearchText]=useState("");
+
+  const scrollBottom = () => {
+    if (scroll.current) {
+       scroll.current.scrollIntoView();
+    }
+    console.log('Hi');
+  };
+
+  useEffect(() => {
+    scrollBottom();
+  }, [messages])
+
+
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
     //getting message from server
@@ -50,6 +64,7 @@ export default function Chat() {
     });
   }, [user]);
   useEffect(async () => {
+
     if (convo) {
       const response = await axios.get("/message/" + convo.chatId);
       setMessages(response.data);
@@ -247,6 +262,7 @@ export default function Chat() {
           lg="8"
           className="converseBox"
           style={{ flexDirection: "column" }}
+          
         >
           {convo ? (
             <>
@@ -265,7 +281,9 @@ export default function Chat() {
                     />
                   );
                 })}
+              <div ref={scroll} style={{ backgroundColor: "black" }} />
               </div>
+              
 
               <div className="writeMessages">
                 <input
