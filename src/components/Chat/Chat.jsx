@@ -13,6 +13,7 @@ import { io } from "socket.io-client";
 export default function Chat() {
   const { user } = useContext(Context);
   const [friends, setFriends] = useState([]);
+  const[filteredFriends,setFilteredFriends]=useState([]);
   const [recentChat, setRecentChats] = useState([]);
   const [recentChatFiltered,setFiltered]=useState([]);
   const [convo, setConvo] = useState(null);
@@ -21,7 +22,7 @@ export default function Chat() {
   const [arrivalMsg, setArrivalMsg] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const socket = useRef();
- 
+  const[searchFriends,setSearchFriends]=useState("");
   const [searchText,setSearchText]=useState("");
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
@@ -177,6 +178,9 @@ export default function Chat() {
   useEffect(()=>{
     setFiltered(recentChat);
   },[recentChat]);
+  useEffect(()=>{
+    setFilteredFriends(friends);
+  },[friends]);
 
   const handleSearch=(event)=>{
     setSearchText(event.target.value);
@@ -191,10 +195,27 @@ export default function Chat() {
       else {
           return el.prof.name.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())
       }
-  })
+    })
    
     setFiltered(filteredData);
     
+  }
+  const handleSearchFriends=(event)=>{
+    setSearchFriends(event.target.value);
+    console.log(event.target.value);
+
+    const filteredData = friends.filter((el) => {
+      //if no input the return the original
+      if (event.target.value === "") {
+          return el;
+      }
+      //return the item which contains the user input
+      else {
+          return el.name.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())
+      }
+    })
+
+    setFilteredFriends(filteredData);
   }
   return (
     <div style={{ width: "100%", height: "100%" }}>
@@ -277,9 +298,11 @@ export default function Chat() {
               type="text"
               placeholder="Search All Users"
               className="searchTab"
+              value={searchFriends}
+              onChange={handleSearchFriends}
             />
           </div>
-          {friends.map((event) => {
+          {filteredFriends.map((event) => {
             const isOnline = onlineUsers.some((el) => el.userId === event._id);
             return (
               <div
