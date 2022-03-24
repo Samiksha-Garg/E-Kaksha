@@ -13,22 +13,25 @@ import ProtectedRoute from "./ProtectedRoute";
 
 
 import ToDoAsnPage from "./components/ToDoAsn/ToDoAsnPage"
+import AttendancePage from "./components/Attendance/AttendancePage"
 
 
 function App(){
   const {user}=useContext(Context);
     return (
-      
-     <Router>
+      <div>
+             <Router>
       <div style={{display : "flex", width : "100vw", minHeight:"100vh"}}>
       {user? <NavBar/> : null} 
         <Routes>
         <Route exact path={"/"} element={<HomePage />} />  
         <Route path={"/calendar"} element={<ProtectedRoute Component={CalendarPage}/>}/>
         <Route path={"/assignments"} element={<ProtectedRoute Component={ToDoAsnPage}/>}/>
+        <Route path={"/attendance"} element={<ProtectedRoute Component={AttendancePage}/>}/>
        </Routes>
        </div>
       </Router>
+      </div>
     );
 }
 export default App;
