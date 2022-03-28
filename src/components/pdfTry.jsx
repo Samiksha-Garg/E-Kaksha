@@ -10,7 +10,7 @@ function PDF() {
       clientId: "570010301519-etlhrs7uv373dji6joeaat8t2rornin4.apps.googleusercontent.com",
       developerKey: "AIzaSyDa-r1oYw0CuYNzHg9Yorlh55mdSWL1GKU",
       viewId: "DOCS",
-      //token:"##youraccesstoken##", // pass oauth token in case you already have one
+      token:"ya29.A0ARrdaM-6OmCjhv10roddtt7m_0B2logDG6BvS3oHsP_4-_bMiQpl7_Ih99AVPoJZUjM7OZ6nf0pyKqYA4FcuSY0ffVi4TKPYgW0YsBAgTMsSbQoAeR7s4FwiOTaGKYDY0dEzKcwzxU8x1tJaXTdiZ0BfPmTA", // pass oauth token in case you already have one
       showUploadView: true,
       showUploadFolders: true,
       supportDrives: true,
