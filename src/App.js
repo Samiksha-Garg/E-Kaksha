@@ -11,6 +11,7 @@ import React, {useState, useRef, useContext, useEffect} from "react";
 import CalendarPage from "./components/Calendar/CalendarPage";
 import ProtectedRoute from "./ProtectedRoute";
 import Chat from "./components/Chat/Chat";
+import PDF from "./components/pdfTry";
 
 import ToDoAsnPage from "./components/ToDoAsn/ToDoAsnPage"
 
@@ -27,6 +28,7 @@ function App(){
         <Route path={"/calendar"} element={<ProtectedRoute Component={CalendarPage}/>}/>
         <Route path={"/chat"} element={<ProtectedRoute Component={Chat}/>}/>
         <Route path={"/assignments"} element={<ProtectedRoute Component={ToDoAsnPage}/>}/>
+        <Route path={"/pdf"} element={<ProtectedRoute Component={PDF}/>}/>
        </Routes>
        </div>
       </Router>
