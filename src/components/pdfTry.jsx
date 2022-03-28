@@ -7,8 +7,8 @@ function PDF() {
   // const customViewsArray = [new google.picker.DocsView()]; // custom view
   const handleOpenPicker = () => {
     openPicker({
-      clientId: "1002411722965-inrhsth7j36ls64bna0elctqnscpg1h6.apps.googleusercontent.com",
-      developerKey: "AIzaSyATTZ_B_pWOTeg0rNj45y7pdCRm8_fk-0s",
+      clientId: "570010301519-etlhrs7uv373dji6joeaat8t2rornin4.apps.googleusercontent.com",
+      developerKey: "AIzaSyDa-r1oYw0CuYNzHg9Yorlh55mdSWL1GKU",
       viewId: "DOCS",
       //token:"##youraccesstoken##", // pass oauth token in case you already have one
       showUploadView: true,
