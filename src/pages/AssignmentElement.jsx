@@ -8,9 +8,8 @@ function AssignmentElement(props){
     <div
     style={{
       backgroundColor: "slategrey",
-      padding: "30px 30px",
+      padding: "25px 25px",
       margin: "20px 50px",
-      width: "1393px"
     }}
   >
     <div>

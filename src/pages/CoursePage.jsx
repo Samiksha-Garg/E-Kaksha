@@ -34,14 +34,13 @@ function CoursePage() {
     
     },[cid])
   return (
-    <div>
+    <div style={{overflowX:"hidden",backgroundColor:"white",width:"100%"}}>
         <TopNavbar />
       <div
         style={{
           backgroundColor: "rgb(251,167,94)",
           padding: "30px 30px",
           margin: "20px 50px",
-          width: "1393px"
         }}
       >
         <div>

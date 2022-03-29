@@ -16,7 +16,7 @@ function App(){
   const {user}=useContext(Context);
     return (
       <Router>
-      <div style={{display : "flex", width : "100vw", minHeight:"100vh"}}>
+      <div style={{display : "flex", width : "100%", minHeight:"100vh"}}>
       {user? <NavBar/> : null} 
         <Routes>
         <Route exact path={"/"} element={<HomePage />} />  
