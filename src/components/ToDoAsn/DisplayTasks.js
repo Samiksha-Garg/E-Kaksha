@@ -18,7 +18,6 @@ function DisplayTasks(props){
     const [selectedDate , setSelectedDate] = useState();
 
     useEffect(() => {
-      console.log(props.todoAssignments);
 
       setTodoAssignments(props.todoAssignments);
       setCompletedAssignments(props.completedAssignments);

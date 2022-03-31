@@ -46,8 +46,7 @@ function ToDoAsnPage(){
             });
         
 
-            assigArrayOfCourse = response2.data;
-            //console.log(assigArrayOfCourse);
+            assigArrayOfCourse = response2.data;;
              
             len=assigArrayOfCourse.length;
             for(let j=0; j<len ; j++){
@@ -64,7 +63,6 @@ function ToDoAsnPage(){
             }
             
             quizArrayOfCourse = response3.data;
-            //console.log(quizArrayOfCourse);
             len=quizArrayOfCourse.length;
             for(let j=0 ; j<len ; j++){
                 quizArray.push({
@@ -86,14 +84,15 @@ function ToDoAsnPage(){
 
 
 
-        let IdOfUser =user.__id;
+        let IdOfUser =user._id;
         l = assignmentArray.length;
         for(let i=0 ; i<l ; i++){
             let len =assignmentArray[i].submissions.length;
             let flag=1;
             for(let j=0 ; j<len ; j++){
-                if(IdOfUser === assignmentArray[i].submissions[j].studentId){
-                    flag=0;break;
+                if(IdOfUser === assignmentArray[i].submissions[j].student){
+                    flag=0;
+                    break;
                 }
             }
 
@@ -116,7 +115,6 @@ function ToDoAsnPage(){
         setMissedAssignments(missedAsn);
 
         l = quizArray.length;
-        //console.log("length" , l);
         for(let i=0 ; i<l ; i++){
             let len =quizArray[i].submissions.length;
             let flag=1;
@@ -131,7 +129,6 @@ function ToDoAsnPage(){
                 let deadline =quizArray[i].start;
                 if(today.getTime() > deadline.getTime()){
                   
-                    //console.log(today , deadline);
                     missedq.push(quizArray[i]);
                 }else {
                     todoq.push(quizArray[i]);
