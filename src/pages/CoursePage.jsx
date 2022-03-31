@@ -1,5 +1,5 @@
 import { padding } from "@mui/system";
-import { useEffect, useState} from "react";
+import { useEffect, useState, useContext} from "react";
 import TopNavbar from "../components/Navigation/topNavbar";
 import classes from "./CoursePage.module.css";
 import CourseMaterial from "./CourseMaterial";
@@ -10,6 +10,7 @@ import { useParams } from "react-router";
 import axios from "axios";
 
 function CoursePage() {
+
 
     const[isAssignment,setAssignment]=useState(true);
     const[isCourseMaterial,setCourseMaterial]=useState(false);
@@ -24,12 +25,18 @@ function CoursePage() {
           return i;
         }
       }
+
+      return -1;
     }
 
     const updateAssignment = (newAssign) => {
       let i = index(newAssign);
       let temp = assignments;
-      temp[i] = newAssign;
+      if (i == -1) {
+        temp.unshift(newAssign);
+      } else {
+        temp[i] = newAssign;
+      }
       setAssignment(false);
       setAssignment(true);
       setAssignments(temp);
@@ -45,7 +52,7 @@ function CoursePage() {
   
       const response1 = await axios.get("/assignment/courseid/"+ cid);
       const response2 = await axios.get("/quiz/courseid/" + cid);
-      setAssignments(response1.data);
+      setAssignments(response1.data.reverse());
       setQuiz(response2.data);
     
     },[cid])
@@ -95,12 +102,10 @@ function CoursePage() {
                Quizzes
         </div>
     </div>  
-    { isAssignment && <AssignmentPage func={updateAssignment} assignments={assignments}/>}
+    { isAssignment && <AssignmentPage cid={cid} func={updateAssignment} assignments={assignments}/>}
      { isCourseMaterial && <CourseMaterial/>}
      { isQuizzes && <QuizPage/>}
-
-
-      </div>
+     </div>
   );
 }
 
