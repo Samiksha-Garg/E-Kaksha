@@ -2,7 +2,7 @@ import { padding } from "@mui/system";
 import { useEffect, useState, useContext} from "react";
 import TopNavbar from "../components/Navigation/topNavbar";
 import classes from "./CoursePage.module.css";
-import CourseMaterial from "./CourseMaterial";
+import CourseMaterial from "./CourseMaterial/CourseMaterial";
 import QuizPage from "./QuizPage";
 import AssignmentPage from "./AssignmentPage";
 import { Assignment } from "@mui/icons-material";
@@ -18,6 +18,7 @@ function CoursePage() {
     const [assignments, setAssignments] = useState([]);
     const [quizzes, setQuiz] = useState([]);
     const [material, setMaterial] = useState([]);
+
 
     const index = (newAssign) => {
       for (let i = 0; i < assignments.length; i++) {
@@ -39,7 +40,15 @@ function CoursePage() {
       }
       setAssignment(false);
       setAssignment(true);
+      setCourseMaterial(false);
+      setCourseMaterial(true);
       setAssignments(temp);
+    }
+
+    const updateMaterial = (newMaterial) => {
+      let temp = material;
+      temp.unshift(newMaterial);
+      setMaterial(temp);
     }
 
     const { cid } = useParams();
@@ -52,8 +61,10 @@ function CoursePage() {
   
       const response1 = await axios.get("/assignment/courseid/"+ cid);
       const response2 = await axios.get("/quiz/courseid/" + cid);
+      const response3 = await axios.get("/material/courseid/" + cid);
       setAssignments(response1.data.reverse());
-      setQuiz(response2.data);
+      setQuiz(response2.data.reverse());
+      setMaterial(response3.data.reverse());
     
     },[cid])
   return (
@@ -103,7 +114,7 @@ function CoursePage() {
         </div>
     </div>  
     { isAssignment && <AssignmentPage cid={cid} func={updateAssignment} assignments={assignments}/>}
-     { isCourseMaterial && <CourseMaterial/>}
+     { isCourseMaterial && <CourseMaterial func={updateMaterial} cid={cid} material={material}/>}
      { isQuizzes && <QuizPage/>}
      </div>
   );
