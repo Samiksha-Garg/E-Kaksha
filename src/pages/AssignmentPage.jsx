@@ -6,12 +6,13 @@ function AssignmentPage(props){
 
   useEffect(() => {
     setAssign(props.assignments);
-  },[props.assignments])
+  },[props])
+
 
     return(
       <div>
         {assign.map((event) => {
-          return <AssignmentElement title = {event.title} link = {event.link} assignId = {event._id} issueDate = {event.issueDate} deadline = {event.deadline}/>;
+          return <AssignmentElement key={event._id} update ={props.func} sub ={event.submissions} title = {event.title} link = {event.link} assignId = {event._id} issueDate = {event.issueDate} deadline = {event.deadline}/>;
         })} 
       </div>
     )

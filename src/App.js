@@ -11,6 +11,7 @@ import React, {useState, useRef, useContext, useEffect} from "react";
 import CalendarPage from "./components/Calendar/CalendarPage";
 import ProtectedRoute from "./ProtectedRoute";
 import Chat from "./components/Chat/Chat";
+import Sample from "./PdfView/Sample";
 
 function App(){
   const {user}=useContext(Context);
@@ -23,6 +24,7 @@ function App(){
         <Route path={"/calendar"} element={<ProtectedRoute Component={CalendarPage}/>}/>
         <Route path={"/chat"} element={<ProtectedRoute Component={Chat}/>}/>
         <Route path="/coursepage/:cid" element={<ProtectedRoute Component={CoursePage}/>}/>
+        <Route path="/pdf" element={<ProtectedRoute Component={Sample}/>}/>
        </Routes>
        </div>
       </Router>

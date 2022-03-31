@@ -18,6 +18,23 @@ function CoursePage() {
     const [quizzes, setQuiz] = useState([]);
     const [material, setMaterial] = useState([]);
 
+    const index = (newAssign) => {
+      for (let i = 0; i < assignments.length; i++) {
+        if (assignments[i]._id == newAssign._id) {
+          return i;
+        }
+      }
+    }
+
+    const updateAssignment = (newAssign) => {
+      let i = index(newAssign);
+      let temp = assignments;
+      temp[i] = newAssign;
+      setAssignment(false);
+      setAssignment(true);
+      setAssignments(temp);
+    }
+
     const { cid } = useParams();
 
     const openAssignment=()=>{setQuizzes(false);setAssignment(true);setCourseMaterial(false);}
@@ -28,7 +45,6 @@ function CoursePage() {
   
       const response1 = await axios.get("/assignment/courseid/"+ cid);
       const response2 = await axios.get("/quiz/courseid/" + cid);
-      console.log(response1);
       setAssignments(response1.data);
       setQuiz(response2.data);
     
@@ -79,7 +95,7 @@ function CoursePage() {
                Quizzes
         </div>
     </div>  
-    { isAssignment && <AssignmentPage assignments={assignments}/>}
+    { isAssignment && <AssignmentPage func={updateAssignment} assignments={assignments}/>}
      { isCourseMaterial && <CourseMaterial/>}
      { isQuizzes && <QuizPage/>}
 
