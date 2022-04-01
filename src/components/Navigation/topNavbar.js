@@ -60,13 +60,16 @@ const handleLogOut = () => {
     <div className={classes.Navbar }>
 
         <ul className={classes.ul}>
+          <div className={classes.iconItem}>
         <Button onClick={() => {
             setShowModal(true);
           }}>
           <AddCourseIcon />
       </Button>
-         
-          <Button
+            </div>
+        
+         <div className={classes.iconItem}>
+          <Button 
         id="demo-positioned-button"
         aria-controls={open1 ? 'demo-positioned-menu' : undefined}
         aria-haspopup="true"
@@ -74,7 +77,8 @@ const handleLogOut = () => {
         onClick={handleClick1}
       >
         <HorizontalNavbarPeopleLogo /> 
-      </Button>
+      </Button></div>
+      
       <Menu
         anchorEl={anchorEl1}
         id="account-menu"
@@ -146,8 +150,8 @@ const handleLogOut = () => {
         <MenuItem >Logout</MenuItem>
       </Menu> */}
     
-
-          <Button
+        <div className={classes.iconItem}>
+        <Button
         id="demo-positioned-button"
         aria-controls={open2 ? 'demo-positioned-menu' : undefined}
         aria-haspopup="true"
@@ -156,6 +160,9 @@ const handleLogOut = () => {
       >
         <NotificationNavbarIcon/>
       </Button>
+      </div>
+          
+
       <Menu
         id="demo-positioned-menu"
         aria-labelledby="demo-positioned-button"

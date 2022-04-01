@@ -22,13 +22,15 @@ function DashBoard(){
            setCourses(courses);
       },[user])
 
+      
+
     return(
         <div>
       
 
 <TopNavbar />
 {userCourses.map((event) => {
-          return <CardT title={event.name} ImageUrl={event.image} body = {event.desc} course_id ={event.__id}/>;
+          return <CardT courseId={event._id} title={event.name} ImageUrl={event.image} body = {event.desc} />;
         })} 
       </div>    
     )
