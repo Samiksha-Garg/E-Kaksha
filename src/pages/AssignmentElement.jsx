@@ -79,7 +79,6 @@ function AssignmentElement(props) {
 
   
   function openPDF(event){
-    console.log(event.target);
     setViewFile(event.target.value);
     setOpen(true);
   }

@@ -107,14 +107,14 @@ function CoursePage() {
       }
       setAssignment(false);
       setAssignment(true);
-      setCourseMaterial(false);
-      setCourseMaterial(true);
       setAssignments(temp);
     }
 
     const updateMaterial = (newMaterial) => {
       let temp = material;
       temp.unshift(newMaterial);
+      setCourseMaterial(false);
+      setCourseMaterial(true);
       setMaterial(temp);
     }
 
