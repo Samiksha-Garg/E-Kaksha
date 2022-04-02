@@ -182,7 +182,7 @@ function CoursePage() {
           >
             {" https://meet.google.com/ "}
           </a>
-          
+          {user.role == "teacher" &&
           <div
             style={{
               width: "150px",
@@ -192,12 +192,14 @@ function CoursePage() {
               float: "right",
             }}
           >
-           {user.role == "teacher" && <btn onClick={() => {
+           <btn onClick={() => {
              setAddModal(true);
-           }}>Schedule a class</btn>}
-           {user.role == "student" && <btn>Chat with Prof!</btn>}
-          </div>
+           }}>Schedule a class</btn>
+           
+          </div> }
+          
         </div>
+        {user.role == "teacher" && <p>Course Code: {courseDeets? courseDeets._id : "Course Code!"}</p> }
       </div>
       <div style={{margin:"0px 50px",padding:"10px", backgroundColor:"slategrey",display:"flex"}} >
         <div className={classes.itemStyle} onClick={openAssignment} style={{cursor:"pointer"}}>
