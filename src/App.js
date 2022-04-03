@@ -22,15 +22,7 @@ function App(){
   console.log("app")
     return (
       <div>
-            {/*<AttendancePage></AttendancePage>*/}
-            <Display></Display>
-      </div>
-    );
-}
-export default App;
-
-/*
- <Router>
+            <Router>
       <div style={{display : "flex", width : "100vw", minHeight:"100vh"}}>
       {user? <NavBar/> : null} 
         <Routes>
@@ -41,4 +33,11 @@ export default App;
        </Routes>
        </div>
       </Router>
+      </div>
+    );
+}
+export default App;
+
+/*
+ 
 */
