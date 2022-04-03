@@ -30,6 +30,7 @@ function App(){
         <Route path={"/calendar"} element={<ProtectedRoute Component={CalendarPage}/>}/>
         <Route path={"/assignments"} element={<ProtectedRoute Component={ToDoAsnPage}/>}/>
         <Route path={"/attendance"} element={<ProtectedRoute Component={AttendancePage}/>}/>
+        <Route path={"/quiz"} element={<ProtectedRoute Component={Display}/>}/>
        </Routes>
        </div>
       </Router>

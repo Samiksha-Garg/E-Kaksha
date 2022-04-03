@@ -3,7 +3,7 @@ import React , {useState , useEffect , useContext} from 'react';
 import { Context } from "../../context/Context";
 
 function Start({onQuizStart , title , duration , desc , courseId}){
-    const [user , dispatch] = useContext(Context);
+    const {user , dispatch} = useContext(Context);
     const [courseName , setCourseName] = useState("");
     useEffect(async () =>{
         const response1 = await axios.get("/courseName/" + courseId);
