@@ -1,10 +1,11 @@
 import React , {useState , useEffect , useContext} from "react" ;
 import CardDisplay from "./CardDisplay";
-// import Select from 'react-select'
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import TopNavbar from "../Navigation/topNavbar";
+import styles from "../../styles/assignments.module.css"
 
 function DisplayTasks(props){
     const [todoAsn , setTodoAssignments] = useState(props.todoAssignments);
@@ -14,21 +15,9 @@ function DisplayTasks(props){
     const [missedQuiz , setMissedQuizzes] = useState(props.missedQuizzes);
     const [completedQuiz , setCompletedQuizzes] =useState(props.completedQuizzes);
     const [selectedCourse , setSelectedCourse] = useState("");
-    const [selectedDate , setSelectedDate] = useState(new Date());
-    const [options, setOptions] = useState([])
+    const [selectedDate , setSelectedDate] = useState();
 
     useEffect(() => {
-      // let op = []
-      // console.log(props.courses);
-      // for (let i = 0; i < props.courses; i++) {
-      //   op.push({
-      //     value : props.coures[i]._id,
-      //     label : props.coures[i].name
-      //   })
-      // }
-
-      // setOptions(op);
-      console.log(props.todoAssignments);
 
       setTodoAssignments(props.todoAssignments);
       setCompletedAssignments(props.completedAssignments);
@@ -42,93 +31,78 @@ function DisplayTasks(props){
       setSelectedCourse(e.target.value.toString());
       let sCourse = e.target.value;
 
+      let sDate = new Date(selectedDate);
+
       if (sCourse == '') {
-        setSelectedDate('');
-        setTodoAssignments(props.todoAssignments);
         setCompletedAssignments(props.completedAssignments);
         setMissedAssignments(props.missedAssignments);
-        setTodoQuizzes(props.todoQuizzes);
+        if (sDate == 'Invalid Date') {
+          setTodoAssignments(props.todoAssignments);
+          setTodoQuizzes(props.todoQuizzes);
+        } else {
+          setTodoAssignments(props.todoAssignments.filter( ele => ele.deadline.setHours(0,0,0)===sDate.setHours(0,0,0)));
+          setTodoQuizzes(props.todoQuizzes.filter( ele => ele.start.setHours(0,0,0)===sDate.setHours(0,0,0)));
+        }
         setMissedQuizzes(props.missedQuizzes);
         setCompletedQuizzes(props.completedQuizzes)
         return;
       }
-      
-      let todoA=[];
-      let missedA=[];
-      let completedA=[];
-      let todoQ=[];
-      let missedQ=[];
-      let completedQ=[];
 
-      for(let i=0 ; i<props.todoAssignments.length ; i++){
-        if(props.todoAssignments[i].cid=== sCourse){
-          todoA.push(props.todoAssignments[i]);
-        }
+      let missedAss = props.missedAssignments;
+      let missedQ = props.missedQuizzes;
+      let compAss = props.completedAssignments;
+      let compQ = props.completedQuizzes;
+      let todoA = props.todoAssignments;
+      let todoQ = props.todoQuizzes;
+
+      if (sDate == "Invalid Date") {
+        setTodoAssignments(todoA.filter( ele => ele.cid===sCourse));
+        setTodoQuizzes(todoQ.filter( ele => ele.cid===sCourse));
+      } else {
+        setTodoAssignments(todoA.filter( ele => ele.cid===sCourse && ele.deadline.setHours(0,0,0)===sDate.setHours(0,0,0)));
+        setTodoQuizzes(todoQ.filter( ele => ele.cid===sCourse && ele.start.setHours(0,0,0)===sDate.setHours(0,0,0)));
       }
-      for(let i=0 ; i<props.missedAssignments.length ; i++){
-        if(props.missedAssignments[i].cid=== sCourse){
-          missedA.push(props.missedAssignments[i]);
-        }
-      }
-      for(let i=0 ; i<props.completedAssignments.length ; i++){
-        if(props.completedAssignments[i].cid===sCourse){
-          completedA.push(props.completedAssignments[i]);
-        }
-      }
-      for(let i=0 ; i<props.todoQuizzes.length ; i++){
-        if(props.todoQuizzes[i].cid===sCourse){
-          todoQ.push(props.todoQuizzes[i]);
-        }
-      }
-      for(let i=0 ; i<props.missedQuizzes.length ; i++){
-        if(props.missedQuizzes[i].cid===sCourse){
-          missedQ.push(props.missedQuizzes[i]);
-        }
-      }
-      for(let i=0 ; i<props.completedQuizzes.length ; i++){
-        if(props.completedQuizzes[i].cid===sCourse){
-          completedQ.push(props.completedQuizzes[i]);
-        }
-      }
-      setTodoAssignments(todoA);
-      setMissedAssignments(missedA);
-      setCompletedAssignments(completedA);
-      setTodoQuizzes(todoQ);
-      setMissedQuizzes(missedQ);
-      setCompletedQuizzes(completedQ);
+     
+      setMissedAssignments(missedAss.filter( ele => ele.cid===sCourse));
+      setCompletedAssignments(compAss.filter( ele => ele.cid===sCourse));
+      setMissedQuizzes(missedQ.filter( ele => ele.cid===sCourse));
+      setCompletedQuizzes(compQ.filter( ele => ele.cid===sCourse));
     }
 
     const SelectDate=e=>{
       setSelectedDate(e.target.value);
+      let sCourse = selectedCourse;
       
       let sDate = new Date(e.target.value);
       if (sDate == "Invalid Date") {
-        setTodoAssignments(props.todoAssignments);
-        setTodoQuizzes(props.todoQuizzes);
+        if (sCourse == '') {
+          setTodoAssignments(props.todoAssignments);
+          setTodoQuizzes(props.todoQuizzes);
+        } else {
+          setTodoAssignments(props.todoAssignments.filter( ele => ele.cid===sCourse));
+          setTodoQuizzes(props.todoQuizzes.filter( ele => ele.cid===sCourse));
+        }
+        
         return;
       }
 
-      let todoA=[];
-      let todoQ=[];
-
-      for(let i=0 ; i<props.todoAssignments.length ; i++){
-        if(props.todoAssignments[i].deadline.setHours(0,0,0)===sDate.setHours(0,0,0)){
-          todoA.push(props.todoAssignments[i]);
-        }
+      if (sCourse == '') {
+        setTodoAssignments(props.todoAssignments.filter( ele => ele.deadline.setHours(0,0,0)===sDate.setHours(0,0,0)));
+      setTodoQuizzes(props.todoQuizzes.filter( ele => ele.start.setHours(0,0,0)===sDate.setHours(0,0,0)));
+      } else {
+        setTodoAssignments(props.todoAssignments.filter( ele => ele.deadline.setHours(0,0,0)===sDate.setHours(0,0,0) && ele.cid===sCourse));
+        setTodoQuizzes(props.todoQuizzes.filter( ele => ele.start.setHours(0,0,0)===sDate.setHours(0,0,0) && ele.cid===sCourse));
       }
-      for(let i=0 ; i<props.todoQuizzes.length ; i++){
-        if(props.todoQuizzes[i].start.setHours(0,0,0) ===sDate.setHours(0,0,0)){
-          todoQ.push(props.todoQuizzes[i]);
-        }
-      }
-      setTodoAssignments(todoA);
-      setTodoQuizzes(todoQ);
+      
+      
   }
     return(
-        <div>
-          <p>Filters</p>
+        <div className={styles.outerBody}>
+          <TopNavbar/>
+          <div style={{height : "30vh"}}>
           <center>
-            <p>Filter By Course</p>
+            <div className = {styles.container}>
+           <h6>Filter By Course</h6>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
         <InputLabel id="courseId">Course</InputLabel>
         <Select
@@ -146,36 +120,50 @@ function DisplayTasks(props){
         })} 
         </Select>
       </FormControl>
+      </div>
           <hr></hr></center>
-          <p>Filter By Date</p>
+          <div className={styles.container}>
+          <h6 style={{marginRight : "10px"}}>Filter TODOs By Date</h6>
           <input type="date" value={selectedDate} onChange={SelectDate} ></input>
-          <hr></hr>  
+          </div>
+          <center><hr></hr></center>
+          </div>
+
+          <div className={styles.view}>
+
+<div>
           <center><p>TODO</p></center>
         {todoAsn.map((event) => {
-          return <CardDisplay cid={event.cid} course={event.course} quizid={event.assigid} title={event.title} start={event.start.toString()} deadline={event.deadline.toString()} submissions={event.submissions}/>;
+          return <CardDisplay type={event.type} cid={event.cid} course={event.course} quizid={event.assigid} title={event.title} start={event.start.toString()} deadline={event.deadline.toString()} submissions={event.submissions}/>;
         })} 
         {todoQuiz.map((event) => {
-          return <CardDisplay cid={event.cid} course={event.course} quizid={event.assigid} title={event.title} start={event.start.toString()} deadline={event.deadline.toString()} submissions={event.submissions}/>;
+          return <CardDisplay  type={event.type} cid={event.cid} course={event.course} quizid={event.assigid} title={event.title} start={event.start.toString()} deadline={event.deadline.toString()} submissions={event.submissions}/>;
         })} 
-        <hr></hr>
+        </div>
+
+        <div>
+
         <center><p>Missed</p></center>
         {missedAsn.map((event) => {
-          return <CardDisplay cid={event.cid} course={event.course} quizid={event.assigid} title={event.title} start={event.start.toString()} deadline={event.deadline.toString()} submissions={event.submissions}/>;
+          return <CardDisplay  type={event.type} cid={event.cid} course={event.course} quizid={event.assigid} title={event.title} start={event.start.toString()} deadline={event.deadline.toString()} submissions={event.submissions}/>;
         })} 
         {missedQuiz.map((event) => {
-          return <CardDisplay cid={event.cid} course={event.course} quizid={event.assigid} title={event.title} start={event.start.toString()} deadline={event.deadline.toString()} submissions={event.submissions}/>;
+          return <CardDisplay  type={event.type} cid={event.cid} course={event.course} quizid={event.assigid} title={event.title} start={event.start.toString()} deadline={event.deadline.toString()} submissions={event.submissions}/>;
         })}   
-        <hr></hr>
+        </div>
+        <div>
         <center><p>Completed</p></center>
         {completedAsn.map((event) => {
-          return <CardDisplay cid={event.cid} course={event.course} quizid={event.assigid} title={event.title} start={event.start.toString()} deadline={event.deadline.toString()} submissions={event.submissions}/>;
+          return <CardDisplay type={event.type}  cid={event.cid} course={event.course} quizid={event.assigid} title={event.title} start={event.start.toString()} deadline={event.deadline.toString()} submissions={event.submissions}/>;
         })} 
         {completedQuiz.map((event) => {
-          return <CardDisplay cid={event.cid} course={event.course} quizid={event.assigid} title={event.title} start={event.start.toString()} deadline={event.deadline.toString()} submissions={event.submissions}/>;
+          return <CardDisplay type={event.type} cid={event.cid} course={event.course} quizid={event.assigid} title={event.title} start={event.start.toString()} deadline={event.deadline.toString()} submissions={event.submissions}/>;
         })} 
+        </div>
+        </div>
+      
       </div>    
     );
 }
 
 export default DisplayTasks;
-

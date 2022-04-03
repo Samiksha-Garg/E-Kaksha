@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, {useEffect, useState, useContext , useCallback} from "react";
 import { Context } from "../../context/Context";
-import Badge from 'react-bootstrap/Badge'
-import DisplayTasks1 from "./DisplayTasks1"
+import DisplayTasks1 from "./DisplayTasks"
 
 function ToDoAsnPage(){
 
@@ -16,8 +15,6 @@ function ToDoAsnPage(){
     const [todoQuizzes , setTodoQuizzes] = useState([]);
     const [missedQuizzes , setMissedQuizzes] = useState([]);
     const [completedQuizzes , setCompletedQuizzes] =useState([]);
-    //const [statusTasks , setStatusTasks]  =useState([]);
-    //const statusArray=[];
 
     useEffect(async () =>{
         let courseArray =user.courses;
@@ -49,8 +46,7 @@ function ToDoAsnPage(){
             });
         
 
-            assigArrayOfCourse = response2.data;
-            //console.log(assigArrayOfCourse);
+            assigArrayOfCourse = response2.data;;
              
             len=assigArrayOfCourse.length;
             for(let j=0; j<len ; j++){
@@ -62,11 +58,11 @@ function ToDoAsnPage(){
                     start:new Date(assigArrayOfCourse[j].issueDate),
                     deadline: new Date(assigArrayOfCourse[j].deadline),
                     submissions: assigArrayOfCourse[j].submissions,
+                    type : "assignment"
                 });
             }
             
             quizArrayOfCourse = response3.data;
-            //console.log(quizArrayOfCourse);
             len=quizArrayOfCourse.length;
             for(let j=0 ; j<len ; j++){
                 quizArray.push({
@@ -77,6 +73,7 @@ function ToDoAsnPage(){
                     start: new Date(quizArrayOfCourse[j].date),
                     deadline: quizArrayOfCourse[j].duration,
                     submissions: quizArrayOfCourse[j].submissions,
+                    type : "quiz"
                 });
             }
         }
@@ -84,32 +81,23 @@ function ToDoAsnPage(){
         setCourses(courseNameArray);
         setAssignments(assignmentArray);
         setQuizzes(quizArray);
-        //console.log(courseNameArray)
-        //console.log(assignmentArray);
-        //console.log(quizArray);
-        //console.log(courseNameArray);
-        //console.log(courses);
-        //console.log(assignments);
-        //console.log(quizzes);
 
 
 
-        let IdOfUser =user.__id;
+        let IdOfUser =user._id;
         l = assignmentArray.length;
         for(let i=0 ; i<l ; i++){
             let len =assignmentArray[i].submissions.length;
             let flag=1;
             for(let j=0 ; j<len ; j++){
-                if(IdOfUser === assignmentArray[i].submissions[j].studentId){
-                    flag=0;break;
+                if(IdOfUser === assignmentArray[i].submissions[j].student){
+                    flag=0;
+                    break;
                 }
             }
 
             if(flag){
                 let today = new Date();
-                //let dd = int(String(today.getDate()).padStart(2, '0'));
-                //let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                //let yyyy = today.getFullYear();
                 let deadline = assignmentArray[i].deadline;
                 
 
@@ -127,7 +115,6 @@ function ToDoAsnPage(){
         setMissedAssignments(missedAsn);
 
         l = quizArray.length;
-        //console.log("length" , l);
         for(let i=0 ; i<l ; i++){
             let len =quizArray[i].submissions.length;
             let flag=1;
@@ -142,7 +129,6 @@ function ToDoAsnPage(){
                 let deadline =quizArray[i].start;
                 if(today.getTime() > deadline.getTime()){
                   
-                    //console.log(today , deadline);
                     missedq.push(quizArray[i]);
                 }else {
                     todoq.push(quizArray[i]);
@@ -157,22 +143,12 @@ function ToDoAsnPage(){
 
     } ,[user])
 
-    //console.log("todo" , todoAssignments);
-    //console.log("missed" , missedAssignments);
-    //console.log("completed" , completedAssignments);
-    //console.log("todoq" , todoQuizzes);
-    //console.log( "missedq", missedQuizzes);
-    //console.log("completedq" , completedQuizzes);
-
     return (
-        <div>
+        <div style={{width : "100%"}}>
             <DisplayTasks1 todoAssignments={todoAssignments} missedAssignments={missedAssignments} 
             completedAssignments={completedAssignments} todoQuizzes={todoQuizzes} 
             missedQuizzes={missedQuizzes} completedQuizzes={completedQuizzes}
             courses = {courses}/>
-            <button onClick={() => {
-                console.log(quizzes);
-            }}> Hello</button>
         </div>
     );
 }

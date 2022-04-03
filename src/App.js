@@ -14,13 +14,23 @@ import ProtectedRoute from "./ProtectedRoute";
 
 import ToDoAsnPage from "./components/ToDoAsn/ToDoAsnPage"
 import AttendancePage from "./components/Attendance/AttendancePage"
+import Display from "./components/TakeQuiz/Dispaly"
 
 
 function App(){
   const {user}=useContext(Context);
+  console.log("app")
     return (
       <div>
-             <Router>
+            {/*<AttendancePage></AttendancePage>*/}
+            <Display></Display>
+      </div>
+    );
+}
+export default App;
+
+/*
+ <Router>
       <div style={{display : "flex", width : "100vw", minHeight:"100vh"}}>
       {user? <NavBar/> : null} 
         <Routes>
@@ -31,8 +41,4 @@ function App(){
        </Routes>
        </div>
       </Router>
-      </div>
-    );
-}
-export default App;
-
+*/

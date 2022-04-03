@@ -2,16 +2,20 @@ import axios from "axios";
 import React, { useEffect, useState,useContext} from "react";
 import { Context } from "../../context/Context";
 import CardDisplayAttendance from "./CardDisplayAttendance";
+import AttendanceCardDisplay from "./AttendanceCardDisplay";
+import AttendanceTableDisplay from "./AttendanceTableDisplay";
 
 function AttendancePage(){
     
-    const [user ,dispatch] = useContext(Context);
+    /*const [user ,dispatch] = useContext(Context);
     const [courses , setCourses] = useState([]);
     const [coursesL , setCoursesL] = useState([]);
     const [classesPresentId, setClassesPresentId] = useState([])
-    const [classesNotPresentId , setClassesNotPresentId] = useState([])
+    const [classesNotPresentId , setClassesNotPresentId] = useState([])*/
 
-    useEffect(async () =>{
+    
+
+   /* useEffect(async () =>{
         let courseArray = user.courses;
         let classesPresentId = [];
         let classesNotPresentId = [];
@@ -48,13 +52,27 @@ function AttendancePage(){
                  classesPresentId : classesPresentId , 
                  classesNotPresentId : classesNotPresentId,}]);
         }
-    } , [user])
+    } , [user])*/
+
+    const courses=[];
+    courses.push({cid : 1 , courseName : "Comp" , attendance : 2,})
+    courses.push({cid : 2 , courseName : "OS" , attendance : 3,})
+    const coursesL=[];
+    coursesL.push({cid : 1 , courseName : "Comp" , attendance : 2,})
+    coursesL.push({cid : 2 , courseName : "OS" , attendance : 3,})
+
+    const classesPresentId=[];
+    classesPresentId.push({classesId:101 , beginTime : 1 , endTime : 2 ,date:3});
+    classesPresentId.push({classesId:102 , beginTime:1,endTime:2 , date:3});
+    const classesNotPresentId=[];
+    classesNotPresentId.push({classesId:103 , beginTime : 1 , endTime : 2 ,date:3});
+    classesNotPresentId.push({classesId:104 , beginTime : 1 , endTime : 2 ,date:3});
 
     const attendanceCardDisplay = () =>{
-        return (<div>
-            {courses.map((course) =>{
-                return <CardDisplayAttendance cid={course.cid} courseName={course.courseName} attendance={course.attendance}></CardDisplayAttendance>
-            })}
+        return (<div> 
+           {courses.map((course) =>{
+return <CardDisplayAttendance cid={course.cid} courseName={course.courseName} attendance={course.attendance}></CardDisplayAttendance>
+})}
         </div>);
     }
 
@@ -105,13 +123,22 @@ function AttendancePage(){
 
     return (
         <div>
-            <button onClick={attendanceCardDisplay}></button>
-            <button onClick={attendanceTableDisplay}></button>
+            {courses.map((course) =>{
+return <CardDisplayAttendance cid={course.cid} courseName={course.courseName} attendance={course.attendance}></CardDisplayAttendance>
+})}
         </div>
     );
 }
 
 export default AttendancePage 
+
+/*
+            <button onClick={attendanceCardDisplay}>Card Display</button>
+            <button onClick={attendanceTableDisplay}>Table Display</button>
+{courses.map((course) =>{
+return <CardDisplayAttendance cid={course.cid} courseName={course.courseName} attendance={course.attendance}></CardDisplayAttendance>
+})}
+*/
 
 /*
     const courses=[];
