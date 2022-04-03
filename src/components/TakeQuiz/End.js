@@ -3,7 +3,7 @@ import React, { useEffect, useState , useContext } from 'react';
 import { Context } from "../../context/Context";
 
 const End = ({ results, data, onAnswersCheck, time }) => {
-  const [user , dispatch] = useContext(Context)
+  const {user , dispatch} = useContext(Context)
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [marks , setMarks] =useState(0);
   const [maxMarks , setMaxMarks] = useState(0);
@@ -12,26 +12,30 @@ const End = ({ results, data, onAnswersCheck, time }) => {
     let correct = 0;
     let mark=0;
     let mMark=0;
+
     results.forEach((result, index) => {
-      if(result.a === data[index].correct_ans) {
-        correct++;
-        mark = mark + data[index].marks;
+      if(result.a === data[index].correctOption) {
+        correct = correct + 1;
+        mark = mark + parseInt(data[index].marks);
       }
     });
 
-    data.question.map((ele) =>{
-        mMark += ele.marks;
+    console.log(correct);
+    console.log(mark);
+
+    data.map((ele) =>{
+        mMark += parseInt(ele.marks);
     });
     setCorrectAnswers(correct);
     setMarks(mark);
-    setMaxMarks(maxMarks);
+    setMaxMarks(mMark);
 
-    const response1 = await axios.post("/quiz/" , {
-        userId : user._id,
-        ans: results,
-        marks : marks,
-    });
-  }, [setMarks]);
+    // const response1 = await axios.post("/quiz/" , {
+    //     userId : user._id,
+    //     ans: results,
+    //     marks : marks,
+    // });
+  }, []);
 
   return(
     <div className="card">
@@ -41,7 +45,7 @@ const End = ({ results, data, onAnswersCheck, time }) => {
           <p>{correctAnswers} of {data.length}</p>
           <p><strong>Your Score : {marks} out of {maxMarks}</strong></p>
           <p><strong>Accuracy : {Math.floor((correctAnswers / data.length) * 100)}%</strong></p>
-          <p><strong>Time Taken :</strong> {time}</p>
+          <p><strong>Time Taken :</strong> {time + " secs"}</p>
           <button className="button is-info mr-2" onClick={onAnswersCheck}>Check your answers</button>
         </div>
       </div>

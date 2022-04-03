@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
 
-const Question = ({ data, onAnswerUpdate, numberOfQuestions, activeQuestion, onSetActiveQuestion, onSetStep , timer }) => {
-  const [selected, setSelected] = useState('');
+const Question = ({ data, answers, onAnswerUpdate, numberOfQuestions, activeQuestion, onSetActiveQuestion, onSetStep , timer }) => {
+  const [selected, setSelected] = useState(answers[activeQuestion].a);
   const [error, setError] = useState('');
   const [options, setOptions] = useState([]);
   const radiosWrapper = useRef();
@@ -10,10 +13,10 @@ const Question = ({ data, onAnswerUpdate, numberOfQuestions, activeQuestion, onS
     let op = [data.option1, data.option2, data.option3, data.option4];
     setOptions(op);
 
-    const findCheckedInput = radiosWrapper.current.querySelector('input:checked');
-    if(findCheckedInput) {
-      findCheckedInput.checked = false;
-    }
+    // const findCheckedInput = radiosWrapper.current.querySelector('input:checked');
+    // if(findCheckedInput) {
+    //   findCheckedInput.checked = false;
+    // }
   }, [data]);
 
   const changeHandler = (e) => {
@@ -24,9 +27,14 @@ const Question = ({ data, onAnswerUpdate, numberOfQuestions, activeQuestion, onS
   }
   
   const nextClickHandler = (e) => {
-    onAnswerUpdate(prevState => [...prevState, prevState[activeQuestion].a =selected]);
-    setSelected('');
+    // console.log(answers);
+    let temp = answers;
+    answers[activeQuestion].a = selected;
+    onAnswerUpdate(temp);
+    
     if(activeQuestion < numberOfQuestions - 1) {
+      console.log(answers[activeQuestion + 1].a);
+      setSelected(answers[activeQuestion + 1].a);
       onSetActiveQuestion(activeQuestion + 1);
     }else {
       onSetStep(3);
@@ -38,8 +46,9 @@ const Question = ({ data, onAnswerUpdate, numberOfQuestions, activeQuestion, onS
         return setError("Can Not Move Back");
     }
     onAnswerUpdate(prevState => [...prevState, prevState[activeQuestion].a =selected]);
-    setSelected('');
+    setSelected(answers[activeQuestion - 1].a);
     onSetActiveQuestion(activeQuestion -1);
+    
   }
 
   return(
@@ -48,15 +57,21 @@ const Question = ({ data, onAnswerUpdate, numberOfQuestions, activeQuestion, onS
         <div className="content">
         Time Left : <h3 className="mb-5">{timer}</h3> In Seconds !
         <hr></hr>
-          <h2 className="mb-5">{data.desc}</h2>
-          <div className="control" ref={radiosWrapper}>
+          <h2 className="mb-5">{data.question}</h2>
+          <RadioGroup
+        aria-labelledby="demo-form-control-label-placement"
+        name="position"
+            value = {selected}
+         onChange = {(e) => setSelected(e.target.value)}
+          >
             {options.map((option, i) => (
-              <label className="radio has-background-light" key={i}>
-                <input type="radio" name="answer" value={option} onChange={changeHandler} />
-                {option}
-              </label>
+              <FormControlLabel value={i + 1} control={<Radio />} label={option} />
+              // <label className="radio has-background-light" key={i}>
+              //   <input type="radio" name="answer" value={i + 1} onChange={changeHandler} />
+              //   {option}
+              // </label>
             ))}
-          </div>
+          </RadioGroup>
           {error && <div className="has-text-danger">{error}</div>}
           <button className="button is-link is-medium is-fullwidth mt-4" onClick={prevClickHandler}>Previous</button>
           <button className="button is-link is-medium is-fullwidth mt-4" onClick={nextClickHandler}>{activeQuestion===numberOfQuestions-1 ? "SUBMIT" : "NEXT"}</button>
