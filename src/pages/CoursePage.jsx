@@ -118,6 +118,30 @@ function CoursePage() {
       setMaterial(temp);
     }
 
+    const quizIndex = (newQuiz) => {
+      for (let i = 0; i < quizzes.length; i++) {
+        if (quizzes[i]._id == newQuiz._id) {
+          return i;
+        }
+      }
+
+      return -1;
+    
+    }
+
+    const updateQuiz = (newQuiz) => {
+      let i = quizIndex(newQuiz);
+      let temp = quizzes;
+      if (i == -1) {
+        temp.unshift(newQuiz);
+      } else {
+        temp[i] = newQuiz;
+      }
+      setQuizzes(false);
+      setQuizzes(true);
+      setQuiz(temp);
+    }
+
     const { cid } = useParams();
 
     const openAssignment=()=>{setQuizzes(false);setAssignment(true);setCourseMaterial(false);}
@@ -212,7 +236,7 @@ function CoursePage() {
     </div>  
     { isAssignment && <AssignmentPage cid={cid} func={updateAssignment} assignments={assignments}/>}
      { isCourseMaterial && <CourseMaterial func={updateMaterial} cid={cid} material={material}/>}
-     { isQuizzes && <QuizPage/>}
+     { isQuizzes && <QuizPage func={updateQuiz} cid={cid} quiz={quizzes}/>}
      <Dialog
             PaperProps={{
               style: {

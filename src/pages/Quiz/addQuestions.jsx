@@ -18,6 +18,7 @@ import {
     DialogTitle,
   } from "@mui/material";
 import styles from "../../styles/SignIn.module.css"
+import axios from "axios";
 
 
 
@@ -33,11 +34,24 @@ function AddQuestions(props) {
         setQuestions([...temp]);
     }
 
-    const submitForm = (e) => {
+    const submitForm = async(e) => {
         if (questions.length == 0) {
             setErrorModal(true);
         } else {
+          const doc = {
+            title : props.title,
+            desc : props.desc,
+            duration : props.duration,
+            date : props.date,
+            courseId : props.cid,
+            question : questions
+          }
+
+          const response = await axios.post("/quiz/", doc);
+          console.log(response);
+          props.update(response.data);
             props.setQuesModal(false);
+            props.setModal(false);
         }
     }
 
