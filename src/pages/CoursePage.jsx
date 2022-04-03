@@ -3,7 +3,7 @@ import { useEffect, useState, useContext} from "react";
 import TopNavbar from "../components/Navigation/topNavbar";
 import classes from "./CoursePage.module.css";
 import CourseMaterial from "./CourseMaterial/CourseMaterial";
-import QuizPage from "./QuizPage";
+import QuizPage from "./Quiz/QuizPage"
 import AssignmentPage from "./AssignmentPage";
 import { Assignment } from "@mui/icons-material";
 import { useParams } from "react-router";

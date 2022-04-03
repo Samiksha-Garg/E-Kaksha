@@ -11,9 +11,9 @@ import React, {useState, useRef, useContext, useEffect} from "react";
 import CalendarPage from "./components/Calendar/CalendarPage";
 import ProtectedRoute from "./ProtectedRoute";
 import Chat from "./components/Chat/Chat";
-import Sample from "./PdfView/Sample";
-
 import ToDoAsnPage from "./components/ToDoAsn/ToDoAsnPage"
+import AddQuestions from "./pages/Quiz/addQuestions";
+import QuizPage from "./pages/Quiz/QuizPage";
 
 
 function App(){
@@ -29,7 +29,7 @@ function App(){
         <Route path={"/chat"} element={<ProtectedRoute Component={Chat}/>}/>
         <Route path={"/assignments"} element={<ProtectedRoute Component={ToDoAsnPage}/>}/>
         <Route path="/coursepage/:cid" element={<ProtectedRoute Component={CoursePage}/>}/>
-
+        <Route path="/quiz" element={<ProtectedRoute Component={QuizPage}/>}/>
        </Routes>
        </div>
       </Router>
