@@ -3,9 +3,13 @@ import React, { useState, useEffect, useRef } from 'react';
 const Question = ({ data, onAnswerUpdate, numberOfQuestions, activeQuestion, onSetActiveQuestion, onSetStep , timer }) => {
   const [selected, setSelected] = useState('');
   const [error, setError] = useState('');
+  const [options, setOptions] = useState([]);
   const radiosWrapper = useRef();
 
   useEffect(() => {
+    let op = [data.option1, data.option2, data.option3, data.option4];
+    setOptions(op);
+
     const findCheckedInput = radiosWrapper.current.querySelector('input:checked');
     if(findCheckedInput) {
       findCheckedInput.checked = false;
@@ -46,7 +50,7 @@ const Question = ({ data, onAnswerUpdate, numberOfQuestions, activeQuestion, onS
         <hr></hr>
           <h2 className="mb-5">{data.desc}</h2>
           <div className="control" ref={radiosWrapper}>
-            {data.options.map((option, i) => (
+            {options.map((option, i) => (
               <label className="radio has-background-light" key={i}>
                 <input type="radio" name="answer" value={option} onChange={changeHandler} />
                 {option}

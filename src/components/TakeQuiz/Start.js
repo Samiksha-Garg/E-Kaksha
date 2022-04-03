@@ -6,9 +6,12 @@ function Start({onQuizStart , title , duration , desc , courseId}){
     const {user , dispatch} = useContext(Context);
     const [courseName , setCourseName] = useState("");
     useEffect(async () =>{
-        const response1 = await axios.get("/courseName/" + courseId);
-        setCourseName(response1.data.name);
-    } , [user])
+        if (courseId != undefined) {
+            const response1 = await axios.get("/course/courseName/" + courseId);
+            setCourseName(response1.data.name);
+        }
+        
+    } , courseId)
     return (
         <div className = "card">
             <div className="card-content">

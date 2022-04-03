@@ -21,13 +21,14 @@ function Display({props}){
 
     useEffect(async() =>{
         let ans=[];
-        const response1 = await axios.get("/"+props.quizId);
+        const response1 = await axios.get("/quiz/"+"6249bf4e943dc3b1e4ec41b3");
         setQuizData(response1.data);
         setTimer(quizData.duration*3600);
-        for (let i=0 ; i<quizData.question ; i++){
+        let temp = response1.data;
+        for (let i=0 ; i<temp.question ; i++){
             ans.push({
-                q: quizData.question[i].desc ,
-                a:"",
+                q: temp.question[i].question ,
+                a: temp.question[i].correctOption,
             })
         }
         setAnswers(ans);
@@ -53,11 +54,11 @@ function Display({props}){
 
     return (
         <div className="App">
-          {step === 1 && <Start onQuizStart={quizStartHandler} />}
+          {step === 1 && <Start title={quizData.title} desc={quizData.desc} duration={quizData.duration} courseId={quizData.courseId} onQuizStart={quizStartHandler} />}
           {step === 2 && <Question 
             data={quizData.question[activeQuestion]}
             onAnswerUpdate={setAnswers}
-            numberOfQuestions={quizData.data.length}
+            numberOfQuestions={quizData.question.length}
             activeQuestion={activeQuestion}
             onSetActiveQuestion={setActiveQuestion}
             onSetStep={setStep}
