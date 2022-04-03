@@ -12,7 +12,7 @@ import CalendarPage from "./components/Calendar/CalendarPage";
 import ProtectedRoute from "./ProtectedRoute";
 import Chat from "./components/Chat/Chat";
 import Sample from "./PdfView/Sample";
-
+import Attendance from "./components/Attendance/AttendancePage"
 import ToDoAsnPage from "./components/ToDoAsn/ToDoAsnPage"
 
 
@@ -29,7 +29,7 @@ function App(){
         <Route path={"/chat"} element={<ProtectedRoute Component={Chat}/>}/>
         <Route path={"/assignments"} element={<ProtectedRoute Component={ToDoAsnPage}/>}/>
         <Route path="/coursepage/:cid" element={<ProtectedRoute Component={CoursePage}/>}/>
-
+        <Route path={"/attendance"} element={<ProtectedRoute Component={Attendance}/>}/>
        </Routes>
        </div>
       </Router>
