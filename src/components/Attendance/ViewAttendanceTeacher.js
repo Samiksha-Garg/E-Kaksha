@@ -33,14 +33,17 @@ function ViewAttendanceTeacher({courseId,classId}){
         Attended: false,
       })
     }
-    const response3 = await axios.get("/classes/"+ classId);
+    console.log(stuName); 
+    const response3 = await axios.get("/class/"+ classId);
     presentStu = response3.data.presentStu;
     for(let i=0 ; i<stuName.length ; i++){
       if(presentStu.includes(stuName[i].Id)){
         stuName[i].Attended=true;
       }
     }
-    setStudentName(stuName);   
+ 
+    setStudentName(stuName);  
+   
   } , [])  
 
   useEffect(async() =>{
@@ -48,7 +51,7 @@ function ViewAttendanceTeacher({courseId,classId}){
     const response3 = await axios.put("/classes/updatePresentStu/"+classId , present);
   }
   }, [present])
-
+  console.log(StudentName);
   return(
     <div>
       <DialogBox courseId={courseId} classId={classId} studentName={StudentName} onSetPresent={setPresent} present={present} onSetStep={setStep}></DialogBox>
