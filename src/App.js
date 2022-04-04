@@ -12,7 +12,7 @@ import CalendarPage from "./components/Calendar/CalendarPage";
 import ProtectedRoute from "./ProtectedRoute";
 import Chat from "./components/Chat/Chat";
 import Sample from "./PdfView/Sample";
-import Attendance from "./components/Attendance/AttendancePageTeacher"
+import Attendance from "./components/Attendance/AttendanceDecider"
 import ToDoAsnPage from "./components/ToDoAsn/ToDoAsnPage"
 
 
