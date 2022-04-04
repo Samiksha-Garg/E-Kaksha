@@ -24,6 +24,7 @@ import styles from "../styles/Calendar.module.css";
 import TimePicker from '@mui/lab/TimePicker';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import QuizStudentPage from "../pages/Quiz/QuizStudentPage";
 
 toast.configure()
 
@@ -129,16 +130,23 @@ function CoursePage() {
     
     }
 
+    const reloadQuiz = () => {
+      let temp = quizzes;
+      setQuizzes(false);
+      setQuizzes(true);
+      setQuiz([...temp]);
+    }
+
     const updateQuiz = (newQuiz) => {
       let i = quizIndex(newQuiz);
       let temp = quizzes;
       if (i == -1) {
         temp.unshift(newQuiz);
+        reloadQuiz();
       } else {
+        console.log('Hi');
         temp[i] = newQuiz;
       }
-      setQuizzes(false);
-      setQuizzes(true);
       setQuiz(temp);
     }
 
@@ -236,7 +244,8 @@ function CoursePage() {
     </div>  
     { isAssignment && <AssignmentPage cid={cid} func={updateAssignment} assignments={assignments}/>}
      { isCourseMaterial && <CourseMaterial func={updateMaterial} cid={cid} material={material}/>}
-     { isQuizzes && <QuizPage func={updateQuiz} cid={cid} quiz={quizzes}/>}
+     {isQuizzes && user.role == "teacher" && <QuizPage func={updateQuiz} cid={cid} quiz={quizzes}/>}
+     {isQuizzes && user.role == "student" && <QuizStudentPage func2={reloadQuiz} func={updateQuiz} cid={cid} quiz={quizzes}/>}
      <Dialog
             PaperProps={{
               style: {

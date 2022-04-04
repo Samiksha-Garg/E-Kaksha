@@ -2,7 +2,7 @@ import axios from 'axios';
 import React , {useState , useEffect , useContext} from 'react';
 import { Context } from "../../context/Context";
 
-function Start({onQuizStart , title , duration , desc , courseId}){
+function Start({goBack, onQuizStart , title , duration , desc , courseId}){
     const {user , dispatch} = useContext(Context);
     const [courseName , setCourseName] = useState("");
     useEffect(async () =>{
@@ -22,8 +22,10 @@ function Start({onQuizStart , title , duration , desc , courseId}){
                     <p>Duration : {duration}</p>
                     <h1>Start The Quiz</h1>
                     <p>Good Luck</p>
-                    
+                    <div style={{display : "flex", justifyContent : "space-between"}}>
                     <button className="button is-info is-medium" onClick={onQuizStart}>Start</button>
+                    <button className="button is-info is-medium" onClick={goBack}>Go Back</button>
+                    </div>
                 </div>
             </div>
         </div>

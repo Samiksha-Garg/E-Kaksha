@@ -23,7 +23,6 @@ function App(){
   console.log("app")
     return (
 
-
       <Router>
       <div style={{display : "flex", width : "100%", minHeight:"100vh"}}>
       {user? <NavBar/> : null} 
@@ -32,13 +31,15 @@ function App(){
         <Route path={"/calendar"} element={<ProtectedRoute Component={CalendarPage}/>}/>
         <Route path={"/chat"} element={<ProtectedRoute Component={Chat}/>}/>
         <Route path={"/assignments"} element={<ProtectedRoute Component={ToDoAsnPage}/>}/>
+        <Route path="/coursepage/:cid" element={<ProtectedRoute Component={CoursePage}/>}/>
         <Route path={"/attendance"} element={<ProtectedRoute Component={AttendancePage}/>}/>
         <Route path={"/quiz"} element={<ProtectedRoute Component={Display}/>}/>
        </Routes>
        </div>
       </Router>
- 
+
     );
 }
+
 export default App;
 

@@ -9,53 +9,67 @@ import { Context } from "../../context/Context";
 
 let interval;
 
-function Display({props}){
+function Display(props){
     const {user , dispatch} =useContext(Context)
     const [step ,setStep] = useState(1);
     const [activeQuestion , setActiveQuestion] = useState(0);
     const [answers , setAnswers] = useState([]);
     const [quizData , setQuizData] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [time, setTime] = useState(0);
-    const [timer , setTimer] = useState(0);
+    const [time, setTime] = useState(-1);
+    const [timer , setTimer] = useState(-1);
 
     useEffect(async() =>{
         let ans=[];
-        const response1 = await axios.get("/quiz/"+"6249ca540072b4b1dad67cc4");
+        const response1 = await axios.get("/quiz/"+props.quizId);
         setQuizData(response1.data);
         let temp = response1.data;
-        setTimer(temp.duration*3600);
         
         for (let i=0 ; i<temp.question.length ; i++){
             ans.push({
-                q: temp.question[i].question ,
                 a: "",
             })
         }
         setAnswers(ans);
     } , [user])
+
     
     useEffect(() => {
+      if (step == 2) {
+        let rn = new Date();
+        let time = new Date(quizData.date);
+        time.setMinutes(time.getMinutes() + parseInt(quizData.duration));
+        let diff = (time.getTime() - rn.getTime());
+        diff /= 1000 * 60;
+        setTimer(60 * Math.ceil(diff));
+      }
         if(step === 3) {
           clearInterval(interval);
         }
       }, [step]);
+
+    const goBack = () => {
+      props.setModal(false);
+    }
 
     const quizStartHandler = () => {
         setStep(2);
         interval = setInterval(() => {
           setTime(prevTime => prevTime + 1);
           setTimer(prevTime => prevTime-1);
-            if(timer === 0 ){
-                setStep(3);
-            }
         }, 1000);
     }
+
+    useEffect(() => {
+      if(timer === 0 ){
+          setStep(3);
+      }
+    },[timer])
         
 
     return (
         <div className="App">
-          {step === 1 && <Start title={quizData.title} desc={quizData.desc} duration={quizData.duration} courseId={quizData.courseId} onQuizStart={quizStartHandler} />}
+          {step === 1 && <Start goBack={goBack} title={quizData.title} desc={quizData.desc} duration={quizData.duration} courseId={quizData.courseId} onQuizStart={quizStartHandler} />}
           {step === 2 && <Question 
             data={quizData.question[activeQuestion]}
             answers = {answers}
@@ -67,6 +81,10 @@ function Display({props}){
             timer = {timer}
           />}
           {step === 3 && <End 
+          isNew={true}
+          goBack ={props.handleUpdate}
+          update = {props.update}
+          quizId = {props.quizId}
         results={answers}
         data={quizData.question}
         onAnswersCheck={() => setShowModal(true)}

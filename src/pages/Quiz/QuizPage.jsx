@@ -41,6 +41,7 @@ function QuizPage(props){
       setDate(null);
       setDesc('');
       setDuration('');
+      setTitle('');
       setFormErrors({});
     }
 
@@ -143,7 +144,7 @@ function QuizPage(props){
  
                 <br/>
                 <br/>
-<TextField id="title" label="Duration" variant="standard" value={duration} onChange={handleDurationChange}/>
+<TextField id="title" label="Duration (in mins)" variant="standard" value={duration} onChange={handleDurationChange}/>
     <br/>
     {formErrors.duration && (
             <center><span className={styles.error}>{formErrors.duration}</span></center>
