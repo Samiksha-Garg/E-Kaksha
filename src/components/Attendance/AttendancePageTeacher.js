@@ -6,28 +6,25 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Context } from "../../context/Context.js";
 import axios from "axios";
+import ViewAttendanceTeacher from "./ViewAttendanceTeacher";
 
 function Attendance() {
   const { user } = useContext(Context);
-  const [finalArr, setArray]=useState([]);
-
+  const [finalArr, setArray] = useState([]);
+  const [showModal, setshowModal] = useState(false);
+  const [clickedClass, setClickedClass] = useState();
   useEffect(async () => {
     let courseArray = user.courses;
     let l = courseArray.length;
-    let arr=[];
+    let arr = [];
     for (let i = 0; i < l; i++) {
-      const res = await axios.get("/course/" + courseArray[i]);  
+      const res = await axios.get("/course/" + courseArray[i]);
       const res2 = await axios.get("/class/courseid/" + courseArray[i]);
-      
-      arr.push({course: res.data, clas: res2.data});
-    
+
+      arr.push({ course: res.data, clas: res2.data });
     }
     setArray(arr);
   }, [user]);
-
-  function handleView (event){
-    
-  }
 
   return (
     <div>
@@ -46,11 +43,16 @@ function Attendance() {
               </Typography>
 
               {event.clas.map((e) => {
+                {/* console.log(e.courseId);
+                console.log(e._id); */}
                 return (
                   <div>
-                  <span>Date:{e.date} </span>&nbsp; &nbsp;
-                    <Button variant="outlined" value={e._id} onChange={handleView}>View Attendance</Button>
-                                       
+                    <span>Date:{e.date} </span>&nbsp; &nbsp;
+                    <ViewAttendanceTeacher
+                      courseId={e.courseId}
+                      classId={e._id}
+                    />
+                    {/* <Button variant="outlined" value={e} onChange={handleView}>View Attendance</Button> */}
                   </div>
                 );
               })}
@@ -58,7 +60,6 @@ function Attendance() {
           </Card>
         );
       })}
-      
     </div>
   );
 }
