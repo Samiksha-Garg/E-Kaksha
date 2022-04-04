@@ -25,6 +25,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Checkbox } from '@mui/material';
 import Slide from '@mui/material/Slide';
+import { SettingsRemoteSharp } from '@mui/icons-material';
 
 function AttendanceTeacherClass({props}){
     const studentName=[];
@@ -35,15 +36,37 @@ function AttendanceTeacherClass({props}){
     
     const changeHandler = (e)=>{
         setChecked(e.target.checked);
+        
         console.log(e.target.value);
     }
 
     const changeHandler1 = (e)=>{
+      console.log("Om");
+       
+
         if(e.target.checked && !presentStu.includes(e.target.value)){
             presentStu.push(e.target.value);
+            for(let i=0 ; i<studentName.length ; i++){
+              console.log(e.target.value);
+              console.log(studentName[i].Attended);
+              if(e.target.value==studentName[i].Id){
+                studentName[i].Attended=true;
+                console.log(i);
+                break;
+              }
+            }
         }
         if(!(e.target.checked) && presentStu.includes(e.target.value)){
             presentStu = presentStu.filter((ele) =>{return ele != e.target.value;})
+            for(let i=0 ; i<studentName.length ; i++){
+              console.log(e.target.value);
+              console.log(studentName[i].Attended);
+              if(e.target.value==studentName[i].Id){
+                studentName[i].Attended=false;
+                console.log(i);
+                break;
+              }
+            }
         }
         //console.log(presentStu);
     }
@@ -52,6 +75,7 @@ function AttendanceTeacherClass({props}){
       setOpen(true);
     };
     const handleClose = () => {
+      props.onSetStep(1);
         props.onSetPresent(presentStu);
       };
     studentName.push({
@@ -107,7 +131,7 @@ function AttendanceTeacherClass({props}){
                     <ListItemText
                       primary={event.Name}
                     />
-                   <FormControlLabel control={<Checkbox></Checkbox>} value={event.Id} onChange={changeHandler1}></FormControlLabel>
+                   <FormControlLabel  control={<Checkbox defaultChecked={event.Attended} onChange={changeHandler1} ></Checkbox>} value={event.Id} ></FormControlLabel>
                   </ListItem>
                   <Divider />
                 </div>
@@ -118,6 +142,5 @@ function AttendanceTeacherClass({props}){
         </div>
     );
 }
-
 
 export default AttendanceTeacherClass;
