@@ -3,7 +3,7 @@ import { useEffect, useState, useContext} from "react";
 import TopNavbar from "../components/Navigation/topNavbar";
 import classes from "./CoursePage.module.css";
 import CourseMaterial from "./CourseMaterial/CourseMaterial";
-import QuizPage from "./QuizPage";
+import QuizPage from "./Quiz/QuizPage"
 import AssignmentPage from "./AssignmentPage";
 import { Assignment } from "@mui/icons-material";
 import { useParams } from "react-router";
@@ -14,6 +14,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import TextField from '@mui/material/TextField';
 import DatePicker from '@mui/lab/DatePicker';
+import CircularProgress from '@mui/material/CircularProgress';
 import {
   Dialog,
   DialogContent,
@@ -24,6 +25,7 @@ import styles from "../styles/Calendar.module.css";
 import TimePicker from '@mui/lab/TimePicker';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import QuizStudentPage from "../pages/Quiz/QuizStudentPage";
 
 toast.configure()
 
@@ -49,6 +51,7 @@ function CoursePage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
+    const [isFetching, setIsFetching] = useState(true);
 
     useEffect(() => {
       if (Object.keys(formErrors).length === 0 && isSubmitting) {
@@ -118,6 +121,37 @@ function CoursePage() {
       setMaterial(temp);
     }
 
+    const quizIndex = (newQuiz) => {
+      for (let i = 0; i < quizzes.length; i++) {
+        if (quizzes[i]._id == newQuiz._id) {
+          return i;
+        }
+      }
+
+      return -1;
+    
+    }
+
+    const reloadQuiz = () => {
+      let temp = quizzes;
+      setQuizzes(false);
+      setQuizzes(true);
+      setQuiz([...temp]);
+    }
+
+    const updateQuiz = (newQuiz) => {
+      let i = quizIndex(newQuiz);
+      let temp = quizzes;
+      if (i == -1) {
+        temp.unshift(newQuiz);
+        reloadQuiz();
+      } else {
+        console.log('Hi');
+        temp[i] = newQuiz;
+      }
+      setQuiz(temp);
+    }
+
     const { cid } = useParams();
 
     const openAssignment=()=>{setQuizzes(false);setAssignment(true);setCourseMaterial(false);}
@@ -134,6 +168,7 @@ function CoursePage() {
       setAssignments(response1.data.reverse());
       setQuiz(response2.data.reverse());
       setMaterial(response3.data.reverse());
+      setIsFetching(false);
     
     },[cid])
 
@@ -163,6 +198,24 @@ function CoursePage() {
 
   return (
     <div style={{overflowX:"hidden",backgroundColor:"white",width:"100%"}}>
+       <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            open={isFetching}
+            
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <CircularProgress/>
+              
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
         <TopNavbar />
       <div
         style={{
@@ -214,7 +267,8 @@ function CoursePage() {
     </div>  
     { isAssignment && <AssignmentPage cid={cid} func={updateAssignment} assignments={assignments}/>}
      { isCourseMaterial && <CourseMaterial func={updateMaterial} cid={cid} material={material}/>}
-     { isQuizzes && <QuizPage/>}
+     {isQuizzes && user.role == "teacher" && <QuizPage func={updateQuiz} cid={cid} quiz={quizzes}/>}
+     {isQuizzes && user.role == "student" && <QuizStudentPage func2={reloadQuiz} func={updateQuiz} cid={cid} quiz={quizzes}/>}
      <Dialog
             PaperProps={{
               style: {
