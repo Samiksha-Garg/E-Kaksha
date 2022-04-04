@@ -45,7 +45,7 @@ function NavBar() {
             </Link>
           </li>
           <li>
-            <Link to="/attendence" className={classes.link}>
+            <Link to="/attendance" className={classes.link}>
               <AttendenceIcon />
               {isOpenNavBar && 'Attendance'}
             </Link>

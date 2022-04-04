@@ -1,157 +1,127 @@
+
 import axios from "axios";
 import React, { useEffect, useState,useContext} from "react";
 import { Context } from "../../context/Context";
 import CardDisplayAttendance from "./CardDisplayAttendance";
-import AttendanceCardDisplay from "./AttendanceCardDisplay";
-import AttendanceTableDisplay from "./AttendanceTableDisplay";
+import TableElement from "./tabletemplate";
 
 function AttendancePage(){
     
-    /*const [user ,dispatch] = useContext(Context);
+    const {user ,dispatch} = useContext(Context);
     const [courses , setCourses] = useState([]);
     const [coursesL , setCoursesL] = useState([]);
-    const [classesPresentId, setClassesPresentId] = useState([])
-    const [classesNotPresentId , setClassesNotPresentId] = useState([])*/
+    const [cardView, setCardView] = useState(true);
 
-    
-
-   /* useEffect(async () =>{
+    useEffect(async () =>{
         let courseArray = user.courses;
         let classesPresentId = [];
         let classesNotPresentId = [];
         let coursesData = [];
         let classData = [];
         let attendance;
+        let totalAttendance = 0;
+        let courseTemp1 = [];
+        let courseTemp2 = [];
+
+        
 
         for(let i=0 ; i<courseArray.length ; i++){
-            let response1 = await axios.get("/course/" + courseArray[i]);
+
+            let temp1 = []
+            let temp2 = []
+            
+            let response1 = await axios.get("/class/courseId/" + courseArray[i]);
+            let response2 = await axios.get("/course/" + courseArray[i]);
+            
             attendance = 0;
             coursesData = response1.data;
-            for(let j=0 ; j<coursesData.classes.length ; j++){
-                let response2 = await axios.get("/"+ coursesData.classes[j]);
-                classData = response2.data;
+            totalAttendance = coursesData.length
+            
+            for(let j=0 ; j<coursesData.length ; j++){
+                classData = coursesData[j];
                 if(classData.presentStu.includes(user._id)){
                     attendance +=1;
-                    setClassesPresentId((prevState) => [...prevState , {classesId: coursesData.classes[j] , 
+                    temp1.push({
                         beginTime : classData.beginTime ,
                         endTime : classData.endTime , 
-                        date: classData.date,}]);
+                        date: classData.date,});
                 }else{
-                    setClassesNotPresentId((prevState) => [...prevState , {classesId: coursesData.classes[j] , 
+                    temp2.push({
                         beginTime : classData.beginTime ,
                         endTime : classData.endTime , 
-                        date: classData.date}]);
+                        date: classData.date})
                 }
             }
 
-            setCourses((prevState) => [...prevState , {cid : courseArray[i] , 
-                courseName : courseArray[i].name , 
-                attendance : attendance , }]);
-            setCoursesL((prevState) => [...prevState , {cid : courseArray[i] ,
-                 courseName : courseArray[i].name , 
-                 classesPresentId : classesPresentId , 
-                 classesNotPresentId : classesNotPresentId,}]);
+            courseTemp1.push({cid : response2.data._id , 
+                courseName : response2.data.name , 
+                attendance : attendance , 
+                totalAttendance : totalAttendance});
+            courseTemp2.push({
+                cid : response2.data._id ,
+                 courseName : response2.data.name , 
+                 classesPresentId : temp1 , 
+                 classesNotPresentId : temp2
+            });
         }
-    } , [user])*/
 
-    const courses=[];
-    courses.push({cid : 1 , courseName : "Comp" , attendance : 2,})
-    courses.push({cid : 2 , courseName : "OS" , attendance : 3,})
-    const coursesL=[];
-    coursesL.push({cid : 1 , courseName : "Comp" , attendance : 2,})
-    coursesL.push({cid : 2 , courseName : "OS" , attendance : 3,})
+        setCourses(courseTemp1);
+        setCoursesL(courseTemp2);
 
-    const classesPresentId=[];
-    classesPresentId.push({classesId:101 , beginTime : 1 , endTime : 2 ,date:3});
-    classesPresentId.push({classesId:102 , beginTime:1,endTime:2 , date:3});
-    const classesNotPresentId=[];
-    classesNotPresentId.push({classesId:103 , beginTime : 1 , endTime : 2 ,date:3});
-    classesNotPresentId.push({classesId:104 , beginTime : 1 , endTime : 2 ,date:3});
+    } , [user])
 
     const attendanceCardDisplay = () =>{
-        return (<div> 
-           {courses.map((course) =>{
-return <CardDisplayAttendance cid={course.cid} courseName={course.courseName} attendance={course.attendance}></CardDisplayAttendance>
-})}
+        // console.log(courses);
+        return (<div style={{display : "grid", gridTemplateColumns : "1fr 1fr 1fr", padding : "10px"}}>
+            {courses.map((course) =>{
+                return <CardDisplayAttendance cid={course.cid} courseName={course.courseName} attendance={course.attendance} totalAttendance={course.totalAttendance}></CardDisplayAttendance>
+            })}
         </div>);
     }
 
     const attendanceTableDisplay = () =>{
-        return(<div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Course Name</th>
-                        <th>Class Title</th>
-                        <th>Begin Time</th>
-                        <th>End Time</th>
-                        <th>Date</th>
-                        <th>Attended</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        {coursesL.map((course) =>{
+        return (
+            <div style={{width : "100%"}}>
+        <div style={{width : "100%", display : "flex"}}>
+        <div style={{width : "20%"}}> <h2> Course Name </h2></div>
+        <div style={{width : "35%"}}> <h2>Begin Date And Time</h2></div>
+        <div style={{width : "35%"}}> <h2>End Date And Time</h2> </div>
+        <div style={{width : "8%"}}> <h2>Attended</h2></div>
+        </div>
+        <hr></hr>
+ 
+                {coursesL.map((course) =>{
                             return (<div>
-                                {classesPresentId.map((P) => {
-                                    return (<div>
-                                        <td>{course.courseName}</td>
-                                        <td>{P.classesId}</td>
-                                        <td>{P.beginTime}</td>
-                                        <td>{P.endTime}</td>
-                                        <td>{P.date}</td>
-                                        <td>Yes</td>
-                                    </div>)
+                                {course.classesPresentId.map((P) => {
+                                    return (<TableElement name={course.courseName} beginTime ={P.beginTime} endTime={P.endTime} attended = "Yes"/>)
                                 })}
-                                {classesNotPresentId.map((NotP) =>{
-                                    return (<div>
-                                        <td>{course.courseName}</td>
-                                        <td>{NotP.classesId}</td>
-                                        <td>{NotP.beginTime}</td>
-                                        <td>{NotP.endTime}</td>
-                                        <td>{NotP.date}</td>
-                                        <td>No</td>
-                                    </div>)
+                                {course.classesNotPresentId.map((NotP) =>{
+                                    return (<TableElement name={course.courseName} beginTime ={NotP.beginTime} endTime={NotP.endTime} attended = "No"/>)
                                 })}
-                            </div>);
-                        })}
-                    </tr>
-                </tbody>
-            </table>
-        </div>);
-    }
+                                 </div>);
+                                 })}
+                                
+            </div>
+        )
+     }
 
     return (
-        <div>
-            {courses.map((course) =>{
-return <CardDisplayAttendance cid={course.cid} courseName={course.courseName} attendance={course.attendance}></CardDisplayAttendance>
-})}
+        <div style={{width : "100%"}}>
+             <br/>
+            <div style={{display : "flex", width : "100%", justifyContent : "space-around"}}>
+            <button onClick={() =>{setCardView(true)}}>Card View</button>
+            <button onClick={() => {setCardView(false)}}>Table View</button>
+            </div>
+            <br/>
+              {cardView && attendanceCardDisplay()}
+              {!cardView && attendanceTableDisplay()}
         </div>
     );
 }
 
 export default AttendancePage 
 
-/*
-            <button onClick={attendanceCardDisplay}>Card Display</button>
-            <button onClick={attendanceTableDisplay}>Table Display</button>
-{courses.map((course) =>{
-return <CardDisplayAttendance cid={course.cid} courseName={course.courseName} attendance={course.attendance}></CardDisplayAttendance>
-})}
-*/
 
-/*
-    const courses=[];
-    courses.push({cid : 1 , courseName : "Comp" , attendance : 2,})
-    courses.push({cid : 2 , courseName : "OS" , attendance : 3,})
-    const coursesL=[];
-    coursesL.push({cid : 1 , courseName : "Comp" , attendance : 2,})
-    coursesL.push({cid : 2 , courseName : "OS" , attendance : 3,})
 
-    const classesPresentId=[];
-    classesPresentId.push({classesId:101});
-    classesPresentId.push({classesId:102});
-    const classesNotPresentId=[];
-    classesNotPresentId.push({classesId:103});
-    classesNotPresentId.push({classesId:104});
-*/
+
+
