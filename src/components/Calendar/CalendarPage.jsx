@@ -20,6 +20,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { set } from "date-fns";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import {
   Dialog,
   DialogContent,
@@ -30,6 +31,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import DateTimePicker from '@mui/lab/DateTimePicker';
+
 
 export default function CalendarPage() {
 
@@ -52,6 +54,7 @@ export default function CalendarPage() {
   const [isQuizChecked, setQuizChecked] = useState(true);
   const [isPersonalChecked, setPersonalChecked] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
 
   const validate = () => {
     let errors = {};
@@ -262,7 +265,7 @@ export default function CalendarPage() {
             quizEvents.push({
               title : quizArrayOfCourse[j].title,
               start : new Date(quizArrayOfCourse[j].date),
-              end : new Date(quizArrayOfCourse[j].date).addHours(quizArrayOfCourse[j].duration),
+              end : new Date(quizArrayOfCourse[j].date).addHours(Math.ceil(quizArrayOfCourse[j].duration / 60)),
               type : "quiz",
               course : courseName
             });
@@ -302,6 +305,8 @@ export default function CalendarPage() {
     setPersonalChecked(true)
     setSelectedCourse('');
 
+    setIsFetching(false);
+
     
   },[user])
 
@@ -311,6 +316,24 @@ export default function CalendarPage() {
 return (
   <div style={{width : "100%"}}>
   <TopNavbar/>
+  <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            open={isFetching}
+            
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <CircularProgress/>
+              
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
   <div className={styles.container}>
     <div className={styles.filters} style={{width : "30%"}}> 
       <h1> Filters</h1>

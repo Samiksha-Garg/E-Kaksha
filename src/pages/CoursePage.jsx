@@ -14,6 +14,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import TextField from '@mui/material/TextField';
 import DatePicker from '@mui/lab/DatePicker';
+import CircularProgress from '@mui/material/CircularProgress';
 import {
   Dialog,
   DialogContent,
@@ -50,6 +51,7 @@ function CoursePage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
+    const [isFetching, setIsFetching] = useState(true);
 
     useEffect(() => {
       if (Object.keys(formErrors).length === 0 && isSubmitting) {
@@ -166,6 +168,7 @@ function CoursePage() {
       setAssignments(response1.data.reverse());
       setQuiz(response2.data.reverse());
       setMaterial(response3.data.reverse());
+      setIsFetching(false);
     
     },[cid])
 
@@ -195,6 +198,24 @@ function CoursePage() {
 
   return (
     <div style={{overflowX:"hidden",backgroundColor:"white",width:"100%"}}>
+       <Dialog
+            PaperProps={{
+              style: {
+                overflow: "visible",
+              },
+            }}
+            open={isFetching}
+            
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <CircularProgress/>
+              
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
         <TopNavbar />
       <div
         style={{
