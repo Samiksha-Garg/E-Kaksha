@@ -98,7 +98,7 @@ function QuizPage(props){
          <center> <p>No Quizzes!</p></center>
         } 
         {quiz.length != 0 && quiz.map((event) => {
-          return <QuizElement question={event.question} key={event._id} title = {event.title} date = {event.date} desc = {event.desc} duration = {event.duration}/>;
+          return <QuizElement sub={event.submissions} question={event.question} quizId={event._id} key={event._id} title = {event.title} date = {event.date} desc = {event.desc} duration = {event.duration}/>;
         })} 
     {user.role == "teacher" && <div onClick={() => {
           setModal(true);
