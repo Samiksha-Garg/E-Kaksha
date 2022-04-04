@@ -14,11 +14,15 @@ import Chat from "./components/Chat/Chat";
 import ToDoAsnPage from "./components/ToDoAsn/ToDoAsnPage"
 import AddQuestions from "./pages/Quiz/addQuestions";
 import QuizPage from "./pages/Quiz/QuizPage";
+import AttendancePage from "./components/Attendance/AttendancePage"
+import Display from "./components/TakeQuiz/Dispaly"
 
 
 function App(){
   const {user}=useContext(Context);
+  console.log("app")
     return (
+
 
       <Router>
       <div style={{display : "flex", width : "100%", minHeight:"100vh"}}>
@@ -28,12 +32,13 @@ function App(){
         <Route path={"/calendar"} element={<ProtectedRoute Component={CalendarPage}/>}/>
         <Route path={"/chat"} element={<ProtectedRoute Component={Chat}/>}/>
         <Route path={"/assignments"} element={<ProtectedRoute Component={ToDoAsnPage}/>}/>
-        <Route path="/coursepage/:cid" element={<ProtectedRoute Component={CoursePage}/>}/>
-        <Route path="/quiz" element={<ProtectedRoute Component={QuizPage}/>}/>
+        <Route path={"/attendance"} element={<ProtectedRoute Component={AttendancePage}/>}/>
+        <Route path={"/quiz"} element={<ProtectedRoute Component={Display}/>}/>
        </Routes>
        </div>
       </Router>
+ 
     );
 }
-
 export default App;
+
