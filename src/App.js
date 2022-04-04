@@ -14,6 +14,7 @@ import ProtectedRoute from "./ProtectedRoute";
 
 import ToDoAsnPage from "./components/ToDoAsn/ToDoAsnPage"
 import AttendancePage from "./components/Attendance/AttendancePage"
+import AttendanceDecider from "./components/Attendance/AttendanceDecider";
 
 
 function App(){
@@ -27,7 +28,7 @@ function App(){
         <Route exact path={"/"} element={<HomePage />} />  
         <Route path={"/calendar"} element={<ProtectedRoute Component={CalendarPage}/>}/>
         <Route path={"/assignments"} element={<ProtectedRoute Component={ToDoAsnPage}/>}/>
-        <Route path={"/attendance"} element={<ProtectedRoute Component={AttendancePage}/>}/>
+        <Route path={"/attendance"} element={<ProtectedRoute Component={AttendanceDecider}/>}/>
        </Routes>
        </div>
       </Router>

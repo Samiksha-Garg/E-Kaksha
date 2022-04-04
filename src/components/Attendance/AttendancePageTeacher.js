@@ -1,9 +1,11 @@
 import React from 'react';
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { Context } from "../context/Context";
+import { Context } from "../../context/Context";
+import AttendanceTeacherClass from './AttendanceTeacherClass';
 
 function AttendancePageTeacher({props}){
+  const {user} = useContext(Context);
   const [StudentId , setStudentId] = useState([]);
   const [StudentName , setStudentName] = useState([]);
   const [present , setPresent] = useState([]);
