@@ -15,13 +15,14 @@ import ProtectedRoute from "./ProtectedRoute";
 import ToDoAsnPage from "./components/ToDoAsn/ToDoAsnPage"
 import AttendancePage from "./components/Attendance/AttendancePage"
 import AttendanceDecider from "./components/Attendance/AttendanceDecider";
+import AttendancePageTeacher from "./components/Attendance/AttendancePageTeacher";
+import AttendanceTeacherClass from "./components/Attendance/AttendanceTeacherClass";
 
 
 function App(){
   const {user}=useContext(Context);
     return (
-      <div>
-             <Router>
+      <Router>
       <div style={{display : "flex", width : "100vw", minHeight:"100vh"}}>
       {user? <NavBar/> : null} 
         <Routes>
@@ -32,8 +33,6 @@ function App(){
        </Routes>
        </div>
       </Router>
-      </div>
     );
 }
 export default App;
-
