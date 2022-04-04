@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 
@@ -20,5 +21,6 @@ function CardDisplayAttendance(props){
         </div>
     );
 }
+
 
 export default CardDisplayAttendance;

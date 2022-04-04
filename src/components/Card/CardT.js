@@ -30,8 +30,8 @@ return (
     <img src={array[props.ImageUrl]} ></img>
 </div>
 <div classsName="card-content">
-    <div className="card-title">
-        <h3> {props.title}</h3>
+    <div style={{fontSize : "1.2rem", textAlign : "center", padding : "10px"}}>
+        <b> {props.title}</b>
     </div>
     <div className="card-body">
     <p> {props.body}</p>
