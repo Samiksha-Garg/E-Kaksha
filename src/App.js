@@ -1,18 +1,14 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import SignIn from "./components/Authentication/SignIn";
-import SignUp from "./components/Authentication/SignUp";
+import React, {useState, useRef, useContext, useEffect} from "react";
+import { Context } from "./context/Context";
+
+//Different components imported to create routes
 import HomePage from "./components/HomePage";
 import CoursePage from "./pages/CoursePage.jsx";
-import { Context } from "./context/Context";
 import NavBar from "./components/Navigation/NavBar";
-// import "./App.css";
-import React, {useState, useRef, useContext, useEffect} from "react";
-
 import CalendarPage from "./components/Calendar/CalendarPage";
 import ProtectedRoute from "./ProtectedRoute";
 import Chat from "./components/Chat/Chat";
-
-import Sample from "./PdfView/Sample";
 import Attendance from "./components/Attendance/AttendanceDecider"
 
 
@@ -22,6 +18,7 @@ import QuizPage from "./pages/Quiz/QuizPage";
 import AttendancePage from "./components/Attendance/AttendancePage"
 import Display from "./components/TakeQuiz/Dispaly"
 
+// import "./App.css";
 
 function App(){
   const {user}=useContext(Context);
