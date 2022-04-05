@@ -48,7 +48,7 @@ function ViewAttendanceTeacher({courseId,classId}){
 
   useEffect(async() =>{
   if(step){
-    const response3 = await axios.put("/classes/updatePresentStu/"+classId , present);
+    const response3 = await axios.put("/class/updatePresentStu/"+classId , present);
   }
   }, [present])
   console.log(StudentName);

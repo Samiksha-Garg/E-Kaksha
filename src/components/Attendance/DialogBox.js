@@ -82,7 +82,7 @@ function DialogBox({courseId,classId,studentName,onSetPresent,present,onSetStep}
                 <CloseIcon />
               </IconButton>
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                Assignment: Hello
+                Attendance
               </Typography>
               <Button autoFocus color="inherit" onClick={handleClose}>
               save
