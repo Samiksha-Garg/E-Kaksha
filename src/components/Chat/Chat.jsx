@@ -30,7 +30,6 @@ export default function Chat() {
     if (scroll.current) {
        scroll.current.scrollIntoView();
     }
-    console.log('Hi');
   };
 
   useEffect(() => {
@@ -48,9 +47,10 @@ export default function Chat() {
       });
     });
   }, []);
+  
   useEffect(() => {
     if (arrivalMsg) {
-      console.log(arrivalMsg);
+      
       convo?.chatId === arrivalMsg.text.chatId &&
         setMessages((prev) => [...prev, arrivalMsg.text]);
     }
@@ -63,6 +63,8 @@ export default function Chat() {
       setOnlineUsers(users);
     });
   }, [user]);
+ 
+  //getting all messages of specific convo
   useEffect(async () => {
 
     if (convo) {
@@ -72,6 +74,7 @@ export default function Chat() {
       setMessages([]);
     }
   }, [convo]);
+
   const sendMessage = async (e) => {
     if (newMessage == "") {
       return;
@@ -91,7 +94,7 @@ export default function Chat() {
         text: msg,
       });
     }
-
+    //post message in db
     const res = await axios.post("/message", msg);
     setMessages([...messages, res.data]);
     setNewMessage("");
@@ -100,6 +103,7 @@ export default function Chat() {
     return self.indexOf(value) === index;
   }
 
+  // getting all teachers for student and all students for teacher and setting use States
   useEffect(async () => {
     let courses = user.courses;
     let l = courses.length;
@@ -157,9 +161,10 @@ export default function Chat() {
     setRecentChats(rec);
     setFriends(info);
   }, []);
-
+  
+  //Setting up new chat
   const handleAllChat = async (event) => {
-    console.log(event);
+    
     let l = recentChat.length;
 
     for (let i = 0; i < l; i++) {
@@ -186,20 +191,19 @@ export default function Chat() {
         },
       ];
     });
-
-    console.log(newChat);
   };
-
+  
+  //Filter functionalities seeting list of contacts on filtering data
   useEffect(()=>{
     setFiltered(recentChat);
   },[recentChat]);
+
   useEffect(()=>{
     setFilteredFriends(friends);
   },[friends]);
 
   const handleSearch=(event)=>{
     setSearchText(event.target.value);
-    console.log(event.target.value);
 
     const filteredData = recentChat.filter((el) => {
       //if no input the return the original
@@ -217,7 +221,6 @@ export default function Chat() {
   }
   const handleSearchFriends=(event)=>{
     setSearchFriends(event.target.value);
-    console.log(event.target.value);
 
     const filteredData = friends.filter((el) => {
       //if no input the return the original
@@ -232,6 +235,7 @@ export default function Chat() {
 
     setFilteredFriends(filteredData);
   }
+
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <TopNavbar />
