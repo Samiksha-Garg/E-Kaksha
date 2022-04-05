@@ -1,4 +1,3 @@
-
 import { createContext, useEffect, useReducer, useState } from "react";
 import Reducer from "./Reducer";
 
@@ -19,7 +18,7 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     console.log(state.user);
     if (state.isChecked) {
-      localStorage.setItem("user", JSON.stringify(state.user));
+      localStorage.setItem("user", JSON.stringify(state.user)); //saving user in local storage of browser
     }
     
   }, [state.user]);
