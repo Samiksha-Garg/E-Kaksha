@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import Home from "../../assets/Home";
 import BarsIcon from "../../assets/Bars-icon";
@@ -9,11 +9,13 @@ import AssignmentIcon from "../../assets/Assignment-icon";
 import AttendenceIcon from "../../assets/Attendence-icon";
 
 import classes from './NavBar.module.css';
+import { Context } from "../../context/Context";
 
 
 function NavBar() {
 
   const[isOpenNavBar,setOpenNavBar]=useState(false);
+  const {user} = useContext(Context)
  
   const changeState=()=>setOpenNavBar(!isOpenNavBar);
   
@@ -32,12 +34,12 @@ function NavBar() {
               {isOpenNavBar && 'Home'}
             </Link>
           </li>
-          <li>
+         {user.role == "student" &&  <li>
             <Link to="/assignments" className={classes.link}>
               <AssignmentIcon />
               {isOpenNavBar && 'Assignments'}
             </Link>
-          </li>
+          </li>}
           <li>
             <Link to="/chat" className={classes.link}>
               <ChatIcon />
