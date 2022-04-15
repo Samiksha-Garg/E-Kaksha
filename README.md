@@ -1,70 +1,27 @@
-# Getting Started with Create React App
+# E-Kaksha
+E-Kaksha is basically a Course Management System, a collection of software tools providing an online environment for course interactions between teachers and students. This Web Application allows the users to manage their assignments, quizzes and course materials all at one place of various courses. It also provides users with a calendar feature with various filters making it easier for students to track their assignments, quizzes and other personal events in their schedules. The realtime chat feature is enabled to make communication between students and teacher effective and effort-less. Attendance feature makes the record of student's presence organized. These various utilities make this application a one-stop solution for users, who generally have to use more than one application for these facilities.
+  
+## Prerequisites:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+One must have nodeJs installed on the system. 
+Download Link: https://nodejs.org/en/download/ (Download the LTS version)
+## Setting the project on local System
 
-## Available Scripts
+Clone the git repository from the following link: https://github.com/Samiksha-Garg/E-Kaksha and after navigating to the folder run command "npm i"
+<br/>
+<br/>
+Clone the git repository from the following link : https://github.com/Kajal-7/api.git .
+Open the project folder on the local system and navigate to the api folder (inside the main folder) using command cd api and run command “npm i”. 
+Also add an .env file in the root folder (the api folder inside the main api folder), which will contain : "MONGO_URL = 'YOUR CONNECTION STRING URI' " (Without outer double quotes).
+Connection string uri format would be similar to : "mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]".
+To generate the uri, refer the mongodb atlas docs : https://www.mongodb.com/docs/guides/cloud/connectionstring/
 
-In the project directory, you can run:
+<br/>
+In the same repository Navigate to socket folder using command cd socket  and run command “npm i”
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## How to Start:
+Navigate to api folder and then run the command “node index.js”
+Navigate to socket folder and then run the command “node index.js”
+Navigate to E-kaksha folder and then run the command “npm start” 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
