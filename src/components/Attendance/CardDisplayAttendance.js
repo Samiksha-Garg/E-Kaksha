@@ -14,7 +14,7 @@ function CardDisplayAttendance(props){
     <Card.Text>
       <p>Attended Classes : {props.attendance}</p>
       <p>Total Classes : {props.totalAttendance}</p>
-      <p>Percentage : {total == 0 ? 100 : att / total} %</p>
+      <p>Percentage : {total == 0 ? 100 : (att / total) * 100} %</p>
     </Card.Text>
   </Card.Body>
 </Card>

@@ -207,6 +207,7 @@ export default function CalendarPage() {
 
   //Adding assignment, quizes,classes, personal events
   useEffect(async () => {
+    setIsFetching(true);
     let personalEvents = user.personalEvents
     let l1 = personalEvents.length;
 
@@ -491,3 +492,4 @@ return (
   </div>
   </div>);
 }
+

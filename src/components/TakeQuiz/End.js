@@ -8,7 +8,6 @@ const End = ({goBack, results, data, onAnswersCheck, time, quizId, update, isNew
   const [marks , setMarks] =useState(0);
   const [maxMarks , setMaxMarks] = useState(0);
   const [back, setBack] = useState(false);
-
   useEffect(async() => {
     let correct = 0;
     let mark=0;

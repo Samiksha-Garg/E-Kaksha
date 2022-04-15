@@ -30,7 +30,7 @@ const Question = ({ data, answers, onAnswerUpdate, numberOfQuestions, activeQues
     // console.log(answers);
     let temp = answers;
     answers[activeQuestion].a = selected;
-    onAnswerUpdate(temp);
+    onAnswerUpdate(answers);
     
     if(activeQuestion < numberOfQuestions - 1) {
       console.log(answers[activeQuestion + 1].a);
@@ -45,7 +45,8 @@ const Question = ({ data, answers, onAnswerUpdate, numberOfQuestions, activeQues
     if(activeQuestion === 0){
         return setError("Can Not Move Back");
     }
-    onAnswerUpdate(prevState => [...prevState, prevState[activeQuestion].a =selected]);
+    answers[activeQuestion].a = selected
+    onAnswerUpdate(answers);
     setSelected(answers[activeQuestion - 1].a);
     onSetActiveQuestion(activeQuestion -1);
     

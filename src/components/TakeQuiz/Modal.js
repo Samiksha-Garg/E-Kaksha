@@ -1,7 +1,7 @@
 import React,  {useState , useEffect , useContext} from 'react';
 
 const Modal = ({ onClose, onOpen , results, data, isTeacher}) => {
-console.log(data);
+
   return(
     <div className="modal is-active">
       <div className="modal-background" onClick={onClose}></div>
