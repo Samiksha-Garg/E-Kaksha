@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useState} from "react";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
@@ -16,9 +16,15 @@ import Typography from "@mui/material/Typography";
 
 
 
-function DialogBox({courseId,classId,studentName,onSetPresent,present,onSetStep}){
+function DialogBox({presentStudents, courseId,classId,studentName,onSetPresent,present,onSetStep}){
     // console.log(studentName);
-     let presentStu =[];
+
+    const [presentStu, setPresentStu] = useState([]);
+
+    useEffect(() => {
+      setPresentStu(presentStudents);
+    }, [presentStudents])
+  
      const [subModal, setSubModal] = useState(false);
     
     const changeHandler1 = (e)=>{
@@ -35,7 +41,10 @@ function DialogBox({courseId,classId,studentName,onSetPresent,present,onSetStep}
             }
         }
         if(!(e.target.checked) && presentStu.includes(e.target.value)){
-            presentStu = presentStu.filter((ele) =>{return ele != e.target.value;})
+
+            
+            let temp = presentStu.filter((ele) =>{return ele != e.target.value;})
+            setPresentStu(temp);
             for(let i=0 ; i<studentName.length ; i++){
               console.log(e.target.value);
               console.log(studentName[i].Attended);
