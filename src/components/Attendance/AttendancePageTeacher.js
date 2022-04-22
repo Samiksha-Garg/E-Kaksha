@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 // import Card from 'react-bootstrap/Card';
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Context } from "../../context/Context.js";
 import axios from "axios";
@@ -11,8 +10,7 @@ import ViewAttendanceTeacher from "./ViewAttendanceTeacher";
 function Attendance() {
   const { user } = useContext(Context);
   const [finalArr, setArray] = useState([]);
-  const [showModal, setshowModal] = useState(false);
-  const [clickedClass, setClickedClass] = useState();
+  
   useEffect(async () => {
     let courseArray = user.courses;
     let l = courseArray.length;

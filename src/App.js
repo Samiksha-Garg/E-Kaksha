@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import React, { useState, useRef, useContext, useEffect } from "react";
+import React, {useContext} from "react";
 import { Context } from "./context/Context";
 
 //Different components imported to create routes

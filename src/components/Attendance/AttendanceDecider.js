@@ -10,8 +10,8 @@ function AttendanceDecider() {
     return (
         <div style={{width : "100%"}}>
             <TopNavBar/>
-            {user.role == "student" && <AttendancePage/>}
-            {user.role == "teacher" && <AttendancePageTeacher/>}
+            {user.role === "student" && <AttendancePage/>}
+            {user.role === "teacher" && <AttendancePageTeacher/>}
         </div>
     )
 }

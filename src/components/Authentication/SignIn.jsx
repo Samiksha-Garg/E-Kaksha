@@ -27,7 +27,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import axios from "axios";
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Context} from "../../context/Context";
 

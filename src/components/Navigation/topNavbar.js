@@ -1,11 +1,8 @@
-import { Link } from "react-router-dom";
-import { useState, useContext, useReducer } from "react";
+import { useState, useContext} from "react";
 import React from "react";
 import HorizontalNavbarPeopleLogo from "../../assets/Horizontal-Navbar-People-Logo";
 import NotificationNavbarIcon from "../../assets/Notification-Navbar";
-import { useMemo } from 'react';
 import classes from "./topNavBar.module.css";
-import Dropdown from 'react-bootstrap/DropdownButton';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -13,7 +10,6 @@ import AddCourseIcon from '../../assets/AddCourseIcon.jsx'
 import Avatar from '@mui/material/Avatar'
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
-import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { Context } from "../../context/Context";

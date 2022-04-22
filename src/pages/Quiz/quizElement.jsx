@@ -7,9 +7,6 @@ import styles from "../assign.module.css"
 import Modal from "../../components/TakeQuiz/Modal";
 import {
   Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle
 } from "@mui/material";
 import Questions from "./questions";
 import AppBar from "@mui/material/AppBar";

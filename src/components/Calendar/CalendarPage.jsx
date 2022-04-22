@@ -1,5 +1,4 @@
 import React, {useEffect, useState, useContext} from "react";
-import { render } from "react-dom";
 import Calendar from "./Calendar";
 import "./index.css";
 import styles from "../../styles/Calendar.module.css"
@@ -8,27 +7,19 @@ import { Context } from "../../context/Context";
 import axios from "axios";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
-import DatePicker from '@mui/lab/DatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { set } from "date-fns";
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import {
   Dialog,
   DialogContent,
   DialogContentText,
-  DialogTitle,
 } from "@mui/material";
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 
@@ -39,7 +30,6 @@ export default function CalendarPage() {
   const [startDate, setStartDate] = useState(null);
   const [title, setTitle] = useState('');
   const [formErrors, setFormErrors] = useState({});
-  const [eventError, setEventError] = useState("");
   const [endDate, setEndDate] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [courses, setCourses] = useState([]);

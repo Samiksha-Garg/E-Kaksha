@@ -1,5 +1,5 @@
 import TextField from '@mui/material/TextField';
-import { useEffect, useState, useContext} from "react";
+import { useEffect, useState} from "react";
 import styles from "../../styles/SignUp.module.css"
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';

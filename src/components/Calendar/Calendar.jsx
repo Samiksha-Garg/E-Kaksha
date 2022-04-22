@@ -1,4 +1,4 @@
-import React, {useState, useRef, useContext, useEffect} from "react";
+import React from "react";
 import { Calendar, momentLocalizer, Views} from "react-big-calendar";
 import moment from "moment";
 import EventWrapper from "./EventWrapper";

@@ -1,6 +1,4 @@
-import { useState, useContext, useEffect } from "react";
-import ReactFileReader from 'react-file-reader';
-import axios from "axios";
+import { useState, useContext} from "react";
 import { Context } from "../../context/Context";
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';

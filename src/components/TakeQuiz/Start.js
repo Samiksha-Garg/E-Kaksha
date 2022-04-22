@@ -1,9 +1,7 @@
 import axios from 'axios';
-import React , {useState , useEffect , useContext} from 'react';
-import { Context } from "../../context/Context";
+import React , {useState , useEffect} from 'react';
 
 function Start({goBack, onQuizStart , title , duration , desc , courseId}){
-    const {user , dispatch} = useContext(Context);
     const [courseName , setCourseName] = useState("");
     useEffect(async () =>{
         if (courseId != undefined) {

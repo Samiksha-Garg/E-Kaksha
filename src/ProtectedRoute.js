@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import {  Navigate, Route } from 'react-router-dom';
+import {  Navigate} from 'react-router-dom';
 import { Context } from './context/Context';
 
 //Redirecting on the basis of isUser logged in or logged out

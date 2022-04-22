@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -7,7 +7,6 @@ const Question = ({ data, answers, onAnswerUpdate, numberOfQuestions, activeQues
   const [selected, setSelected] = useState(answers[activeQuestion].a);
   const [error, setError] = useState('');
   const [options, setOptions] = useState([]);
-  const radiosWrapper = useRef();
 
   useEffect(() => {
     let op = [data.option1, data.option2, data.option3, data.option4];

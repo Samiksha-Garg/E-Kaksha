@@ -3,7 +3,7 @@ import React, { useEffect, useState , useContext } from 'react';
 import { Context } from "../../context/Context";
 
 const End = ({goBack, results, data, onAnswersCheck, time, quizId, update, isNew }) => {
-  const {user , dispatch} = useContext(Context)
+  const {user} = useContext(Context)
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [marks , setMarks] =useState(0);
   const [maxMarks , setMaxMarks] = useState(0);

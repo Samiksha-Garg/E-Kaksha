@@ -8,7 +8,6 @@ import {
   Dialog,
   DialogContent,
   DialogContentText,
-  DialogTitle,
 } from "@mui/material";
 
 function DashBoard(){

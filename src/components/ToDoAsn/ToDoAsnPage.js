@@ -7,12 +7,11 @@ import {
   Dialog,
   DialogContent,
   DialogContentText,
-  DialogTitle,
 } from "@mui/material";
 
 function ToDoAsnPage(){
 
-    const {user , dispatch} =useContext(Context)
+    const {user} =useContext(Context)
     const [courses , setCourses] =useState([]);
     const [assignments , setAssignments] = useState([]);
     const [todoAssignments , setTodoAssignments] = useState([]);

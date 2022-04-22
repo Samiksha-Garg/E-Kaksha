@@ -1,15 +1,13 @@
 import React from 'react';
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { Context } from "../../context/Context";
 import DialogBox from "./DialogBox.js";
-import { ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 toast.configure()
 
 function ViewAttendanceTeacher({courseId,classId}){
  
  
-  const {user} = useContext(Context);
   const [StudentId , setStudentId] = useState([]);
   const [StudentName , setStudentName] = useState([]);
   const [present , setPresent] = useState([]);
@@ -61,7 +59,7 @@ function ViewAttendanceTeacher({courseId,classId}){
 
   useEffect(async() =>{
   if(step){
-    const response3 = await axios.put("/class/updatePresentStu/"+classId , present);
+    await axios.put("/class/updatePresentStu/"+classId , present);
     notify();
   }
   }, [present])

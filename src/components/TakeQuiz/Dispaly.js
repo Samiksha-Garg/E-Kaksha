@@ -10,7 +10,7 @@ import { Context } from "../../context/Context";
 let interval;
 
 function Display(props){
-    const {user , dispatch} =useContext(Context)
+    const {user} =useContext(Context)
     const [step ,setStep] = useState(1);
     const [activeQuestion , setActiveQuestion] = useState(0);
     const [answers , setAnswers] = useState([]);

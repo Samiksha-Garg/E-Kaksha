@@ -4,7 +4,6 @@ import {
     Dialog,
     DialogContent,
     DialogContentText,
-    DialogTitle,
   } from "@mui/material";
 import classes from "../CoursePage.module.css";
 import { Context } from "../../context/Context";
@@ -12,9 +11,7 @@ import Button from '@mui/material/Button';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import TextField from '@mui/material/TextField';
-import DatePicker from '@mui/lab/DatePicker';
 import styles from "../../styles/Calendar.module.css";
-import TimePicker from '@mui/lab/TimePicker';
 import QuizElement from "./quizElement";
 import DateTimePicker from '@mui/lab/DateTimePicker';
 

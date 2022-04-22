@@ -1,6 +1,6 @@
-import React,  {useState , useEffect , useContext} from 'react';
+import React from 'react';
 
-const Modal = ({ onClose, onOpen , results, data, isTeacher}) => {
+const Modal = ({ onClose, results, data, isTeacher}) => {
 
   return(
     <div className="modal is-active">

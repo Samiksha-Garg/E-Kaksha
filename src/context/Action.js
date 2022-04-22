@@ -1,5 +1,5 @@
 //action defines how the state will be updated
-const LoginStart = function (userCredentials) {
+const LoginStart = function () {
     return ({
       type: "LOGIN_START",
    })

@@ -7,15 +7,13 @@ import TableElement from "./tabletemplate";
 
 function AttendancePage(){
     
-    const {user ,dispatch} = useContext(Context);
+    const {user} = useContext(Context);
     const [courses , setCourses] = useState([]);
     const [coursesL , setCoursesL] = useState([]);
     const [cardView, setCardView] = useState(true);
 
     useEffect(async () =>{
         let courseArray = user.courses;
-        let classesPresentId = [];
-        let classesNotPresentId = [];
         let coursesData = [];
         let classData = [];
         let attendance;

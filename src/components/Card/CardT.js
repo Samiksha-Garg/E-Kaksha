@@ -2,8 +2,7 @@ import React from 'react'
 import './Card.css' 
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
-import pic from "./CardImg.jpg"
-import { Link, resolvePath } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import CardImg0 from "./CardImg0.jpg"
 import CardImg1 from "./CardImg1.png"
 import CardImg2 from "./CardImg2.png"
