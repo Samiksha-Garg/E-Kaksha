@@ -1,5 +1,21 @@
 # E-Kaksha
 E-Kaksha is basically a Course Management System, a collection of software tools providing an online environment for course interactions between teachers and students. This Web Application allows the users to manage their assignments, quizzes and course materials all at one place of various courses. It also provides users with a calendar feature with various filters making it easier for students to track their assignments, quizzes and other personal events in their schedules. The realtime chat feature is enabled to make communication between students and teacher effective and effort-less. Attendance feature makes the record of student's presence organized. These various utilities make this application a one-stop solution for users, who generally have to use more than one application for these facilities.
+
+# Screenshots of some webpages
+
+<img src = "public/images/login.png" width = "700" />
+<img src = "public/images/dashboard.png" width = "700" />
+<img src = "public/images/calendar.png" width = "700" />
+<img src = "public/images/assignment.png" width = "700" />
+<img src = "public/images/pdf.png" width = "700" />
+<img src = "public/images/quiz.png" width = "700" />
+<img src = "public/images/takeQuiz.png" width = "700" />
+<img src = "public/images/takeQuiz2.png" width = "700" />
+<img src = "public/images/results.png" width = "700" />
+<img src = "public/images/toDo.png" width = "700" />
+<img src = "public/images/chat.png" width = "700" />
+<img src = "public/images/attendance.png" width = "700" />
+<img src = "public/images/attendance2.png" width = "700" />
   
 ## Prerequisites:
 
