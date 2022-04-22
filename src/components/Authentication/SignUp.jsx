@@ -65,7 +65,7 @@ export default function SignUp({setShowModal}) {
     const role = selectedProf;
 
     try {
-      const response = await axios.post("/auth/register", {
+      const response = await axios.post("/api/auth/register", {
         name : name,
         email : formValues.email,
         password : formValues.password,
