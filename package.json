@@ -73,5 +73,5 @@
             "last 1 safari version"
         ]
     },
-    "proxy": "http://localhost:1000/api"
+    "proxy": "https://e-kaksha-api.herokuapp.com/api"
 }

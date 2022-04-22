@@ -38,7 +38,7 @@ export default function Chat() {
 
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
+    socket.current = io("https://e-kaksha-socket.herokuapp.com");
     //getting message from server
     socket.current.on("getMessage", (msg) => {
       setArrivalMsg({
