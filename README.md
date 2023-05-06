@@ -2,7 +2,7 @@
 E-Kaksha is basically a Course Management System, a collection of software tools providing an online environment for course interactions between teachers and students. This Web Application allows the users to manage their assignments, quizzes and course materials all at one place of various courses. It also provides users with a calendar feature with various filters making it easier for students to track their assignments, quizzes and other personal events in their schedules. The realtime chat feature is enabled to make communication between students and teacher effective and effort-less. Attendance feature makes the record of student's presence organized. These various utilities make this application a one-stop solution for users, who generally have to use more than one application for these facilities.
 
 <br/>
-Website : https://sweet-starburst-15d15d.netlify.app/
+Website : https://sweet-starburst-15d15d.netlify.app/ //Currently not working!//
 
 # Screenshots of some webpages
 
